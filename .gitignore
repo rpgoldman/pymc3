@@ -34,6 +34,7 @@ benchmarks/results/
 .vs/
 .vscode/
 .mypy_cache
+\.mypy_cache/
 
 pytestdebug.log
 .dir-locals.el
@@ -41,3 +42,9 @@ pytestdebug.log
 
 # Codespaces
 pythonenv*
+
+\.pyre/
+
+\.pyre_configuration
+
+mypy\.ini

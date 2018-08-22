@@ -1,0 +1,14 @@
+from . import Model, RV
+from typing import Mapping, Iterable, Optional
+
+
+class TransformedRV: ...
+
+
+def modelcontext(m: Optional[Model]) -> Model: ...
+
+
+def Point(sequence: Mapping[str, RV] = ...) -> Mapping[str, RV]: ...
+
+
+def all_continuous(vars: Iterable[RV]) -> bool: ...

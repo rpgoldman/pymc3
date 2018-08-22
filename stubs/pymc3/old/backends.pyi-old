@@ -1,0 +1,14 @@
+from . import Model, RV
+from typing import Optional, Iterable, Any
+
+# FIXME: the following should actually be in a 'base' module
+class BaseTrace: ...
+
+class MultiTrace(BaseTrace): ...
+
+class Backend: ...
+
+class Text(Backend, BaseTrace):
+    def __init__(self: Text, name: str, model: Optional[Model]=None,
+                 vars: Optional[Iterable[str]]=None,
+                 test_point: Optional[Any]=None) -> None: ...
