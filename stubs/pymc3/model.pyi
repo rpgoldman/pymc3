@@ -4,8 +4,6 @@
 from typing import Any, Optional, Dict, Mapping, Iterable
 
 
-from .memoize import memoize, WithMemoization
-
 from collections import namedtuple
 from theano.tensor.var import TensorVariable
 from typing import Any, Optional, Dict
