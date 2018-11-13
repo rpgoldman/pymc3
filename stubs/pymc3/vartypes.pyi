@@ -4,7 +4,7 @@
 
 from typing import Any
 
-string_types = basestring
+string_types = string
 
 bool_types: Any
 int_types: Any

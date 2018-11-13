@@ -4,16 +4,22 @@
 # ... and then hand-edited.
 
 from numpy import ndarray
-from typing import Any, Optional, Union, List, Generator, Iterable, Dict, Tuple
+from typing import Any, Optional, Union, List, Generator, Iterable, Dict, Tuple, Sequence
 from .backends.base import MultiTrace
 from .model import Model
 from .step_methods import NUTS
-import pymc3 as pm
-from pymc3.backends import Backend
+from .backends import Backend
 from .distributions import Distribution
+from . import _Point, _Varname, _RandomSeed
+import pymc3 as pm
 
-_RandomSeed = Union[int,List[int]]
+optint = Optional[int]
+optbool = Optional[bool]
+
+# FIXME: give better definitions for these
 _Samples = Dict[pm._Varname, ndarray]
+StepFunction = Any
+
 
 def iter_sample(draws: int,
                 step: Any,
@@ -56,13 +62,13 @@ def sample(draws: optint=500,
            step_kwargs: Optional[Dict[str,Any]]=None,
            progressbar: optbool=None,
            model: Optional[Model]=None,
-           random_seed: random_seed=None,
+           random_seed: _RandomSeed=None,
            live_plot: optbool=None,
            discard_tuned_samples: optbool=None,
            live_plot_kwargs: Optional[Dict[str,Any]]=None,
            compute_convergence_checks: optbool=None,
            use_mmap: optbool=None,
-           **kwargs) -> Trace:  ...
+           **kwargs) -> MultiTrace:  ...
 
 def sample_posterior_predictive(trace: MultiTrace,
                                 samples: Optional[int] = ...,

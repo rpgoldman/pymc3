@@ -30,13 +30,13 @@ from .math import expand_packed_triangular as expand_packed_triangular, \
                   logsumexp as logsumexp, \
                   probit as probit
 from .model import *
+from .model import Model as Model
 from .model_graph import model_to_graphviz as model_to_graphviz
 from .stats import *
 from .sampling import *
 from .theanof import *
 from .tuning import *
 from .variational import *
-from .vartypes import *
 from .exceptions import *
 from . import sampling as sampling
 
@@ -52,4 +52,8 @@ from .data import *
 from .backends import load_trace as load_trace, save_trace as save_trace, \
     MultiTrace as MultiTrace
 from .math import expand_packed_triangular, invlogit, invprobit, logaddexp, logit, logsumexp, probit
-from .model_graph import model_to_graphviz
+
+_Varname = str
+_Point = Dict[str, Any]
+_RandomSeed = Union[int,List[int]]
+
