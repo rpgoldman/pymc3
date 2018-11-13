@@ -21,7 +21,6 @@ from .blocking import *
 from .distributions import *
 from .distributions.transforms import Transform as Transform
 from .glm import *
-from . import gp
 from .math import expand_packed_triangular as expand_packed_triangular, \
                   invlogit as invlogit, \
                   invprobit as invprobit, \
@@ -34,7 +33,6 @@ from .model import Model as Model
 from .model_graph import model_to_graphviz as model_to_graphviz
 from .stats import *
 from .sampling import *
-from .theanof import *
 from .tuning import *
 from .variational import *
 from .exceptions import *

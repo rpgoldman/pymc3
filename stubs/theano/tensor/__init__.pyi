@@ -1,0 +1,6 @@
+from typing import Union
+
+class TensorVariable:
+    ...
+
+def largest(*args: Union[float, int, TensorVariable]) -> TensorVariable: ...

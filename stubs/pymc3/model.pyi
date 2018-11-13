@@ -5,7 +5,7 @@ from typing import Any, Optional, Dict, Mapping, Iterable
 
 
 from collections import namedtuple
-from theano.tensor.var import TensorVariable
+from theano import TensorVariable
 from typing import Any, Optional, Dict
 from pymc3 import _Point
 from .distributions import Distribution
