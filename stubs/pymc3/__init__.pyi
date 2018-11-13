@@ -19,6 +19,7 @@ from . import model, backends
 
 from .blocking import *
 from .distributions import *
+from .distributions.transforms import Transform as Transform
 from .glm import *
 from . import gp
 from .math import expand_packed_triangular as expand_packed_triangular, \

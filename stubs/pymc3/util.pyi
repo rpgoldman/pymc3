@@ -4,7 +4,7 @@
 
 from typing import Any, List
 
-from .transforms import Transform
+from .distributions.transforms import Transform
 
 RV = Any # variable type.
 
@@ -15,7 +15,7 @@ def get_untransformed_name(name: str) -> str: ...
 def get_default_varnames(var_iterator: Any, include_transformed: Any) -> List[str]: ...
 
 
-s# The following are all pretty opaque in their meaning and type.  I'm
+# The following are all pretty opaque in their meaning and type.  I'm
 # going to hope that no external user will need to know their types,
 # and comment them out.[2018/11/12:rpg]s
 
