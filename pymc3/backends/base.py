@@ -32,7 +32,9 @@ from pymc3.util import get_var_name
 
 logger = logging.getLogger("pymc3")
 
-if sys.version_info >= (3, 6):
+if version_info >= (3, 6):
+    from typing import Union, Tuple, Iterator, Any
+    ndarray = Any # don't have good typing for this right now.
     class TraceMap:
         def __getitem__(self, idx: Union[int,str,Tuple[str,slice]]) -> ndarray: ...
         def keys(self) -> Iterator[str]: ...
