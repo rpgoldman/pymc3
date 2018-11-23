@@ -49,6 +49,7 @@ from .plots import plot_posterior as plot_posterior, traceplot as traceplot
 from .data import *
 from .backends import load_trace as load_trace, save_trace as save_trace, \
     MultiTrace as MultiTrace
+from .backends.base import TraceMap as TraceMap
 from .math import expand_packed_triangular, invlogit, invprobit, logaddexp, logit, logsumexp, probit
 
 _Varname = str
