@@ -25,6 +25,10 @@ from typing import List
 
 import numpy as np
 import theano.tensor as tt
+try:
+    from collections.abc import Sized
+except ImportError:
+    from collections import Sized
 
 from pymc3.backends.report import SamplerReport, merge_reports
 from pymc3.model import modelcontext
@@ -33,16 +37,9 @@ from pymc3.util import get_var_name
 logger = logging.getLogger("pymc3")
 
 if version_info >= (3, 6):
-    from typing import Union, Tuple, Iterator, Any
-    ndarray = Any # don't have good typing for this right now.
-    class TraceMap:
-        def __getitem__(self, idx: Union[int,str,Tuple[str,slice]]) -> ndarray: ...
-        def keys(self) -> Iterator[str]: ...
+    from .trace_map3 import TraceMap
 else:
-    class TraceMap:
-        def __getitem__(self, idx): ...
-        def keys(self): ...
-
+    from .trace_map2 import TraceMap
 
 
 class BackendError(Exception):
