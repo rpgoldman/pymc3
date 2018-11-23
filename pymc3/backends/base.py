@@ -32,6 +32,16 @@ from pymc3.util import get_var_name
 
 logger = logging.getLogger("pymc3")
 
+if sys.version_info >= (3, 6):
+    class TraceMap:
+        def __getitem__(self, idx: Union[int,str,Tuple[str,slice]]) -> ndarray: ...
+        def keys(self) -> Iterator[str]: ...
+else:
+    class TraceMap:
+        def __getitem__(self, idx): ...
+        def keys(self): ...
+
+
 
 class BackendError(Exception):
     pass
