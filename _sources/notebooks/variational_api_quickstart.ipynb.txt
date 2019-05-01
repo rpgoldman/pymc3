@@ -56,7 +56,7 @@
     "sd = pm.floatX([.1, .1])\n",
     "\n",
     "with pm.Model() as model:\n",
-    "    x = pm.NormalMixture('x', w=w, mu=mu, sd=sd, dtype=theano.config.floatX)\n",
+    "    x = pm.NormalMixture('x', w=w, mu=mu, sigma=sd, dtype=theano.config.floatX)\n",
     "    x2 = x ** 2\n",
     "    sin_x = pm.math.sin(x)"
    ]
@@ -144,7 +144,7 @@
    "source": [
     "with pm.Model() as model:\n",
     "    \n",
-    "    x = pm.NormalMixture('x', w=w, mu=mu, sd=sd, dtype=theano.config.floatX)\n",
+    "    x = pm.NormalMixture('x', w=w, mu=mu, sigma=sd, dtype=theano.config.floatX)\n",
     "    x2 = x ** 2\n",
     "    sin_x = pm.math.sin(x)"
    ]
@@ -1125,7 +1125,7 @@
     "with pm.Model() as iris_model:\n",
     "    \n",
     "    # Coefficients for features\n",
-    "    β = pm.Normal('β', 0, sd=1e2, shape=(4, 3))\n",
+    "    β = pm.Normal('β', 0, sigma=1e2, shape=(4, 3))\n",
     "    # Transoform to unit interval\n",
     "    a = pm.Flat('a', shape=(3,))\n",
     "    p = tt.nnet.softmax(Xt.dot(β) + a)\n",
@@ -1451,7 +1451,9 @@
     "\n",
     "Now let's use minibatches. At every iteration, we will draw 500 random values:\n",
     "\n",
-    "> Remember to set `total_size` in observed"
+    "> Remember to set `total_size` in observed\n",
+    "\n",
+    "**total_size** is an important parameter that allows pymc3 to infer the right way of rescaling densities. If it is not set, you are likely to get completely wrong results. For more information please refer to the comprehensive documentation of `pm.Minibatch`."
    ]
   },
   {
@@ -1684,7 +1686,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.6.0b4"
+   "version": "3.6.3"
   }
  },
  "nbformat": 4,

@@ -1,37 +1,63 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Profiling &#8212; PyMC3 3.5.rc1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <title>Profiling &#8212; PyMC3 3.5 documentation</title>
+    <link rel="stylesheet" href="../_static/semantic-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script type="text/javascript" src="../_static/highlight.min.js"></script>
+    <script type="text/javascript" src="../_static/semantic.min.js"></script>
+    <link rel="shortcut icon" href="../_static/PyMC3.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+<script>hljs.initHighlightingOnLoad();</script>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+
 
   </head><body>
-  
+<div class="ui vertical center aligned">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
+    <div class="ui container">
+        <div class="ui large secondary pointing menu">
+            <a class="item" href="/">
+                <img class="ui bottom aligned tiny image" src="https://cdn.rawgit.com/pymc-devs/pymc3/master/docs/logos/svg/PyMC3_banner.svg" />
+            </a>
+             <a href="../nb_tutorials/index.html" class="item">Tutorials</a> <a href="../nb_examples/index.html" class="item">Examples</a> <a href="../learn.html" class="item">Books + Videos</a> <a href="../api.html" class="item">API</a> <a href="../developer_guide.html" class="item">Developer Guide</a> <a href="../history.html" class="item">About PyMC3</a>
             
+            <div class="right menu">
+                <div class="item">
+                    <form class="ui icon input" action="../search.html" method="get">
+                        <input type="text" placeholder="Search..." name="q" />
+                        <i class="search link icon"></i>
+                    </form>
+                </div>
+                <a class="item" href="https://github.com/pymc-devs/pymc3"><i class="github blue icon large"></i></a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="ui container" role="main">
+    
+
+    <div class="ui vertical segment">
+        
   
 <style>
 /* CSS for nbsphinx extension */
@@ -87,18 +113,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 7ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -138,9 +164,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -148,7 +174,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -197,28 +223,59 @@ div.nboutput div.output_area.stderr {
 
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
 </style>
 <div class="section" id="Profiling">
 <h1>Profiling<a class="headerlink" href="#Profiling" title="Permalink to this headline">¶</a></h1>
-<p>Sometimes computing the likelihood is not as fast as we would like.
-Theano provides handy profiling tools, which pymc3 provides a wrapper
-<code class="docutils literal notranslate"><span class="pre">model.profile</span></code> which returns a <code class="docutils literal notranslate"><span class="pre">ProfileStats</span></code> object. Here we’ll
-profile the likelihood and gradient for the stochastic volatility
-example.</p>
+<p>Sometimes computing the likelihood is not as fast as we would like. Theano provides handy profiling tools which are wrapped in PyMC3 by <code class="docutils literal notranslate"><span class="pre">model.profile</span></code>. This function returns a <code class="docutils literal notranslate"><span class="pre">ProfileStats</span></code> object conveying information about the underlying Theano operations. Here we’ll profile the likelihood and gradient for the stochastic volatility example.</p>
 <p>First we build the model.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pymc3</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">pymc3.math</span> <span class="kn">import</span> <span class="n">exp</span>
 <span class="kn">from</span> <span class="nn">pymc3.distributions.timeseries</span> <span class="kn">import</span> <span class="o">*</span>
 
-<span class="n">n</span> <span class="o">=</span> <span class="mi">400</span>
-<span class="n">returns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;SP500.csv&#39;</span><span class="p">))[</span><span class="o">-</span><span class="n">n</span><span class="p">:]</span>
+<span class="n">returns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;SP500.csv&#39;</span><span class="p">),</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="n">returns</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
 <span class="k">with</span> <span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
     <span class="n">sigma</span> <span class="o">=</span> <span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;sigma&#39;</span><span class="p">,</span> <span class="mf">1.</span> <span class="o">/</span> <span class="o">.</span><span class="mo">02</span><span class="p">,</span> <span class="n">testval</span><span class="o">=.</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">nu</span> <span class="o">=</span> <span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;nu&#39;</span><span class="p">,</span> <span class="mf">1.</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span>
@@ -228,10 +285,9 @@ example.</p>
 </pre></div>
 </div>
 </div>
-<p>Then call profile and summarize it.</p>
+<p>Then we call the <code class="docutils literal notranslate"><span class="pre">profile</span></code> function and summarize its return values.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -243,83 +299,88 @@ example.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Function profiling
 ==================
-  Message: /home/jovyan/pymc3/pymc3/model.py:605
-  Time in 1000 calls to Function.__call__: 1.775136e-01s
-  Time in Function.fn.__call__: 1.416550e-01s (79.800%)
-  Time in thunks: 8.041668e-02s (45.302%)
-  Total compile time: 1.353232e+00s
-    Number of Apply nodes: 20
-    Theano Optimizer time: 6.614311e-01s
-       Theano validate time: 4.212379e-03s
-    Theano Linker time (includes C, CUDA code generation/compiling): 6.327283e-01s
-       Import time 3.420997e-02s
-       Node make_thunk time 6.312668e-01s
-           Node Elemwise{Composite{(Switch(Identity(GT(i0, i1)), (i2 - (i3 * i0)), i4) + i5 + Switch(Identity(GT(i6, i1)), (i7 - (i8 * i6)), i4) + i9 + i10 + i11)}}[(0, 0)](Elemwise{exp,no_inplace}.0, TensorConstant{0}, TensorConstant{3.9120230674743652}, TensorConstant{50.0}, TensorConstant{-inf}, sigma_log_, Elemwise{exp,no_inplace}.0, TensorConstant{-2.3025850929940455}, TensorConstant{0.1}, nu_log_, Sum{acc_dtype=float64}.0, Sum{acc_dtype=float64}.0) time 5.813510e-01s
-           Node InplaceDimShuffle{x}(sigma) time 5.518913e-03s
-           Node Elemwise{Composite{Switch(Identity((GT(Composite{exp((i0 * i1))}(i0, i1), i2) * i3 * GT(inv(sqrt(Composite{exp((i0 * i1))}(i0, i1))), i2))), (((i4 + (i5 * log(((i6 * Composite{exp((i0 * i1))}(i0, i1)) / i7)))) - i8) - (i5 * i9 * log1p(((Composite{exp((i0 * i1))}(i0, i1) * i10) / i7)))), i11)}}(TensorConstant{(1,) of -2.0}, s, TensorConstant{(1,) of 0}, Elemwise{gt,no_inplace}.0, Elemwise{Composite{scalar_gammaln((i0 * i1))}}.0, TensorConstant{(1,) of 0.5}, TensorConstant{(1,) of 0...8309886184}, InplaceDimShuffle{x}.0, Elemwise{Composite{scalar_gammaln((i0 * i1))}}.0, Elemwise{add,no_inplace}.0, TensorConstant{[  4.05769..48400e-06]}, TensorConstant{(1,) of -inf}) time 5.294800e-03s
-           Node Elemwise{Composite{inv(sqr(i0))}}(InplaceDimShuffle{x}.0) time 4.826069e-03s
-           Node Elemwise{Composite{log((i0 * i1))}}(TensorConstant{(1,) of 0...9154943092}, Elemwise{Composite{inv(sqr(i0))}}.0) time 4.477978e-03s
+  Message: /Users/ckrapu/miniconda3/envs/pymc3-dev/lib/python3.7/site-packages/pymc3-3.5-py3.7.egg/pymc3/model.py:910
+  Time in 1000 calls to Function.__call__: 4.618220e+00s
+  Time in Function.fn.__call__: 4.519772e+00s (97.868%)
+  Time in thunks: 4.468524e+00s (96.759%)
+  Total compile time: 1.687160e+00s
+    Number of Apply nodes: 26
+    Theano Optimizer time: 1.493099e+00s
+       Theano validate time: 4.654884e-03s
+    Theano Linker time (includes C, CUDA code generation/compiling): 1.448960e-01s
+       Import time 9.179330e-02s
+       Node make_thunk time 1.380470e-01s
+           Node Elemwise{Composite{exp((i0 * i1))}}(TensorConstant{(1, 1) of -2.0}, InplaceDimShuffle{x,0}.0) time 1.914692e-02s
+           Node Elemwise{Composite{(Switch(Cast{int8}(GE(i0, i1)), (i2 - (i3 * i0)), i4) + i5)}}(sigma, TensorConstant{0}, TensorConstant{3.9120230674743652}, TensorConstant{50.0}, TensorConstant{-inf}, sigma_log__) time 1.753592e-02s
+           Node Elemwise{add,no_inplace}(TensorConstant{(1, 1) of 1.0}, InplaceDimShuffle{x,x}.0) time 9.997129e-03s
+           Node Elemwise{Composite{Cast{int8}((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}(Elemwise{Composite{exp((i0 * i1))}}.0, TensorConstant{(1, 1) of 0}, Elemwise{gt,no_inplace}.0) time 8.508921e-03s
+           Node Elemwise{Composite{scalar_gammaln((i0 * i1))}}(TensorConstant{(1, 1) of 0.5}, InplaceDimShuffle{x,x}.0) time 8.479118e-03s
 
 Time in all call to theano.grad() 0.000000e+00s
-Time since theano import 10.620s
+Time since theano import 163.017s
 Class
 ---
 &lt;% time&gt; &lt;sum %&gt; &lt;apply time&gt; &lt;time per call&gt; &lt;type&gt; &lt;#call&gt; &lt;#apply&gt; &lt;Class name&gt;
-  71.7%    71.7%       0.058s       4.81e-06s     C    12000      12   theano.tensor.elemwise.Elemwise
-   7.4%    79.1%       0.006s       2.98e-06s     C     2000       2   theano.tensor.elemwise.Sum
-   7.2%    86.3%       0.006s       2.90e-06s     C     2000       2   theano.tensor.subtensor.Subtensor
-   7.0%    93.4%       0.006s       2.83e-06s     C     2000       2   theano.tensor.elemwise.DimShuffle
-   6.6%   100.0%       0.005s       2.66e-06s     C     2000       2   theano.compile.ops.ViewOp
+  92.6%    92.6%       4.138s       2.43e-04s     C    17000      17   theano.tensor.elemwise.Elemwise
+   7.1%    99.7%       0.318s       1.06e-04s     C     3000       3   theano.tensor.elemwise.Sum
+   0.2%    99.9%       0.007s       2.44e-06s     C     3000       3   theano.tensor.elemwise.DimShuffle
+   0.1%    99.9%       0.003s       1.48e-06s     C     2000       2   theano.tensor.subtensor.Subtensor
+   0.1%   100.0%       0.002s       2.43e-06s     C     1000       1   theano.tensor.opt.MakeVector
    ... (remaining 0 Classes account for   0.00%(0.00s) of the runtime)
 
 Ops
 ---
 &lt;% time&gt; &lt;sum %&gt; &lt;apply time&gt; &lt;time per call&gt; &lt;type&gt; &lt;#call&gt; &lt;#apply&gt; &lt;Op name&gt;
-  30.5%    30.5%       0.025s       2.45e-05s     C     1000        1   Elemwise{Composite{Switch(Identity((GT(Composite{exp((i0 * i1))}(i0, i1), i2) * i3 * GT(inv(sqrt(Composite{exp((i0 * i1))}(i0, i1))), i2))), (((i4 + (i5 * log(((i6 * Composite{exp((i0 * i1))}(i0, i1)) / i7)))) - i8) - (i5 * i9 * log1p(((Composite{exp((i0 * i1))}(i0, i1) * i10) / i7)))), i11)}}
-   7.5%    38.0%       0.006s       3.02e-06s     C     2000        2   Elemwise{exp,no_inplace}
-   7.4%    45.4%       0.006s       2.98e-06s     C     2000        2   Sum{acc_dtype=float64}
-   7.0%    52.5%       0.006s       2.83e-06s     C     2000        2   InplaceDimShuffle{x}
-   7.0%    59.4%       0.006s       2.81e-06s     C     2000        2   Elemwise{Composite{scalar_gammaln((i0 * i1))}}
-   6.6%    66.1%       0.005s       2.66e-06s     C     2000        2   ViewOp
-   5.1%    71.2%       0.004s       4.14e-06s     C     1000        1   Elemwise{Composite{Switch(i0, (i1 * ((-(i2 * sqr((i3 - i4)))) + i5)), i6)}}
-   3.9%    75.1%       0.003s       3.16e-06s     C     1000        1   Elemwise{Composite{(Switch(Identity(GT(i0, i1)), (i2 - (i3 * i0)), i4) + i5 + Switch(Identity(GT(i6, i1)), (i7 - (i8 * i6)), i4) + i9 + i10 + i11)}}[(0, 0)]
-   3.8%    78.9%       0.003s       3.02e-06s     C     1000        1   Subtensor{int64::}
-   3.6%    82.5%       0.003s       2.93e-06s     C     1000        1   Elemwise{gt,no_inplace}
-   3.6%    86.2%       0.003s       2.92e-06s     C     1000        1   Elemwise{Composite{log((i0 * i1))}}
-   3.6%    89.8%       0.003s       2.89e-06s     C     1000        1   Elemwise{Composite{Identity(GT(inv(sqrt(i0)), i1))}}
-   3.5%    93.2%       0.003s       2.78e-06s     C     1000        1   Subtensor{:int64:}
-   3.4%    96.7%       0.003s       2.76e-06s     C     1000        1   Elemwise{add,no_inplace}
-   3.3%   100.0%       0.003s       2.69e-06s     C     1000        1   Elemwise{Composite{inv(sqr(i0))}}
-   ... (remaining 0 Ops account for   0.00%(0.00s) of the runtime)
+  91.8%    91.8%       4.100s       4.10e-03s     C     1000        1   Elemwise{Composite{Switch(i0, (i1 - (i2 * i3 * log1p(((i4 * i5) / i6)))), i7)}}
+   7.1%    98.9%       0.318s       1.06e-04s     C     3000        3   Sum{acc_dtype=float64}
+   0.2%    99.0%       0.007s       7.25e-06s     C     1000        1   Elemwise{Composite{((i0 + (i1 * log(((i2 * i3) / i4)))) - i5)}}
+   0.1%    99.2%       0.006s       6.03e-06s     C     1000        1   Elemwise{Composite{exp((i0 * i1))}}
+   0.1%    99.3%       0.003s       3.49e-06s     C     1000        1   InplaceDimShuffle{x}
+   0.1%    99.3%       0.003s       3.43e-06s     C     1000        1   Elemwise{Composite{Switch(i0, (i1 * ((-(i2 * sqr((i3 - i4)))) + i5)), i6)}}
+   0.1%    99.4%       0.003s       1.64e-06s     C     2000        2   Elemwise{Composite{scalar_gammaln((i0 * i1))}}
+   0.1%    99.5%       0.003s       3.14e-06s     C     1000        1   Elemwise{Composite{Cast{int8}((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}
+   0.1%    99.5%       0.003s       2.64e-06s     C     1000        1   InplaceDimShuffle{x,x}
+   0.1%    99.6%       0.003s       2.64e-06s     C     1000        1   Elemwise{add,no_inplace}
+   0.1%    99.6%       0.002s       2.43e-06s     C     1000        1   MakeVector{dtype=&#39;float64&#39;}
+   0.0%    99.7%       0.002s       2.19e-06s     C     1000        1   Subtensor{int64::}
+   0.0%    99.7%       0.002s       2.17e-06s     C     1000        1   Elemwise{Composite{(Switch(Cast{int8}(GE(i0, i1)), (i2 - (i3 * i0)), i4) + i5)}}[(0, 0)]
+   0.0%    99.8%       0.002s       1.77e-06s     C     1000        1   Elemwise{gt,no_inplace}
+   0.0%    99.8%       0.002s       8.57e-07s     C     2000        2   Elemwise{exp,no_inplace}
+   0.0%    99.9%       0.002s       1.63e-06s     C     1000        1   Elemwise{Composite{(Switch(Cast{int8}(GE(i0, i1)), (i2 - (i3 * i0)), i4) + i5)}}
+   0.0%    99.9%       0.001s       1.47e-06s     C     1000        1   Elemwise{Composite{Cast{int8}(GT(i0, i1))}}
+   0.0%    99.9%       0.001s       1.36e-06s     C     1000        1   Elemwise{Composite{log((i0 * i1))}}
+   0.0%    99.9%       0.001s       1.20e-06s     C     1000        1   InplaceDimShuffle{x,0}
+   0.0%   100.0%       0.001s       8.85e-07s     C     1000        1   Elemwise{Composite{inv(sqrt(inv(sqr(i0))))}}[(0, 0)]
+   ... (remaining 2 Ops account for   0.03%(0.00s) of the runtime)
 
 Apply
 ------
 &lt;% time&gt; &lt;sum %&gt; &lt;apply time&gt; &lt;time per call&gt; &lt;#call&gt; &lt;id&gt; &lt;Apply name&gt;
-  30.5%    30.5%       0.025s       2.45e-05s   1000    16   Elemwise{Composite{Switch(Identity((GT(Composite{exp((i0 * i1))}(i0, i1), i2) * i3 * GT(inv(sqrt(Composite{exp((i0 * i1))}(i0, i1))), i2))), (((i4 + (i5 * log(((i6 * Composite{exp((i0 * i1))}(i0, i1)) / i7)))) - i8) - (i5 * i9 * log1p(((Composite{exp((i0 * i1))}(i0, i1) * i10) / i7)))), i11)}}(TensorConstant{(1,) of -2.0}, s, TensorConstant{(1,) of 0}, Elemwise{gt,no_inplace}.0, Elemwise{Composite{scalar_gammaln((i0 * i1))}}.0, TensorConstant{(1,) o
-   5.1%    35.6%       0.004s       4.14e-06s   1000    15   Elemwise{Composite{Switch(i0, (i1 * ((-(i2 * sqr((i3 - i4)))) + i5)), i6)}}(Elemwise{Composite{Identity(GT(inv(sqrt(i0)), i1))}}.0, TensorConstant{(1,) of 0.5}, Elemwise{Composite{inv(sqr(i0))}}.0, Subtensor{int64::}.0, Subtensor{:int64:}.0, Elemwise{Composite{log((i0 * i1))}}.0, TensorConstant{(1,) of -inf})
-   3.9%    39.6%       0.003s       3.16e-06s   1000    19   Elemwise{Composite{(Switch(Identity(GT(i0, i1)), (i2 - (i3 * i0)), i4) + i5 + Switch(Identity(GT(i6, i1)), (i7 - (i8 * i6)), i4) + i9 + i10 + i11)}}[(0, 0)](Elemwise{exp,no_inplace}.0, TensorConstant{0}, TensorConstant{3.9120230674743652}, TensorConstant{50.0}, TensorConstant{-inf}, sigma_log_, Elemwise{exp,no_inplace}.0, TensorConstant{-2.3025850929940455}, TensorConstant{0.1}, nu_log_, Sum{acc_dtype=float64}.0, Sum{acc_dtype=float64}.0)
-   3.9%    43.5%       0.003s       3.14e-06s   1000     0   Elemwise{exp,no_inplace}(sigma_log_)
-   3.8%    47.2%       0.003s       3.03e-06s   1000    17   Sum{acc_dtype=float64}(Elemwise{Composite{Switch(i0, (i1 * ((-(i2 * sqr((i3 - i4)))) + i5)), i6)}}.0)
-   3.8%    51.0%       0.003s       3.02e-06s   1000     3   Subtensor{int64::}(s, Constant{1})
-   3.7%    54.7%       0.003s       2.99e-06s   1000    14   Elemwise{Composite{scalar_gammaln((i0 * i1))}}(TensorConstant{(1,) of 0.5}, Elemwise{add,no_inplace}.0)
-   3.6%    58.4%       0.003s       2.93e-06s   1000    18   Sum{acc_dtype=float64}(Elemwise{Composite{Switch(Identity((GT(Composite{exp((i0 * i1))}(i0, i1), i2) * i3 * GT(inv(sqrt(Composite{exp((i0 * i1))}(i0, i1))), i2))), (((i4 + (i5 * log(((i6 * Composite{exp((i0 * i1))}(i0, i1)) / i7)))) - i8) - (i5 * i9 * log1p(((Composite{exp((i0 * i1))}(i0, i1) * i10) / i7)))), i11)}}.0)
-   3.6%    62.0%       0.003s       2.93e-06s   1000    11   Elemwise{gt,no_inplace}(InplaceDimShuffle{x}.0, TensorConstant{(1,) of 0})
-   3.6%    65.6%       0.003s       2.92e-06s   1000    12   Elemwise{Composite{log((i0 * i1))}}(TensorConstant{(1,) of 0...9154943092}, Elemwise{Composite{inv(sqr(i0))}}.0)
-   3.6%    69.2%       0.003s       2.91e-06s   1000     1   Elemwise{exp,no_inplace}(nu_log_)
-   3.6%    72.8%       0.003s       2.89e-06s   1000    13   Elemwise{Composite{Identity(GT(inv(sqrt(i0)), i1))}}(Elemwise{Composite{inv(sqr(i0))}}.0, TensorConstant{(1,) of 0})
-   3.6%    76.4%       0.003s       2.86e-06s   1000     6   InplaceDimShuffle{x}(sigma)
-   3.5%    79.9%       0.003s       2.81e-06s   1000     7   InplaceDimShuffle{x}(nu)
-   3.5%    83.3%       0.003s       2.78e-06s   1000     2   Subtensor{:int64:}(s, Constant{-1})
-   3.4%    86.8%       0.003s       2.76e-06s   1000     9   Elemwise{add,no_inplace}(TensorConstant{(1,) of 1.0}, InplaceDimShuffle{x}.0)
-   3.3%    90.1%       0.003s       2.69e-06s   1000     8   Elemwise{Composite{inv(sqr(i0))}}(InplaceDimShuffle{x}.0)
-   3.3%    93.4%       0.003s       2.68e-06s   1000     5   ViewOp(Elemwise{exp,no_inplace}.0)
-   3.3%    96.7%       0.003s       2.65e-06s   1000     4   ViewOp(Elemwise{exp,no_inplace}.0)
-   3.3%   100.0%       0.003s       2.63e-06s   1000    10   Elemwise{Composite{scalar_gammaln((i0 * i1))}}(TensorConstant{(1,) of 0.5}, InplaceDimShuffle{x}.0)
-   ... (remaining 0 Apply instances account for 0.00%(0.00s) of the runtime)
+  91.8%    91.8%       4.100s       4.10e-03s   1000    19   Elemwise{Composite{Switch(i0, (i1 - (i2 * i3 * log1p(((i4 * i5) / i6)))), i7)}}(Elemwise{Composite{Cast{int8}((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}.0, Elemwise{Composite{((i0 + (i1 * log(((i2 * i3) / i4)))) - i5)}}.0, TensorConstant{(1, 1) of 0.5}, Elemwise{add,no_inplace}.0, Elemwise{Composite{exp((i0 * i1))}}.0, TensorConstant{[[7.637491..7877e-07]]}, InplaceDimShuffle{x,x}.0, TensorConstant{(1, 1) of -inf})
+   7.1%    98.8%       0.316s       3.16e-04s   1000    22   Sum{acc_dtype=float64}(Elemwise{Composite{Switch(i0, (i1 - (i2 * i3 * log1p(((i4 * i5) / i6)))), i7)}}.0)
+   0.2%    99.0%       0.007s       7.25e-06s   1000    17   Elemwise{Composite{((i0 + (i1 * log(((i2 * i3) / i4)))) - i5)}}(Elemwise{Composite{scalar_gammaln((i0 * i1))}}.0, TensorConstant{(1, 1) of 0.5}, TensorConstant{(1, 1) of ..8861837907}, Elemwise{Composite{exp((i0 * i1))}}.0, InplaceDimShuffle{x,x}.0, Elemwise{Composite{scalar_gammaln((i0 * i1))}}.0)
+   0.1%    99.1%       0.006s       6.03e-06s   1000     6   Elemwise{Composite{exp((i0 * i1))}}(TensorConstant{(1, 1) of -2.0}, InplaceDimShuffle{x,0}.0)
+   0.1%    99.2%       0.003s       3.49e-06s   1000     8   InplaceDimShuffle{x}(sigma)
+   0.1%    99.3%       0.003s       3.43e-06s   1000    21   Elemwise{Composite{Switch(i0, (i1 * ((-(i2 * sqr((i3 - i4)))) + i5)), i6)}}(Elemwise{Composite{Cast{int8}(GT(i0, i1))}}.0, TensorConstant{(1,) of 0.5}, Elemwise{Composite{inv(sqr(i0))}}[(0, 0)].0, Subtensor{int64::}.0, Subtensor{:int64:}.0, Elemwise{Composite{log((i0 * i1))}}.0, TensorConstant{(1,) of -inf})
+   0.1%    99.3%       0.003s       3.14e-06s   1000    14   Elemwise{Composite{Cast{int8}((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}(Elemwise{Composite{exp((i0 * i1))}}.0, TensorConstant{(1, 1) of 0}, Elemwise{gt,no_inplace}.0)
+   0.1%    99.4%       0.003s       2.78e-06s   1000    10   Elemwise{Composite{scalar_gammaln((i0 * i1))}}(TensorConstant{(1, 1) of 0.5}, InplaceDimShuffle{x,x}.0)
+   0.1%    99.5%       0.003s       2.64e-06s   1000     5   InplaceDimShuffle{x,x}(nu)
+   0.1%    99.5%       0.003s       2.64e-06s   1000     9   Elemwise{add,no_inplace}(TensorConstant{(1, 1) of 1.0}, InplaceDimShuffle{x,x}.0)
+   0.1%    99.6%       0.002s       2.43e-06s   1000    24   MakeVector{dtype=&#39;float64&#39;}(__logp_sigma_log__, __logp_nu_log__, __logp_s, __logp_r)
+   0.0%    99.6%       0.002s       2.19e-06s   1000     4   Subtensor{int64::}(s, Constant{1})
+   0.0%    99.7%       0.002s       2.17e-06s   1000    20   Elemwise{Composite{(Switch(Cast{int8}(GE(i0, i1)), (i2 - (i3 * i0)), i4) + i5)}}[(0, 0)](nu, TensorConstant{0}, TensorConstant{-2.3025850929940455}, TensorConstant{0.1}, TensorConstant{-inf}, nu_log__)
+   0.0%    99.7%       0.002s       1.77e-06s   1000    11   Elemwise{gt,no_inplace}(InplaceDimShuffle{x,x}.0, TensorConstant{(1, 1) of 0})
+   0.0%    99.8%       0.002s       1.63e-06s   1000     7   Elemwise{Composite{(Switch(Cast{int8}(GE(i0, i1)), (i2 - (i3 * i0)), i4) + i5)}}(sigma, TensorConstant{0}, TensorConstant{3.9120230674743652}, TensorConstant{50.0}, TensorConstant{-inf}, sigma_log__)
+   0.0%    99.8%       0.002s       1.55e-06s   1000    23   Sum{acc_dtype=float64}(Elemwise{Composite{Switch(i0, (i1 * ((-(i2 * sqr((i3 - i4)))) + i5)), i6)}}.0)
+   0.0%    99.8%       0.001s       1.47e-06s   1000    15   Elemwise{Composite{Cast{int8}(GT(i0, i1))}}(Elemwise{Composite{inv(sqrt(inv(sqr(i0))))}}[(0, 0)].0, TensorConstant{(1,) of 0})
+   0.0%    99.9%       0.001s       1.39e-06s   1000     2   Elemwise{exp,no_inplace}(sigma_log__)
+   0.0%    99.9%       0.001s       1.36e-06s   1000    18   Elemwise{Composite{log((i0 * i1))}}(TensorConstant{(1,) of 0...4309189535}, Elemwise{Composite{inv(sqr(i0))}}[(0, 0)].0)
+   0.0%    99.9%       0.001s       1.20e-06s   1000     1   InplaceDimShuffle{x,0}(s)
+   ... (remaining 6 Apply instances account for 0.09%(0.00s) of the runtime)
 
 Here are tips to potentially make your code run faster
                  (if you think of new ones, suggest them on the mailing list).
@@ -331,8 +392,7 @@ We don&#39;t know if amdlibm will accelerate this scalar op. scalar_gammaln
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -343,94 +403,93 @@ We don&#39;t know if amdlibm will accelerate this scalar op. scalar_gammaln
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Function profiling
 ==================
-  Message: /home/jovyan/pymc3/pymc3/model.py:605
-  Time in 1000 calls to Function.__call__: 3.743136e-01s
-  Time in Function.fn.__call__: 3.272467e-01s (87.426%)
-  Time in thunks: 1.778915e-01s (47.525%)
-  Total compile time: 1.396206e+00s
-    Number of Apply nodes: 47
-    Theano Optimizer time: 6.084559e-01s
-       Theano validate time: 1.443505e-02s
-    Theano Linker time (includes C, CUDA code generation/compiling): 7.295318e-01s
-       Import time 8.256626e-02s
-       Node make_thunk time 7.264183e-01s
-           Node Elemwise{Composite{Switch(i0, (i1 * (i2 + ((i3 * i4 * i5 * i6) / i7))), i8)}}[(0, 6)](Elemwise{Composite{Identity((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}.0, TensorConstant{(1,) of -2.0}, TensorConstant{(1,) of 0.5}, TensorConstant{(1,) of -0.5}, InplaceDimShuffle{x}.0, TensorConstant{[  4.05769..48400e-06]}, Elemwise{Composite{exp((i0 * i1))}}.0, Elemwise{Add}[(0, 1)].0, TensorConstant{(1,) of 0}) time 5.903370e-01s
-           Node Join(TensorConstant{0}, Rebroadcast{1}.0, Rebroadcast{1}.0, IncSubtensor{InplaceInc;:int64:}.0) time 1.472402e-02s
-           Node Elemwise{Composite{Switch(i0, ((i1 * i2 * i3 * i4) / i5), i6)}}(Elemwise{Composite{Identity((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}.0, TensorConstant{(1,) of 0.5}, InplaceDimShuffle{x}.0, Elemwise{Composite{exp((i0 * i1))}}.0, TensorConstant{[  4.05769..48400e-06]}, Elemwise{Add}[(0, 1)].0, TensorConstant{(1,) of 0}) time 1.461983e-02s
-           Node Elemwise{Composite{Switch(i0, (i1 * i2 * i3), i4)}}(Elemwise{Composite{Identity(GT(inv(sqrt(i0)), i1))}}.0, TensorConstant{(1,) of -1.0}, InplaceDimShuffle{x}.0, Elemwise{sub,no_inplace}.0, TensorConstant{(1,) of 0}) time 7.709503e-03s
-           Node Elemwise{Composite{(i0 + Switch(Identity(GT(i1, i2)), (i3 * i1), i2) + (((i4 * i5 * psi((i4 * i6))) + (i7 * (i8 / i9)) + (i4 * i10 * psi((i4 * i9))) + (i4 * i11) + (i12 / i9)) * i1))}}[(0, 5)](TensorConstant{1.0}, Elemwise{exp,no_inplace}.0, TensorConstant{0}, TensorConstant{-0.1}, TensorConstant{0.5}, Sum{acc_dtype=float64}.0, Elemwise{add,no_inplace}.0, TensorConstant{3.141592653589793}, Sum{acc_dtype=float64}.0, nu, Sum{acc_dtype=float64}.0, Sum{acc_dtype=float64}.0, Sum{acc_dtype=float64}.0) time 7.651806e-03s
+  Message: /Users/ckrapu/miniconda3/envs/pymc3-dev/lib/python3.7/site-packages/pymc3-3.5-py3.7.egg/pymc3/model.py:910
+  Time in 1000 calls to Function.__call__: 1.147447e+01s
+  Time in Function.fn.__call__: 1.134008e+01s (98.829%)
+  Time in thunks: 1.043050e+01s (90.902%)
+  Total compile time: 5.045708e+00s
+    Number of Apply nodes: 49
+    Theano Optimizer time: 2.870366e+00s
+       Theano validate time: 1.429296e-02s
+    Theano Linker time (includes C, CUDA code generation/compiling): 2.071112e+00s
+       Import time 1.761718e-01s
+       Node make_thunk time 2.066094e+00s
+           Node Alloc(Elemwise{switch,no_inplace}.0, TensorConstant{401}, Shape_i{0}.0) time 1.797580e+00s
+           Node Elemwise{Composite{Switch(i0, (i1 * (i2 - i3)), i4)}}(Elemwise{Composite{Cast{int8}(GT(i0, i1))}}.0, InplaceDimShuffle{x}.0, Subtensor{int64::}.0, Subtensor{:int64:}.0, TensorConstant{(1,) of 0}) time 1.598787e-02s
+           Node Elemwise{Composite{(Switch(Cast{int8}(GE(i0, i1)), (i2 * i0), i1) + i3 + (i4 * (((i5 * i6 * Composite{inv(Composite{(sqr(i0) * i0)}(i0))}(i7)) / i8) - (i9 * Composite{inv(Composite{(sqr(i0) * i0)}(i0))}(i7))) * (i10 ** i11) * inv(Composite{(sqr(i0) * i0)}(i0)) * i0))}}[(0, 0)](sigma, TensorConstant{0}, TensorConstant{-50.0}, TensorConstant{1.0}, TensorConstant{-2.0}, TensorConstant{0.5}, Sum{acc_dtype=float64}.0, Elemwise{Composite{inv(sqrt(i0))}}.0, Elemwise{Composite{inv(sqr(i0))}}.0, Sum{acc_dtype=float64}.0, Elemwise{Composite{inv(sqr(i0))}}.0, TensorConstant{-1.5}) time 1.419187e-02s
+           Node Elemwise{Composite{exp((i0 * i1))}}(TensorConstant{(1,) of -2.0}, s) time 1.391387e-02s
+           Node Elemwise{Composite{(i0 * ((i1 * i2) + (i3 * i4)))}}[(0, 2)](TensorConstant{(1,) of -2.0}, TensorConstant{(1,) of 0.5}, Sum{axis=[0], acc_dtype=float64}.0, Sum{axis=[0], acc_dtype=float64}.0, Elemwise{Composite{exp((i0 * i1))}}.0) time 1.356912e-02s
 
-Time in all call to theano.grad() 7.784910e-01s
-Time since theano import 13.326s
+Time in all call to theano.grad() 1.094223e+01s
+Time since theano import 190.878s
 Class
 ---
 &lt;% time&gt; &lt;sum %&gt; &lt;apply time&gt; &lt;time per call&gt; &lt;type&gt; &lt;#call&gt; &lt;#apply&gt; &lt;Class name&gt;
-  54.0%    54.0%       0.096s       4.00e-06s     C    24000      24   theano.tensor.elemwise.Elemwise
-  12.9%    66.9%       0.023s       3.29e-06s     C     7000       7   theano.tensor.elemwise.Sum
-   6.4%    73.3%       0.011s       5.70e-06s     C     2000       2   theano.tensor.subtensor.IncSubtensor
-   4.9%    78.2%       0.009s       2.88e-06s     C     3000       3   theano.tensor.elemwise.DimShuffle
-   3.8%    81.9%       0.007s       6.69e-06s     C     1000       1   theano.tensor.basic.Join
-   3.7%    85.6%       0.007s       3.28e-06s     C     2000       2   theano.tensor.subtensor.Subtensor
-   3.4%    89.0%       0.006s       3.04e-06s     C     2000       2   theano.tensor.basic.Reshape
-   3.2%    92.3%       0.006s       5.70e-06s     C     1000       1   theano.tensor.basic.Alloc
-   3.1%    95.4%       0.006s       2.76e-06s     C     2000       2   theano.compile.ops.ViewOp
-   3.0%    98.3%       0.005s       2.66e-06s     C     2000       2   theano.compile.ops.Rebroadcast
-   1.7%   100.0%       0.003s       2.95e-06s     C     1000       1   theano.compile.ops.Shape_i
+  70.5%    70.5%       7.352s       2.94e-04s     C    25000      25   theano.tensor.elemwise.Elemwise
+  23.4%    93.9%       2.444s       3.49e-04s     C     7000       7   theano.tensor.elemwise.Sum
+   5.2%    99.1%       0.545s       2.73e-04s     C     2000       2   theano.tensor.basic.Alloc
+   0.4%    99.5%       0.040s       2.00e-05s     C     2000       2   theano.tensor.subtensor.IncSubtensor
+   0.2%    99.7%       0.020s       3.90e-06s     C     5000       5   theano.tensor.elemwise.DimShuffle
+   0.1%    99.9%       0.016s       1.55e-05s     C     1000       1   theano.tensor.basic.Join
+   0.1%    99.9%       0.006s       3.25e-06s     C     2000       2   theano.tensor.basic.Reshape
+   0.0%   100.0%       0.005s       2.38e-06s     C     2000       2   theano.tensor.subtensor.Subtensor
+   0.0%   100.0%       0.002s       8.01e-07s     C     2000       2   theano.compile.ops.Rebroadcast
+   0.0%   100.0%       0.002s       1.52e-06s     C     1000       1   theano.compile.ops.Shape_i
    ... (remaining 0 Classes account for   0.00%(0.00s) of the runtime)
 
 Ops
 ---
 &lt;% time&gt; &lt;sum %&gt; &lt;apply time&gt; &lt;time per call&gt; &lt;type&gt; &lt;#call&gt; &lt;#apply&gt; &lt;Op name&gt;
-  12.9%    12.9%       0.023s       3.29e-06s     C     7000        7   Sum{acc_dtype=float64}
-   7.6%    20.6%       0.014s       3.40e-06s     C     4000        4   Elemwise{Switch}
-   4.9%    25.4%       0.009s       2.88e-06s     C     3000        3   InplaceDimShuffle{x}
-   4.8%    30.2%       0.009s       8.55e-06s     C     1000        1   Elemwise{Composite{Switch(i0, (-log1p((i1 / i2))), i3)}}
-   4.0%    34.3%       0.007s       7.18e-06s     C     1000        1   IncSubtensor{InplaceInc;int64::}
-   4.0%    38.2%       0.007s       3.53e-06s     C     2000        2   Elemwise{exp,no_inplace}
-   3.8%    42.0%       0.007s       6.69e-06s     C     1000        1   Join
-   3.6%    45.6%       0.006s       6.32e-06s     C     1000        1   Elemwise{Composite{exp((i0 * i1))}}
-   3.4%    49.0%       0.006s       3.04e-06s     C     2000        2   Reshape{1}
-   3.2%    52.2%       0.006s       5.70e-06s     C     1000        1   Alloc
-   3.1%    55.3%       0.006s       2.76e-06s     C     2000        2   ViewOp
-   3.0%    58.3%       0.005s       2.66e-06s     C     2000        2   Rebroadcast{1}
-   2.9%    61.2%       0.005s       5.22e-06s     C     1000        1   Elemwise{Composite{Switch(i0, (i1 * (i2 + ((i3 * i4 * i5 * i6) / i7))), i8)}}[(0, 6)]
-   2.9%    64.1%       0.005s       5.19e-06s     C     1000        1   Elemwise{Composite{Switch(i0, ((i1 * i2 * i3 * i4) / i5), i6)}}
-   2.9%    67.0%       0.005s       5.14e-06s     C     1000        1   Elemwise{Composite{Identity((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}
-   2.4%    69.4%       0.004s       4.31e-06s     C     1000        1   Elemwise{Composite{(i0 + Switch(Identity(GT(i1, i2)), (i3 * i1), i2) + (((i4 * i5 * psi((i4 * i6))) + (i7 * (i8 / i9)) + (i4 * i10 * psi((i4 * i9))) + (i4 * i11) + (i12 / i9)) * i1))}}[(0, 5)]
-   2.4%    71.8%       0.004s       4.23e-06s     C     1000        1   IncSubtensor{InplaceInc;:int64:}
-   2.2%    74.0%       0.004s       3.96e-06s     C     1000        1   Elemwise{Composite{Switch(i0, (i1 * i2 * i3), i4)}}
-   2.2%    76.3%       0.004s       3.94e-06s     C     1000        1   Elemwise{sub,no_inplace}
-   2.2%    78.4%       0.004s       3.83e-06s     C     1000        1   Elemwise{Composite{Switch(i0, (i1 * sqr(i2)), i3)}}
-   ... (remaining 12 Ops account for  21.59%(0.04s) of the runtime)
+  42.1%    42.1%       4.395s       4.40e-03s     C     1000        1   Elemwise{Composite{Switch(i0, (-log1p((i1 / i2))), i3)}}
+  16.1%    58.2%       1.676s       8.38e-04s     C     2000        2   Sum{axis=[0], acc_dtype=float64}
+  14.0%    72.2%       1.459s       1.46e-03s     C     1000        1   Elemwise{Composite{Switch(i0, ((i1 * i2 * i3 * i4) / i5), i6)}}
+   7.4%    79.6%       0.768s       1.54e-04s     C     5000        5   Sum{acc_dtype=float64}
+   6.3%    85.9%       0.661s       3.30e-04s     C     2000        2   Elemwise{mul,no_inplace}
+   5.3%    91.2%       0.558s       5.58e-04s     C     1000        1   Elemwise{Composite{Switch(i0, (i1 / i2), i3)}}[(0, 2)]
+   5.2%    96.5%       0.545s       2.73e-04s     C     2000        2   Alloc
+   1.9%    98.4%       0.199s       1.99e-04s     C     1000        1   Elemwise{Add}[(0, 1)]
+   0.3%    98.6%       0.028s       2.79e-05s     C     1000        1   IncSubtensor{InplaceInc;int64::}
+   0.1%    98.8%       0.016s       5.18e-06s     C     3000        3   InplaceDimShuffle{x}
+   0.1%    98.9%       0.016s       1.55e-05s     C     1000        1   Join
+   0.1%    99.1%       0.012s       1.21e-05s     C     1000        1   IncSubtensor{InplaceInc;:int64:}
+   0.1%    99.1%       0.009s       9.24e-06s     C     1000        1   Elemwise{Composite{Switch(i0, (i1 * i2 * (i3 - i4)), i5)}}
+   0.1%    99.2%       0.009s       8.52e-06s     C     1000        1   Elemwise{Composite{(Switch(Cast{int8}(GE(i0, i1)), (i2 * i0), i1) + i3 + (i4 * i5 * psi((i4 * (i6 + i0))) * i0) + (i7 * i8 * i9) + (i10 * i4 * i11 * psi((i4 * i0)) * i0) + (i4 * i12 * i0) + i13)}}[(0, 0)]
+   0.1%    99.3%       0.007s       7.16e-06s     C     1000        1   Elemwise{Composite{exp((i0 * i1))}}
+   0.1%    99.4%       0.007s       3.26e-06s     C     2000        2   Elemwise{switch,no_inplace}
+   0.1%    99.4%       0.007s       6.50e-06s     C     1000        1   Elemwise{Composite{(Switch(Cast{int8}(GE(i0, i1)), (i2 * i0), i1) + i3 + (i4 * (((i5 * i6 * Composite{inv(Composite{(sqr(i0) * i0)}(i0))}(i7)) / i8) - (i9 * Composite{inv(Composite{(sqr(i0) * i0)}(i0))}(i7))) * (i10 ** i11) * inv(Composite{(sqr(i0) * i0)}(i0)) * i0))}}[(0, 0)]
+   0.1%    99.5%       0.006s       3.25e-06s     C     2000        2   Reshape{1}
+   0.1%    99.5%       0.006s       6.45e-06s     C     1000        1   Elemwise{Composite{Switch(i0, (i1 * (i2 - i3)), i4)}}
+   0.1%    99.6%       0.006s       5.96e-06s     C     1000        1   Elemwise{Composite{(i0 * ((i1 * i2) + (i3 * i4)))}}[(0, 2)]
+   ... (remaining 15 Ops account for   0.40%(0.04s) of the runtime)
 
 Apply
 ------
 &lt;% time&gt; &lt;sum %&gt; &lt;apply time&gt; &lt;time per call&gt; &lt;#call&gt; &lt;id&gt; &lt;Apply name&gt;
-   4.8%     4.8%       0.009s       8.55e-06s   1000    22   Elemwise{Composite{Switch(i0, (-log1p((i1 / i2))), i3)}}(Elemwise{Composite{Identity((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}.0, Elemwise{mul,no_inplace}.0, InplaceDimShuffle{x}.0, TensorConstant{(1,) of 0})
-   4.0%     8.8%       0.007s       7.18e-06s   1000    39   IncSubtensor{InplaceInc;int64::}(Elemwise{Composite{Switch(i0, (i1 * (i2 + ((i3 * i4 * i5 * i6) / i7))), i8)}}[(0, 6)].0, Elemwise{Composite{Switch(i0, (i1 * i2 * i3), i4)}}.0, Constant{1})
-   3.8%    12.6%       0.007s       6.69e-06s   1000    46   Join(TensorConstant{0}, Rebroadcast{1}.0, Rebroadcast{1}.0, IncSubtensor{InplaceInc;:int64:}.0)
-   3.6%    16.2%       0.006s       6.32e-06s   1000     5   Elemwise{Composite{exp((i0 * i1))}}(TensorConstant{(1,) of -2.0}, s)
-   3.2%    19.4%       0.006s       5.70e-06s   1000    29   Alloc(Elemwise{switch,no_inplace}.0, Elemwise{Composite{(i0 - Switch(LT(i1, i0), i2, i0))}}[(0, 0)].0)
-   2.9%    22.3%       0.005s       5.22e-06s   1000    36   Elemwise{Composite{Switch(i0, (i1 * (i2 + ((i3 * i4 * i5 * i6) / i7))), i8)}}[(0, 6)](Elemwise{Composite{Identity((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}.0, TensorConstant{(1,) of -2.0}, TensorConstant{(1,) of 0.5}, TensorConstant{(1,) of -0.5}, InplaceDimShuffle{x}.0, TensorConstant{[  4.05769..48400e-06]}, Elemwise{Composite{exp((i0 * i1))}}.0, Elemwise{Add}[(0, 1)].0, TensorConstant{(1,) of 0})
-   2.9%    25.2%       0.005s       5.19e-06s   1000    34   Elemwise{Composite{Switch(i0, ((i1 * i2 * i3 * i4) / i5), i6)}}(Elemwise{Composite{Identity((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}.0, TensorConstant{(1,) of 0.5}, InplaceDimShuffle{x}.0, Elemwise{Composite{exp((i0 * i1))}}.0, TensorConstant{[  4.05769..48400e-06]}, Elemwise{Add}[(0, 1)].0, TensorConstant{(1,) of 0})
-   2.9%    28.1%       0.005s       5.14e-06s   1000    18   Elemwise{Composite{Identity((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}(Elemwise{Composite{exp((i0 * i1))}}.0, TensorConstant{(1,) of 0}, Elemwise{gt,no_inplace}.0)
-   2.4%    30.5%       0.004s       4.31e-06s   1000    40   Elemwise{Composite{(i0 + Switch(Identity(GT(i1, i2)), (i3 * i1), i2) + (((i4 * i5 * psi((i4 * i6))) + (i7 * (i8 / i9)) + (i4 * i10 * psi((i4 * i9))) + (i4 * i11) + (i12 / i9)) * i1))}}[(0, 5)](TensorConstant{1.0}, Elemwise{exp,no_inplace}.0, TensorConstant{0}, TensorConstant{-0.1}, TensorConstant{0.5}, Sum{acc_dtype=float64}.0, Elemwise{add,no_inplace}.0, TensorConstant{3.141592653589793}, Sum{acc_dtype=float64}.0, nu, Sum{acc_dtype=float64}.0, Sum{
-   2.4%    32.9%       0.004s       4.23e-06s   1000    42   IncSubtensor{InplaceInc;:int64:}(IncSubtensor{InplaceInc;int64::}.0, Elemwise{Composite{Switch(i0, (i1 * i2), i3)}}[(0, 2)].0, Constant{-1})
-   2.2%    35.1%       0.004s       3.96e-06s   1000    19   Elemwise{Composite{Switch(i0, (i1 * i2 * i3), i4)}}(Elemwise{Composite{Identity(GT(inv(sqrt(i0)), i1))}}.0, TensorConstant{(1,) of -1.0}, InplaceDimShuffle{x}.0, Elemwise{sub,no_inplace}.0, TensorConstant{(1,) of 0})
-   2.2%    37.3%       0.004s       3.94e-06s   1000     7   Elemwise{sub,no_inplace}(Subtensor{int64::}.0, Subtensor{:int64:}.0)
-   2.2%    39.5%       0.004s       3.88e-06s   1000     3   Elemwise{exp,no_inplace}(sigma_log_)
-   2.2%    41.7%       0.004s       3.83e-06s   1000    20   Elemwise{Composite{Switch(i0, (i1 * sqr(i2)), i3)}}(Elemwise{Composite{Identity(GT(inv(sqrt(i0)), i1))}}.0, TensorConstant{(1,) of 0.5}, Elemwise{sub,no_inplace}.0, TensorConstant{(1,) of 0})
-   2.1%    43.7%       0.004s       3.66e-06s   1000    10   Elemwise{mul,no_inplace}(Elemwise{Composite{exp((i0 * i1))}}.0, TensorConstant{[  4.05769..48400e-06]})
-   2.0%    45.8%       0.004s       3.62e-06s   1000    38   Elemwise{Composite{(i0 + Switch(Identity(GT(i1, i2)), (i3 * i1), i2) + (i4 * (((i5 * i6 * Composite{inv(Composite{(sqr(i0) * i0)}(i0))}(i7)) / i8) - (i9 * Composite{inv(Composite{(sqr(i0) * i0)}(i0))}(i7))) * i1))}}[(0, 6)](TensorConstant{1.0}, Elemwise{exp,no_inplace}.0, TensorConstant{0}, TensorConstant{-50.0}, TensorConstant{-2.0}, TensorConstant{0.5}, Sum{acc_dtype=float64}.0, sigma, Elemwise{Composite{inv(sqr(i0))}}.0, Sum{acc_dtype=float64}.0)
-   2.0%    47.7%       0.003s       3.48e-06s   1000    25   Elemwise{Switch}(Elemwise{Composite{Identity((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}.0, TensorConstant{(1,) of 1.0}, TensorConstant{(1,) of 0.0})
-   1.9%    49.7%       0.003s       3.45e-06s   1000    24   Elemwise{switch,no_inplace}(Elemwise{Composite{Identity((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}.0, TensorConstant{(1,) of -0..9154943092}, TensorConstant{(1,) of 0})
-   1.9%    51.6%       0.003s       3.44e-06s   1000     2   Subtensor{int64::}(s, Constant{1})
-   1.9%    53.5%       0.003s       3.44e-06s   1000    35   Sum{acc_dtype=float64}(Alloc.0)
-   ... (remaining 27 Apply instances account for 46.46%(0.08s) of the runtime)
+  42.1%    42.1%       4.395s       4.40e-03s   1000    21   Elemwise{Composite{Switch(i0, (-log1p((i1 / i2))), i3)}}(Elemwise{Composite{Cast{int8}((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}.0, Elemwise{mul,no_inplace}.0, InplaceDimShuffle{x,x}.0, TensorConstant{(1, 1) of 0})
+  14.0%    56.1%       1.459s       1.46e-03s   1000    30   Elemwise{Composite{Switch(i0, ((i1 * i2 * i3 * i4) / i5), i6)}}(Elemwise{Composite{Cast{int8}((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}.0, TensorConstant{(1, 1) of 0.5}, Elemwise{add,no_inplace}.0, InplaceDimShuffle{x,0}.0, TensorConstant{[[7.637491..7877e-07]]}, Elemwise{Add}[(0, 1)].0, TensorConstant{(1, 1) of 0})
+   8.4%    64.5%       0.876s       8.76e-04s   1000    32   Sum{axis=[0], acc_dtype=float64}(Alloc.0)
+   7.7%    72.2%       0.800s       8.00e-04s   1000    37   Sum{axis=[0], acc_dtype=float64}(Elemwise{Composite{Switch(i0, (i1 / i2), i3)}}[(0, 2)].0)
+   6.2%    78.4%       0.652s       6.52e-04s   1000    12   Elemwise{mul,no_inplace}(InplaceDimShuffle{x,0}.0, TensorConstant{[[7.637491..7877e-07]]})
+   5.3%    83.8%       0.558s       5.58e-04s   1000    33   Elemwise{Composite{Switch(i0, (i1 / i2), i3)}}[(0, 2)](Elemwise{Composite{Cast{int8}((GT(i0, i1) * i2 * GT(inv(sqrt(i0)), i1)))}}.0, Elemwise{mul,no_inplace}.0, Elemwise{Add}[(0, 1)].0, TensorConstant{(1, 1) of 0})
+   5.2%    89.0%       0.539s       5.39e-04s   1000    27   Alloc(Elemwise{switch,no_inplace}.0, TensorConstant{401}, Shape_i{0}.0)
+   3.7%    92.6%       0.384s       3.84e-04s   1000    35   Sum{acc_dtype=float64}(Elemwise{Composite{Switch(i0, ((i1 * i2 * i3 * i4) / i5), i6)}}.0)
+   3.6%    96.2%       0.376s       3.76e-04s   1000    28   Sum{acc_dtype=float64}(Elemwise{Composite{Switch(i0, (-log1p((i1 / i2))), i3)}}.0)
+   1.9%    98.2%       0.199s       1.99e-04s   1000    22   Elemwise{Add}[(0, 1)](InplaceDimShuffle{x,x}.0, Elemwise{mul,no_inplace}.0)
+   0.3%    98.4%       0.028s       2.79e-05s   1000    43   IncSubtensor{InplaceInc;int64::}(Elemwise{Composite{(i0 * ((i1 * i2) + (i3 * i4)))}}[(0, 2)].0, Elemwise{Composite{Switch(i0, (i1 * i2 * (i3 - i4)), i5)}}.0, Constant{1})
+   0.1%    98.6%       0.016s       1.55e-05s   1000    48   Join(TensorConstant{0}, Rebroadcast{1}.0, Rebroadcast{1}.0, (d__logp/ds))
+   0.1%    98.7%       0.012s       1.21e-05s   1000    46   IncSubtensor{InplaceInc;:int64:}(IncSubtensor{InplaceInc;int64::}.0, Elemwise{Composite{Switch(i0, (i1 * (i2 - i3)), i4)}}.0, Constant{-1})
+   0.1%    98.8%       0.009s       9.24e-06s   1000    24   Elemwise{Composite{Switch(i0, (i1 * i2 * (i3 - i4)), i5)}}(Elemwise{Composite{Cast{int8}(GT(i0, i1))}}.0, TensorConstant{(1,) of -1.0}, InplaceDimShuffle{x}.0, Subtensor{int64::}.0, Subtensor{:int64:}.0, TensorConstant{(1,) of 0})
+   0.1%    98.9%       0.009s       8.98e-06s   1000    16   Elemwise{mul,no_inplace}(TensorConstant{(1, 1) of -0.5}, Elemwise{add,no_inplace}.0, TensorConstant{[[7.637491..7877e-07]]})
+   0.1%    98.9%       0.009s       8.52e-06s   1000    39   Elemwise{Composite{(Switch(Cast{int8}(GE(i0, i1)), (i2 * i0), i1) + i3 + (i4 * i5 * psi((i4 * (i6 + i0))) * i0) + (i7 * i8 * i9) + (i10 * i4 * i11 * psi((i4 * i0)) * i0) + (i4 * i12 * i0) + i13)}}[(0, 0)](nu, TensorConstant{0}, TensorConstant{-0.1}, TensorConstant{1.0}, TensorConstant{0.5}, Sum{acc_dtype=float64}.0, TensorConstant{1.0}, TensorConstant{3.141592653589793}, TensorConstant{-0.15915494309189535}, Sum{acc_dtype=float64}.0, TensorConstant{
+   0.1%    99.0%       0.007s       7.27e-06s   1000    14   InplaceDimShuffle{x}(Elemwise{Composite{inv(sqrt(i0))}}.0)
+   0.1%    99.1%       0.007s       7.16e-06s   1000     5   Elemwise{Composite{exp((i0 * i1))}}(TensorConstant{(1,) of -2.0}, s)
+   0.1%    99.1%       0.007s       6.50e-06s   1000    41   Elemwise{Composite{(Switch(Cast{int8}(GE(i0, i1)), (i2 * i0), i1) + i3 + (i4 * (((i5 * i6 * Composite{inv(Composite{(sqr(i0) * i0)}(i0))}(i7)) / i8) - (i9 * Composite{inv(Composite{(sqr(i0) * i0)}(i0))}(i7))) * (i10 ** i11) * inv(Composite{(sqr(i0) * i0)}(i0)) * i0))}}[(0, 0)](sigma, TensorConstant{0}, TensorConstant{-50.0}, TensorConstant{1.0}, TensorConstant{-2.0}, TensorConstant{0.5}, Sum{acc_dtype=float64}.0, Elemwise{Composite{inv(sqrt(i0))}}.0
+   0.1%    99.2%       0.006s       6.47e-06s   1000    34   Alloc(Elemwise{switch,no_inplace}.0, Elemwise{Composite{(i0 - Switch(LT(i1, i0), i2, i0))}}[(0, 0)].0)
+   ... (remaining 29 Apply instances account for 0.79%(0.08s) of the runtime)
 
 Here are tips to potentially make your code run faster
                  (if you think of new ones, suggest them on the mailing list).
@@ -444,66 +503,22 @@ We don&#39;t know if amdlibm will accelerate this scalar op. psi
 </div>
 
 
-          </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/pymc3_logo.jpg" alt="Logo"/>
-            </a></p>
-<h1 class="logo"><a href="../index.html">PyMC3</a></h1>
-
-
-
-<p class="blurb">Probabilistic Programming in Python: Bayesian Modeling and Probabilistic Machine Learning with Theano</p>
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../prob_dists.html">Probability Distributions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+<div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <a href="https://github.com/pymc-devs/pymc3"><i class="github icon large"></i></a>
+        <a href="https://twitter.com/pymc_devs"><i class="twitter icon large"></i></a>
+        <a href="https://discourse.pymc.io/"><i class="discourse icon large"></i></a>
     </div>
-    <div class="footer">
-      &copy;2017, The PyMC Development Team.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
-      
-      |
-      <a href="../_sources/notebooks/profiling.ipynb.txt"
-          rel="nofollow">Page source</a>
+    <div class="ui center aligned container">
+        <p>
+            &copy; Copyright 2018, The PyMC Development Team.
+        </p>
+        <p>
+            Created using <a href="https://sphinx-doc.org/">Sphinx</a> 2.0.1.<br />
+        </p>
     </div>
-
-    
-
-    
+</div>
   </body>
 </html>

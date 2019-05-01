@@ -168,7 +168,7 @@
    "source": [
     "## Accelerated failure time models\n",
     "\n",
-    "[Accenterated failure time models](https://en.wikipedia.org/wiki/Accelerated_failure_time_model) are the most common type of parametric survival regression models.  The fundamental quantity of survival analysis is the [survival function](https://en.wikipedia.org/wiki/Survival_function); if $T$ is the random variable representing the time to the event in question, the survival function is $S(t) = P(T > t)$.  Accelerated failure time models incorporate covariates $\\mathbf{x}$ into the survival function as\n",
+    "[Accelerated failure time models](https://en.wikipedia.org/wiki/Accelerated_failure_time_model) are the most common type of parametric survival regression models.  The fundamental quantity of survival analysis is the [survival function](https://en.wikipedia.org/wiki/Survival_function); if $T$ is the random variable representing the time to the event in question, the survival function is $S(t) = P(T > t)$.  Accelerated failure time models incorporate covariates $\\mathbf{x}$ into the survival function as\n",
     "\n",
     "$$S(t\\ |\\ \\beta, \\mathbf{x}) = S_0\\left(\\exp\\left(\\beta^{\\top} \\mathbf{x}\\right) \\cdot t\\right),$$\n",
     "\n",
@@ -647,7 +647,7 @@
    ],
    "source": [
     "with weibull_model:\n",
-    "    pp_weibull_trace = pm.sample_ppc(\n",
+    "    pp_weibull_trace = pm.sample_posterior_predictive(\n",
     "        weibull_trace, samples=1500, vars=[y_obs]\n",
     "    )"
    ]
@@ -892,7 +892,7 @@
     "cens_.set_value(cens_pp)\n",
     "\n",
     "with log_logistic_model:\n",
-    "    pp_log_logistic_trace = pm.sample_ppc(\n",
+    "    pp_log_logistic_trace = pm.sample_posterior_predictive(\n",
     "        log_logistic_trace, samples=1500, vars=[y_obs]\n",
     "    )"
    ]

@@ -1,39 +1,63 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Diagnostics &#8212; PyMC3 3.5.rc1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <title>Diagnostics &#8212; PyMC3 3.5 documentation</title>
+    <link rel="stylesheet" href="../_static/semantic-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script type="text/javascript" src="../_static/highlight.min.js"></script>
+    <script type="text/javascript" src="../_static/semantic.min.js"></script>
+    <link rel="shortcut icon" href="../_static/PyMC3.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Backends" href="backends.html" />
-    <link rel="prev" title="Stats" href="stats.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+<script>hljs.initHighlightingOnLoad();</script>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+
 
   </head><body>
-  
+<div class="ui vertical center aligned">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
+    <div class="ui container">
+        <div class="ui large secondary pointing menu">
+            <a class="item" href="/">
+                <img class="ui bottom aligned tiny image" src="https://cdn.rawgit.com/pymc-devs/pymc3/master/docs/logos/svg/PyMC3_banner.svg" />
+            </a>
+             <a href="../nb_tutorials/index.html" class="item">Tutorials</a> <a href="../nb_examples/index.html" class="item">Examples</a> <a href="../learn.html" class="item">Books + Videos</a> <a href="../api.html" class="item">API</a> <a href="../developer_guide.html" class="item">Developer Guide</a> <a href="../history.html" class="item">About PyMC3</a>
             
+            <div class="right menu">
+                <div class="item">
+                    <form class="ui icon input" action="../search.html" method="get">
+                        <input type="text" placeholder="Search..." name="q" />
+                        <i class="search link icon"></i>
+                    </form>
+                </div>
+                <a class="item" href="https://github.com/pymc-devs/pymc3"><i class="github blue icon large"></i></a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="ui container" role="main">
+    
+
+    <div class="ui vertical segment">
+        
   <div class="section" id="module-pymc3.diagnostics">
 <span id="diagnostics"></span><h1>Diagnostics<a class="headerlink" href="#module-pymc3.diagnostics" title="Permalink to this headline">¶</a></h1>
 <p>Convergence diagnostics and model validation</p>
@@ -45,25 +69,28 @@
 series. x is divided into a number of segments for which this difference is
 computed. If the series is converged, this score should oscillate between
 -1 and 1.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x</strong> (<em>array-like</em>) – The trace of some stochastic parameter.</li>
-<li><strong>first</strong> (<em>float</em>) – The fraction of series at the beginning of the trace.</li>
-<li><strong>last</strong> (<em>float</em>) – The fraction of series at the end to be compared with the section
-at the beginning.</li>
-<li><strong>intervals</strong> (<em>int</em>) – The number of segments.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>scores</strong> (<em>list [[]]</em>) – Return a list of [i, score], where i is the starting index for each
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>x</strong><span class="classifier">array-like</span></dt><dd><p>The trace of some stochastic parameter.</p>
+</dd>
+<dt><strong>first</strong><span class="classifier">float</span></dt><dd><p>The fraction of series at the beginning of the trace.</p>
+</dd>
+<dt><strong>last</strong><span class="classifier">float</span></dt><dd><p>The fraction of series at the end to be compared with the section
+at the beginning.</p>
+</dd>
+<dt><strong>intervals</strong><span class="classifier">int</span></dt><dd><p>The number of segments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>scores</strong><span class="classifier">list [[]]</span></dt><dd><p>Return a list of [i, score], where i is the starting index for each
 interval and score the Geweke score on the interval.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Notes</p>
 <p>The Geweke score on some series x is computed by:</p>
 <blockquote>
@@ -87,25 +114,27 @@ If convergence has been achieved, the between-chain and within-chain
 variances should be identical. To be most effective in detecting evidence
 for nonconvergence, each chain should have been initialized to starting
 values that are dispersed relative to the target distribution.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>mtrace</strong> (<em>MultiTrace</em><em> or </em><em>trace object</em>) – A MultiTrace object containing parallel traces (minimum 2)
-of one or more stochastic parameters.</li>
-<li><strong>varnames</strong> (<em>list</em>) – Names of variables to include in the rhat report</li>
-<li><strong>include_transformed</strong> (<em>bool</em>) – Flag for reporting automatically transformed variables in addition
-to original variables (defaults to False).</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>Rhat</strong> (<em>dict of floats (MultiTrace) or float (trace object)</em>) – Returns dictionary of the potential scale reduction
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>mtrace</strong><span class="classifier">MultiTrace or trace object</span></dt><dd><p>A MultiTrace object containing parallel traces (minimum 2)
+of one or more stochastic parameters.</p>
+</dd>
+<dt><strong>varnames</strong><span class="classifier">list</span></dt><dd><p>Names of variables to include in the rhat report</p>
+</dd>
+<dt><strong>include_transformed</strong><span class="classifier">bool</span></dt><dd><p>Flag for reporting automatically transformed variables in addition
+to original variables (defaults to False).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>Rhat</strong><span class="classifier">dict of floats (MultiTrace) or float (trace object)</span></dt><dd><p>Returns dictionary of the potential scale reduction
 factors, <span class="math notranslate nohighlight">\(\hat{R}\)</span></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Notes</p>
 <p>The diagnostic is computed by:</p>
 <blockquote>
@@ -126,24 +155,26 @@ Gelman and Rubin (1992)</p>
 <dt id="pymc3.diagnostics.effective_n">
 <code class="descclassname">pymc3.diagnostics.</code><code class="descname">effective_n</code><span class="sig-paren">(</span><em>mtrace</em>, <em>varnames=None</em>, <em>include_transformed=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.diagnostics.effective_n" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns estimate of the effective sample size of a set of traces.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>mtrace</strong> (<em>MultiTrace</em><em> or </em><em>trace object</em>) – A MultiTrace object containing parallel traces (minimum 2)
-of one or more stochastic parameters.</li>
-<li><strong>varnames</strong> (<em>list</em>) – Names of variables to include in the effective_n report</li>
-<li><strong>include_transformed</strong> (<em>bool</em>) – Flag for reporting automatically transformed variables in addition
-to original variables (defaults to False).</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>n_eff</strong> (<em>dictionary of floats (MultiTrace) or float (trace object)</em>) – Return the effective sample size, <span class="math notranslate nohighlight">\(\hat{n}_{eff}\)</span></p>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>mtrace</strong><span class="classifier">MultiTrace or trace object</span></dt><dd><p>A MultiTrace object containing parallel traces (minimum 2)
+of one or more stochastic parameters.</p>
+</dd>
+<dt><strong>varnames</strong><span class="classifier">list</span></dt><dd><p>Names of variables to include in the effective_n report</p>
+</dd>
+<dt><strong>include_transformed</strong><span class="classifier">bool</span></dt><dd><p>Flag for reporting automatically transformed variables in addition
+to original variables (defaults to False).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>n_eff</strong><span class="classifier">dictionary of floats (MultiTrace) or float (trace object)</span></dt><dd><p>Return the effective sample size, <span class="math notranslate nohighlight">\(\hat{n}_{eff}\)</span></p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Notes</p>
 <p>The diagnostic is computed by:</p>
 <div class="math notranslate nohighlight">
@@ -160,82 +191,22 @@ monotone sequence criterion (Geyer, 1992; Geyer, 2011).</p>
 </div>
 
 
-          </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/pymc3_logo.jpg" alt="Logo"/>
-            </a></p>
-<h1 class="logo"><a href="../index.html">PyMC3</a></h1>
-
-
-
-<p class="blurb">Probabilistic Programming in Python: Bayesian Modeling and Probabilistic Machine Learning with Theano</p>
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../prob_dists.html">Probability Distributions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="distributions.html">Distributions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bounds.html">Bounded Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="inference.html">Inference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="glm.html">Generalized Linear Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gp.html">GP Implementations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gp.html#mean-functions">Mean Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gp.html#covariance-functions">Covariance Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plots.html">Plots</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stats.html">Stats</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Diagnostics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="backends.html">Backends</a></li>
-<li class="toctree-l2"><a class="reference internal" href="math.html">Math</a></li>
-<li class="toctree-l2"><a class="reference internal" href="data.html">Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model.html">Model</a></li>
-</ul>
-</li>
-</ul>
-
-
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+<div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <a href="https://github.com/pymc-devs/pymc3"><i class="github icon large"></i></a>
+        <a href="https://twitter.com/pymc_devs"><i class="twitter icon large"></i></a>
+        <a href="https://discourse.pymc.io/"><i class="discourse icon large"></i></a>
     </div>
-    <div class="footer">
-      &copy;2017, The PyMC Development Team.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
-      
-      |
-      <a href="../_sources/api/diagnostics.rst.txt"
-          rel="nofollow">Page source</a>
+    <div class="ui center aligned container">
+        <p>
+            &copy; Copyright 2018, The PyMC Development Team.
+        </p>
+        <p>
+            Created using <a href="https://sphinx-doc.org/">Sphinx</a> 2.0.1.<br />
+        </p>
     </div>
-
-    
-
-    
+</div>
   </body>
 </html>

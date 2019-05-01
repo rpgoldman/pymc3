@@ -1,0 +1,10 @@
+
+.. _notebook_gallery:
+
+.. title:: examples_notebooks
+
+.. raw:: html
+
+    <h1 class="ui header">Example Notebooks</h1>
+    <div id="gallery" class="ui vertical segment">
+    </div>

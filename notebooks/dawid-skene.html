@@ -1,39 +1,63 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>The Dawid-Skene model with priors &#8212; PyMC3 3.5.rc1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <title>The Dawid-Skene model with priors &#8212; PyMC3 3.5 documentation</title>
+    <link rel="stylesheet" href="../_static/semantic-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script type="text/javascript" src="../_static/highlight.min.js"></script>
+    <script type="text/javascript" src="../_static/semantic.min.js"></script>
+    <link rel="shortcut icon" href="../_static/PyMC3.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="GLM: Linear regression" href="GLM-linear.html" />
-    <link rel="prev" title="A Hierarchical model for Rugby prediction" href="rugby_analytics.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+<script>hljs.initHighlightingOnLoad();</script>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+
 
   </head><body>
-  
+<div class="ui vertical center aligned">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
+    <div class="ui container">
+        <div class="ui large secondary pointing menu">
+            <a class="item" href="/">
+                <img class="ui bottom aligned tiny image" src="https://cdn.rawgit.com/pymc-devs/pymc3/master/docs/logos/svg/PyMC3_banner.svg" />
+            </a>
+             <a href="../nb_tutorials/index.html" class="item">Tutorials</a> <a href="../nb_examples/index.html" class="item">Examples</a> <a href="../learn.html" class="item">Books + Videos</a> <a href="../api.html" class="item">API</a> <a href="../developer_guide.html" class="item">Developer Guide</a> <a href="../history.html" class="item">About PyMC3</a>
             
+            <div class="right menu">
+                <div class="item">
+                    <form class="ui icon input" action="../search.html" method="get">
+                        <input type="text" placeholder="Search..." name="q" />
+                        <i class="search link icon"></i>
+                    </form>
+                </div>
+                <a class="item" href="https://github.com/pymc-devs/pymc3"><i class="github blue icon large"></i></a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="ui container" role="main">
+    
+
+    <div class="ui vertical segment">
+        
   
 <style>
 /* CSS for nbsphinx extension */
@@ -89,18 +113,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 7ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -140,9 +164,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -150,7 +174,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -199,29 +223,51 @@ div.nboutput div.output_area.stderr {
 
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
 </style>
 <div class="section" id="The-Dawid-Skene-model-with-priors">
 <h1>The Dawid-Skene model with priors<a class="headerlink" href="#The-Dawid-Skene-model-with-priors" title="Permalink to this headline">¶</a></h1>
-<p>The Dawid-Skene model (1979) is perhaps one of the first models to
-discover true item states/effects from multiple noisy measurements.
-Since then, there have been multiple models that improve over the basic
-model. This notebook covers the Dawid-Skene model which has been
-enhanced with priors.</p>
-<p>The model follows implementation in Rebecca J. Passonneau, Bob
-Carpenter, “The Benefits of a Model of Annotation”, TACL, 2014.</p>
+<p>The Dawid-Skene model (1979) is perhaps one of the first models to discover true item states/effects from multiple noisy measurements. Since then, there have been multiple models that improve over the basic model. This notebook covers the Dawid-Skene model which has been enhanced with priors.</p>
+<p>The model follows implementation in Rebecca J. Passonneau, Bob Carpenter, “The Benefits of a Model of Annotation”, TACL, 2014.</p>
 <div class="section" id="Introduction">
 <h2>Introduction<a class="headerlink" href="#Introduction" title="Permalink to this headline">¶</a></h2>
-<p>In healthcare, a number of patients can receive potentially noisy
-judgments from several professionals. In computer science, work items of
-different difficulty get labeled by multiple annotators of different
-skill. In this notebook we will attempt to recover true work item labels
-from noisy annotator input.</p>
-<p>The primary goal is to recover the true item states. The secondary goal
-is to estimate various additional factors of potential interest. We will
-use probabilistic programming approach in attempt to solve the problem.</p>
+<p>In healthcare, a number of patients can receive potentially noisy judgments from several professionals. In computer science, work items of different difficulty get labeled by multiple annotators of different skill. In this notebook we will attempt to recover true work item labels from noisy annotator input.</p>
+<p>The primary goal is to recover the true item states. The secondary goal is to estimate various additional factors of potential interest. We will use probabilistic programming approach in attempt to solve the problem.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -238,17 +284,10 @@ use probabilistic programming approach in attempt to solve the problem.</p>
 </div>
 <div class="section" id="Data">
 <h2>Data<a class="headerlink" href="#Data" title="Permalink to this headline">¶</a></h2>
-<p>Load also the data matrix with following dimensions: work items,
-annotators, categories. The data for this notebook has been taken from
-<a class="reference external" href="https://github.com/abhishekmalali/questioning-strategy-classification/tree/master/data">https://github.com/abhishekmalali/questioning-strategy-classification/tree/master/data</a></p>
-<p>Note: The data in this notebook is organized in matrix where each work
-item gets exactly one response for each work item. This is often not
-possible in practice. The discussed model accepts triplets of data:
-(work item, annotator, response) which relaxes the constraint to have
-all observations.</p>
+<p>Load also the data matrix with following dimensions: work items, annotators, categories. The data for this notebook has been taken from <a class="reference external" href="https://github.com/abhishekmalali/questioning-strategy-classification/tree/master/data">https://github.com/abhishekmalali/questioning-strategy-classification/tree/master/data</a></p>
+<p>Note: The data in this notebook is organized in matrix where each work item gets exactly one response for each work item. This is often not possible in practice. The discussed model accepts triplets of data: (work item, annotator, response) which relaxes the constraint to have all observations.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -262,15 +301,10 @@ all observations.</p>
 </pre></div>
 </div>
 </div>
-<p>Let’s create the necessary data structures. In particular, we will
-convert the data cube into triplet format. One data point with index n
-allows to access the following information: jj[n] as annotator ID,
-providing his/her vote y[n] for item ii[n].</p>
-<p>At the same time, we compute the majority vote estimate. This will serve
-both as a baseline and as initialization for our model.</p>
+<p>Let’s create the necessary data structures. In particular, we will convert the data cube into triplet format. One data point with index n allows to access the following information: jj[n] as annotator ID, providing his/her vote y[n] for item ii[n].</p>
+<p>At the same time, we compute the majority vote estimate. This will serve both as a baseline and as initialization for our model.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -298,14 +332,9 @@ both as a baseline and as initialization for our model.</p>
 </pre></div>
 </div>
 </div>
-<p>Comparing true item labels and majority vote estimated labels one by one
-is tedious. Computing accuracy gives a single performance metric but
-does not reveal where the mistakes are made (e.g. which categories tend
-to be confused) and by how much. A confusion matrix with majority vote
-estimates will serve as our baseline:</p>
+<p>Comparing true item labels and majority vote estimated labels one by one is tedious. Computing accuracy gives a single performance metric but does not reveal where the mistakes are made (e.g. which categories tend to be confused) and by how much. A confusion matrix with majority vote estimates will serve as our baseline:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -329,23 +358,11 @@ Majority vote estimate of true category:
 </div>
 <div class="section" id="Model">
 <h2>Model<a class="headerlink" href="#Model" title="Permalink to this headline">¶</a></h2>
-<p>With the data loaded and baseline set, we can now start building the
-Dawid-Skene model. We will start by setting the top level priors: class
-prevalence and annotator-specific confusion matrices. The two priors are
-of secondary interest.</p>
-<p>The class prevalence prior tells the proportion of categories in the
-data. Since we are completely ignorant about category proportions, it is
-meaningful to set a flat distribution.</p>
-<p>The annotator-specific confusion matrices will “describe” every
-annotator. Notably, a confusion matrix for an annotator j tells us which
-categories the annotator is expert (very high value on diagonal) and
-where his expertise is limited (relatively small value on diagonal and
-relatively big values off-diagonal). We will initialize confusion
-matrices with uniform values with slightly dominant diagonal – our
-annotators are expected to provide meaningful labels.</p>
+<p>With the data loaded and baseline set, we can now start building the Dawid-Skene model. We will start by setting the top level priors: class prevalence and annotator-specific confusion matrices. The two priors are of secondary interest.</p>
+<p>The class prevalence prior tells the proportion of categories in the data. Since we are completely ignorant about category proportions, it is meaningful to set a flat distribution.</p>
+<p>The annotator-specific confusion matrices will “describe” every annotator. Notably, a confusion matrix for an annotator j tells us which categories the annotator is expert (very high value on diagonal) and where his expertise is limited (relatively small value on diagonal and relatively big values off-diagonal). We will initialize confusion matrices with uniform values with slightly dominant diagonal – our annotators are expected to provide meaningful labels.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -358,22 +375,12 @@ annotators are expected to provide meaningful labels.</p>
 </div>
 </div>
 <p>Now, the interesting part – the definition of the model.</p>
-<p>First, we will need two random variables to encode class prevalence (pi)
-and annotator confusion matrices (theta). The two random variables can
-be naturally modeled with Dirichlet.</p>
-<p>Second, we will define a variable for the true/hidden category for each
-work item. The Categorical distribution fits well our purpose to model a
-work item with K possible states.</p>
-<p>Finally, a special variable for observed data brings together all random
-variables. This is the variable (Categorical) where the data is
-injected. The parametrization of the variable needs to be explained: the
-observation y[n] is generated according to Categorical distribution by
-worker y[n] for item ii[n], where the true label is z[ ii[n] ].</p>
-<p>The following block will build the model only but won’t do any
-inference.</p>
+<p>First, we will need two random variables to encode class prevalence (pi) and annotator confusion matrices (theta). The two random variables can be naturally modeled with Dirichlet.</p>
+<p>Second, we will define a variable for the true/hidden category for each work item. The Categorical distribution fits well our purpose to model a work item with K possible states.</p>
+<p>Finally, a special variable for observed data brings together all random variables. This is the variable (Categorical) where the data is injected. The parametrization of the variable needs to be explained: the observation y[n] is generated according to Categorical distribution by worker y[n] for item ii[n], where the true label is z[ ii[n] ].</p>
+<p>The following block will build the model only but won’t do any inference.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -387,19 +394,10 @@ inference.</p>
 </pre></div>
 </div>
 </div>
-<p>With model defined, we also need to set up the inference machinery. The
-variables of interest (pi, theta and z) will be divided in two groups:
-continuous (pi,theta) and discrete (z). The step methods are different:
-Metropolis or NUTS for former and CategoricalGibbsMetropolis for latter.</p>
-<p>Note: Running the following block will perform inference for our
-variables of interest and store results in the trace variable. The trace
-variable will contain a wealth of information that will be useful to
-perfom diagnostics and get posteriors for our three hidden variables –
-class prevalence, annotator confusion matrices and true categories for
-all work items.</p>
+<p>With model defined, we also need to set up the inference machinery. The variables of interest (pi, theta and z) will be divided in two groups: continuous (pi,theta) and discrete (z). The step methods are different: Metropolis or NUTS for former and CategoricalGibbsMetropolis for latter.</p>
+<p>Note: Running the following block will perform inference for our variables of interest and store results in the trace variable. The trace variable will contain a wealth of information that will be useful to perfom diagnostics and get posteriors for our three hidden variables – class prevalence, annotator confusion matrices and true categories for all work items.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -413,7 +411,7 @@ all work items.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 100%|██████████| 5000/5000 [28:06&lt;00:00,  4.73it/s]
 </pre></div></div>
@@ -421,17 +419,10 @@ all work items.</p>
 </div>
 <div class="section" id="Results">
 <h2>Results<a class="headerlink" href="#Results" title="Permalink to this headline">¶</a></h2>
-<p>Let’s get a global overview of the trace. On the left side of the
-figure, posterior distributions; on the right - individual samples. The
-samples subplots should show “uniform band of noise” as the sampler
-locks around the true variable state. It is important to not see any
-jumps, switches or steady increase/decrease.</p>
-<p>Besides the class prevalence variable (“pi”), the categories and theta
-posteriors, the plots are of little utility. We will explore other
-variables in other form.</p>
+<p>Let’s get a global overview of the trace. On the left side of the figure, posterior distributions; on the right - individual samples. The samples subplots should show “uniform band of noise” as the sampler locks around the true variable state. It is important to not see any jumps, switches or steady increase/decrease.</p>
+<p>Besides the class prevalence variable (“pi”), the categories and theta posteriors, the plots are of little utility. We will explore other variables in other form.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -440,8 +431,7 @@ variables in other form.</p>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -457,12 +447,9 @@ variables in other form.</p>
 <img alt="../_images/notebooks_dawid-skene_16_1.png" src="../_images/notebooks_dawid-skene_16_1.png" />
 </div>
 </div>
-<p>We will take 1000 last samples from posterior for random variable (“z”).
-The majority vote from 1000 samples will give us our estimate of true
-item labels.</p>
+<p>We will take 1000 last samples from posterior for random variable (“z”). The majority vote from 1000 samples will give us our estimate of true item labels.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -474,12 +461,9 @@ item labels.</p>
 </pre></div>
 </div>
 </div>
-<p>The confusion matrix tells us how good our estimate is with respect to
-the ground truth. Compare it to the baseline: a better estimate has less
-off diagonal values (and more on main diagonal).</p>
+<p>The confusion matrix tells us how good our estimate is with respect to the ground truth. Compare it to the baseline: a better estimate has less off diagonal values (and more on main diagonal).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -500,12 +484,9 @@ Dawid-Skene estimate of true category:
  [  2   1   1 121]]
 </pre></div></div>
 </div>
-<p>Finally, let’s plot the confusion matrices of annotators. Notice the
-dominant diagonal nature of matrices – measure of annotator
-performance. Compare the first annotator (j=0) and the last one (j=4).</p>
+<p>Finally, let’s plot the confusion matrices of annotators. Notice the dominant diagonal nature of matrices – measure of annotator performance. Compare the first annotator (j=0) and the last one (j=4).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -553,84 +534,22 @@ Annotator j=4
 </div>
 
 
-          </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/pymc3_logo.jpg" alt="Logo"/>
-            </a></p>
-<h1 class="logo"><a href="../index.html">PyMC3</a></h1>
-
-
-
-<p class="blurb">Probabilistic Programming in Python: Bayesian Modeling and Probabilistic Machine Learning with Theano</p>
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../prob_dists.html">Probability Distributions</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#howto">Howto</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#applied">Applied</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="BEST.html">Bayesian Estimation Supersedes the T-Test</a></li>
-<li class="toctree-l3"><a class="reference internal" href="multilevel_modeling.html">A Primer on Bayesian Methods for Multilevel Modeling</a></li>
-<li class="toctree-l3"><a class="reference internal" href="stochastic_volatility.html">Stochastic Volatility model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="probabilistic_matrix_factorization.html">Probabilistic Matrix Factorization for Making Personalized Recommendations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rugby_analytics.html">A Hierarchical model for Rugby prediction</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">The Dawid-Skene model with priors</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#glm">GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#survival-analysis">Survival Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#gaussian-processes">Gaussian Processes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#mixture-models">Mixture Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#variational-inference">Variational Inference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#stochastic-gradient">Stochastic Gradient</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+<div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <a href="https://github.com/pymc-devs/pymc3"><i class="github icon large"></i></a>
+        <a href="https://twitter.com/pymc_devs"><i class="twitter icon large"></i></a>
+        <a href="https://discourse.pymc.io/"><i class="discourse icon large"></i></a>
     </div>
-    <div class="footer">
-      &copy;2017, The PyMC Development Team.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
-      
-      |
-      <a href="../_sources/notebooks/dawid-skene.ipynb.txt"
-          rel="nofollow">Page source</a>
+    <div class="ui center aligned container">
+        <p>
+            &copy; Copyright 2018, The PyMC Development Team.
+        </p>
+        <p>
+            Created using <a href="https://sphinx-doc.org/">Sphinx</a> 2.0.1.<br />
+        </p>
     </div>
-
-    
-
-    
+</div>
   </body>
 </html>

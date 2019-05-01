@@ -1,39 +1,63 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Gaussian Process Regression and Classification with Elliptical Slice Sampling &#8212; PyMC3 3.5.rc1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <title>Gaussian Process Regression and Classification with Elliptical Slice Sampling &#8212; PyMC3 3.5 documentation</title>
+    <link rel="stylesheet" href="../_static/semantic-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script type="text/javascript" src="../_static/highlight.min.js"></script>
+    <script type="text/javascript" src="../_static/semantic.min.js"></script>
+    <link rel="shortcut icon" href="../_static/PyMC3.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Gaussian Process (GP) smoothing" href="GP-smoothing.html" />
-    <link rel="prev" title="Example: CO\(_2\) at Mauna Loa" href="GP-MaunaLoa.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+<script>hljs.initHighlightingOnLoad();</script>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+
 
   </head><body>
-  
+<div class="ui vertical center aligned">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
+    <div class="ui container">
+        <div class="ui large secondary pointing menu">
+            <a class="item" href="/">
+                <img class="ui bottom aligned tiny image" src="https://cdn.rawgit.com/pymc-devs/pymc3/master/docs/logos/svg/PyMC3_banner.svg" />
+            </a>
+             <a href="../nb_tutorials/index.html" class="item">Tutorials</a> <a href="../nb_examples/index.html" class="item">Examples</a> <a href="../learn.html" class="item">Books + Videos</a> <a href="../api.html" class="item">API</a> <a href="../developer_guide.html" class="item">Developer Guide</a> <a href="../history.html" class="item">About PyMC3</a>
             
+            <div class="right menu">
+                <div class="item">
+                    <form class="ui icon input" action="../search.html" method="get">
+                        <input type="text" placeholder="Search..." name="q" />
+                        <i class="search link icon"></i>
+                    </form>
+                </div>
+                <a class="item" href="https://github.com/pymc-devs/pymc3"><i class="github blue icon large"></i></a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="ui container" role="main">
+    
+
+    <div class="ui vertical segment">
+        
   
 <style>
 /* CSS for nbsphinx extension */
@@ -89,18 +113,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 7ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -140,9 +164,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -150,7 +174,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -199,26 +223,48 @@ div.nboutput div.output_area.stderr {
 
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
 </style>
 <div class="section" id="Gaussian-Process-Regression-and-Classification-with-Elliptical-Slice-Sampling">
 <h1>Gaussian Process Regression and Classification with Elliptical Slice Sampling<a class="headerlink" href="#Gaussian-Process-Regression-and-Classification-with-Elliptical-Slice-Sampling" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://arxiv.org/abs/1001.0175">Elliptical slice sampling</a> is a
-variant of slice sampling that allows sampling from distributions with
-multivariate Gaussian prior and arbitrary likelihood. It is generally
-about as fast as regular slice sampling, mixes well even when the prior
-covariance might otherwise induce a strong dependence between samples,
-and does not depend on any tuning parameters. It can be useful when
-working with Gaussian processes, in which a multivariate Gaussian prior
-is used to impose a covariance structure on some latent function.</p>
-<p>This notebook provides examples of how to use PyMC3’s elliptical slice
-sampler to perform Gaussian process regression and classification. Since
-the focus of these examples are to show how to of elliptical slice
-sampling to sample from the posterior rather than to show how to fit the
-covariance kernel parameters, we assume that the kernel parameters are
-known.</p>
+<p><a class="reference external" href="https://arxiv.org/abs/1001.0175">Elliptical slice sampling</a> is a variant of slice sampling that allows sampling from distributions with multivariate Gaussian prior and arbitrary likelihood. It is generally about as fast as regular slice sampling, mixes well even when the prior covariance might otherwise induce a strong dependence between samples, and does not depend on any tuning parameters. It can be useful when working with Gaussian processes, in which a multivariate Gaussian prior is used
+to impose a covariance structure on some latent function.</p>
+<p>This notebook provides examples of how to use PyMC3’s elliptical slice sampler to perform Gaussian process regression and classification. Since the focus of these examples are to show how to of elliptical slice sampling to sample from the posterior rather than to show how to fit the covariance kernel parameters, we assume that the kernel parameters are known.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -236,22 +282,16 @@ known.</p>
 </div>
 <div class="section" id="Gaussian-Process-Regression">
 <h2>Gaussian Process Regression<a class="headerlink" href="#Gaussian-Process-Regression" title="Permalink to this headline">¶</a></h2>
-<p>In Gaussian process regression, the prior <span class="math notranslate nohighlight">\(f\)</span> is a multivariate
-normal with mean zero and covariance matrix <span class="math notranslate nohighlight">\(K\)</span>, and the
-likelihood is a factored normal (or, equivalently, a multivariate normal
-with diagonal covariance) with mean <span class="math notranslate nohighlight">\(f\)</span> and variance
-<span class="math notranslate nohighlight">\(\sigma^2_n\)</span>:</p>
-<div class="math notranslate nohighlight">
-\begin{equation}
+<p>In Gaussian process regression, the prior <span class="math notranslate nohighlight">\(f\)</span> is a multivariate normal with mean zero and covariance matrix <span class="math notranslate nohighlight">\(K\)</span>, and the likelihood is a factored normal (or, equivalently, a multivariate normal with diagonal covariance) with mean <span class="math notranslate nohighlight">\(f\)</span> and variance <span class="math notranslate nohighlight">\(\sigma^2_n\)</span>:</p>
+<p><span class="math">\begin{equation}
 f \sim N(\boldsymbol{0}, K) \\
 L(y | f, \sigma^2_n) = \Pi_n N(f_n, \sigma^2_n)
-\end{equation}</div><div class="section" id="Generate-some-example-data">
+\end{equation}</span></p>
+<div class="section" id="Generate-some-example-data">
 <h3>Generate some example data<a class="headerlink" href="#Generate-some-example-data" title="Permalink to this headline">¶</a></h3>
-<p>We generate some data from Gaussian process at 30 random points in
-<span class="math notranslate nohighlight">\([0, 3]\)</span> and interpolate the function’s value in this interval.</p>
+<p>We generate some data from Gaussian process at 30 random points in <span class="math notranslate nohighlight">\([0, 3]\)</span> and interpolate the function’s value in this interval.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -286,15 +326,9 @@ L(y | f, \sigma^2_n) = \Pi_n N(f_n, \sigma^2_n)
 </div>
 <div class="section" id="Examine-actual-posterior-distribution">
 <h3>Examine actual posterior distribution<a class="headerlink" href="#Examine-actual-posterior-distribution" title="Permalink to this headline">¶</a></h3>
-<p>The posterior is analytically tractable so we can compute the posterior
-mean explicitly. Rather than computing the inverse of the covariance
-matrix <code class="docutils literal notranslate"><span class="pre">K</span></code>, we use the numerically stable calculation described
-Algorithm 2.1 in the book “Gaussian Processes for Machine Learning”
-(2006) by Rasmussen and Williams, which is <a class="reference external" href="http://www.gaussianprocess.org/gpml/">available online for
-free</a>.</p>
+<p>The posterior is analytically tractable so we can compute the posterior mean explicitly. Rather than computing the inverse of the covariance matrix <code class="docutils literal notranslate"><span class="pre">K</span></code>, we use the numerically stable calculation described Algorithm 2.1 in the book “Gaussian Processes for Machine Learning” (2006) by Rasmussen and Williams, which is <a class="reference external" href="http://www.gaussianprocess.org/gpml/">available online for free</a>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -325,8 +359,7 @@ free</a>.</p>
 <div class="section" id="Sample-from-posterior-distribution">
 <h3>Sample from posterior distribution<a class="headerlink" href="#Sample-from-posterior-distribution" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -351,12 +384,9 @@ free</a>.</p>
 </div>
 <div class="section" id="Evaluate-posterior-fit">
 <h3>Evaluate posterior fit<a class="headerlink" href="#Evaluate-posterior-fit" title="Permalink to this headline">¶</a></h3>
-<p>The posterior samples are consistent with the analytically derived
-posterior and behaves how one would expect–narrower near areas with lots
-of observations and wider in areas with more uncertainty.</p>
+<p>The posterior samples are consistent with the analytically derived posterior and behaves how one would expect–narrower near areas with lots of observations and wider in areas with more uncertainty.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -382,21 +412,15 @@ of observations and wider in areas with more uncertainty.</p>
 </div>
 <div class="section" id="Gaussian-Process-Classification">
 <h2>Gaussian Process Classification<a class="headerlink" href="#Gaussian-Process-Classification" title="Permalink to this headline">¶</a></h2>
-<p>In Gaussian process classification, the likelihood is not normal and
-thus the posterior is not analytically tractable. The prior is again a
-multivariate normal with covariance matrix <span class="math notranslate nohighlight">\(K\)</span>, and the likelihood
-is the standard likelihood for logistic regression:</p>
-<div class="math notranslate nohighlight">
-\begin{equation}
+<p>In Gaussian process classification, the likelihood is not normal and thus the posterior is not analytically tractable. The prior is again a multivariate normal with covariance matrix <span class="math notranslate nohighlight">\(K\)</span>, and the likelihood is the standard likelihood for logistic regression:</p>
+<p><span class="math">\begin{equation}
 L(y | f) = \Pi_n \sigma(y_n, f_n)
-\end{equation}</div><div class="section" id="Generate-some-example-data">
+\end{equation}</span></p>
+<div class="section" id="Generate-some-example-data">
 <h3>Generate some example data<a class="headerlink" href="#Generate-some-example-data" title="Permalink to this headline">¶</a></h3>
-<p>We generate random samples from a Gaussian process, assign any points
-greater than zero to a “positive” class, and assign all other points to
-a “negative” class.</p>
+<p>We generate random samples from a Gaussian process, assign any points greater than zero to a “positive” class, and assign all other points to a “negative” class.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -410,8 +434,7 @@ a “negative” class.</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -435,8 +458,7 @@ a “negative” class.</p>
 <div class="section" id="Sample-from-posterior-distribution">
 <h3>Sample from posterior distribution<a class="headerlink" href="#Sample-from-posterior-distribution" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -461,11 +483,9 @@ a “negative” class.</p>
 </div>
 <div class="section" id="Evaluate-posterior-fit">
 <h3>Evaluate posterior fit<a class="headerlink" href="#Evaluate-posterior-fit" title="Permalink to this headline">¶</a></h3>
-<p>The posterior looks good, though the fit is, unsurprisingly, erratic
-outside the range of the observed data.</p>
+<p>The posterior looks good, though the fit is, unsurprisingly, erratic outside the range of the observed data.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -490,86 +510,22 @@ outside the range of the observed data.</p>
 </div>
 
 
-          </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/pymc3_logo.jpg" alt="Logo"/>
-            </a></p>
-<h1 class="logo"><a href="../index.html">PyMC3</a></h1>
-
-
-
-<p class="blurb">Probabilistic Programming in Python: Bayesian Modeling and Probabilistic Machine Learning with Theano</p>
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../prob_dists.html">Probability Distributions</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#howto">Howto</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#applied">Applied</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#glm">GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#survival-analysis">Survival Analysis</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#gaussian-processes">Gaussian Processes</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="GP-MeansAndCovs.html">Mean and Covariance Functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="GP-Marginal.html">Marginal Likelihood Implementation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="GP-Latent.html">Latent Variable Implementation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="GP-SparseApprox.html">Sparse Approximations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="GP-TProcess.html">Student-t Process</a></li>
-<li class="toctree-l3"><a class="reference internal" href="GP-MaunaLoa.html">Example: CO<span class="math notranslate nohighlight">\(_2\)</span> at Mauna Loa</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Gaussian Process Regression and Classification with Elliptical Slice Sampling</a></li>
-<li class="toctree-l3"><a class="reference internal" href="GP-smoothing.html">Gaussian Process (GP) smoothing</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#mixture-models">Mixture Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#variational-inference">Variational Inference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#stochastic-gradient">Stochastic Gradient</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+<div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <a href="https://github.com/pymc-devs/pymc3"><i class="github icon large"></i></a>
+        <a href="https://twitter.com/pymc_devs"><i class="twitter icon large"></i></a>
+        <a href="https://discourse.pymc.io/"><i class="discourse icon large"></i></a>
     </div>
-    <div class="footer">
-      &copy;2017, The PyMC Development Team.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
-      
-      |
-      <a href="../_sources/notebooks/GP-slice-sampling.ipynb.txt"
-          rel="nofollow">Page source</a>
+    <div class="ui center aligned container">
+        <p>
+            &copy; Copyright 2018, The PyMC Development Team.
+        </p>
+        <p>
+            Created using <a href="https://sphinx-doc.org/">Sphinx</a> 2.0.1.<br />
+        </p>
     </div>
-
-    
-
-    
+</div>
   </body>
 </html>

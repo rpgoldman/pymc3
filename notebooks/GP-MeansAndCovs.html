@@ -1,39 +1,63 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Mean and Covariance Functions &#8212; PyMC3 3.5.rc1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <title>Mean and Covariance Functions &#8212; PyMC3 3.5 documentation</title>
+    <link rel="stylesheet" href="../_static/semantic-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script type="text/javascript" src="../_static/highlight.min.js"></script>
+    <script type="text/javascript" src="../_static/semantic.min.js"></script>
+    <link rel="shortcut icon" href="../_static/PyMC3.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Marginal Likelihood Implementation" href="GP-Marginal.html" />
-    <link rel="prev" title="Censored Data Models" href="censored_data.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+<script>hljs.initHighlightingOnLoad();</script>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+
 
   </head><body>
-  
+<div class="ui vertical center aligned">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
+    <div class="ui container">
+        <div class="ui large secondary pointing menu">
+            <a class="item" href="/">
+                <img class="ui bottom aligned tiny image" src="https://cdn.rawgit.com/pymc-devs/pymc3/master/docs/logos/svg/PyMC3_banner.svg" />
+            </a>
+             <a href="../nb_tutorials/index.html" class="item">Tutorials</a> <a href="../nb_examples/index.html" class="item">Examples</a> <a href="../learn.html" class="item">Books + Videos</a> <a href="../api.html" class="item">API</a> <a href="../developer_guide.html" class="item">Developer Guide</a> <a href="../history.html" class="item">About PyMC3</a>
             
+            <div class="right menu">
+                <div class="item">
+                    <form class="ui icon input" action="../search.html" method="get">
+                        <input type="text" placeholder="Search..." name="q" />
+                        <i class="search link icon"></i>
+                    </form>
+                </div>
+                <a class="item" href="https://github.com/pymc-devs/pymc3"><i class="github blue icon large"></i></a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="ui container" role="main">
+    
+
+    <div class="ui vertical segment">
+        
   
 <style>
 /* CSS for nbsphinx extension */
@@ -89,18 +113,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 7ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -140,9 +164,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -150,7 +174,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -199,10 +223,43 @@ div.nboutput div.output_area.stderr {
 
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
 </style>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -221,28 +278,20 @@ div.nboutput div.output_area.stderr {
 </div>
 <div class="section" id="Mean-and-Covariance-Functions">
 <h1>Mean and Covariance Functions<a class="headerlink" href="#Mean-and-Covariance-Functions" title="Permalink to this headline">¶</a></h1>
-<p>A large set of mean and covariance functions are available in PyMC3. It
-is relatively easy to define custom mean and covariance functions. Since
-PyMC3 uses Theano, their gradients do not need to be defined by the
-user.</p>
+<p>A large set of mean and covariance functions are available in PyMC3. It is relatively easy to define custom mean and covariance functions. Since PyMC3 uses Theano, their gradients do not need to be defined by the user.</p>
 <div class="section" id="Mean-functions">
 <h2>Mean functions<a class="headerlink" href="#Mean-functions" title="Permalink to this headline">¶</a></h2>
 <p>The following mean functions are available in PyMC3.</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">gp.mean.Zero</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">gp.mean.Constant</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">gp.mean.Linear</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gp.mean.Zero</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gp.mean.Constant</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gp.mean.Linear</span></code></p></li>
 </ul>
-<p>All follow a similar usage pattern. First, the mean function is
-specified. Then it can be evaluated over some inputs. The first two mean
-functions are very simple. Regardless of the inputs, <code class="docutils literal notranslate"><span class="pre">gp.mean.Zero</span></code>
-returns a vector of zeros with the same length as the number of input
-values.</p>
+<p>All follow a similar usage pattern. First, the mean function is specified. Then it can be evaluated over some inputs. The first two mean functions are very simple. Regardless of the inputs, <code class="docutils literal notranslate"><span class="pre">gp.mean.Zero</span></code> returns a vector of zeros with the same length as the number of input values.</p>
 <div class="section" id="Zero">
 <h3>Zero<a class="headerlink" href="#Zero" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -261,15 +310,13 @@ values.</p>
 [ 0.  0.  0.  0.  0.]
 </pre></div></div>
 </div>
-<p>The default mean functions for all GP implementations in PyMC3 is
-<code class="docutils literal notranslate"><span class="pre">Zero</span></code>.</p>
+<p>The default mean functions for all GP implementations in PyMC3 is <code class="docutils literal notranslate"><span class="pre">Zero</span></code>.</p>
 </div>
 <div class="section" id="Constant">
 <h3>Constant<a class="headerlink" href="#Constant" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">gp.mean.Constant</span></code> returns a vector whose value is provided.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -287,12 +334,9 @@ values.</p>
 [ 25.2  25.2  25.2  25.2  25.2]
 </pre></div></div>
 </div>
-<p>As long as the shape matches the input it will receive,
-<code class="docutils literal notranslate"><span class="pre">gp.mean.Constant</span></code> can also accept a Theano tensor or vector of PyMC3
-random variables.</p>
+<p>As long as the shape matches the input it will receive, <code class="docutils literal notranslate"><span class="pre">gp.mean.Constant</span></code> can also accept a Theano tensor or vector of PyMC3 random variables.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -313,11 +357,9 @@ random variables.</p>
 </div>
 <div class="section" id="Linear">
 <h3>Linear<a class="headerlink" href="#Linear" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">gp.mean.Linear</span></code> is a takes as input a matrix of coefficients and a
-vector of intercepts (or a slope and scalar intercept in one dimension).</p>
+<p><code class="docutils literal notranslate"><span class="pre">gp.mean.Linear</span></code> is a takes as input a matrix of coefficients and a vector of intercepts (or a slope and scalar intercept in one dimension).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -336,16 +378,14 @@ vector of intercepts (or a slope and scalar intercept in one dimension).</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[-2.21615117  0.18483208 -0.13889476 -0.8641522  -1.89552731]
+[-0.36242716  2.20718024  0.41039522  2.50735445 -2.06177178]
 </pre></div></div>
 </div>
 </div>
 </div>
 <div class="section" id="Defining-a-custom-mean-function">
 <h2>Defining a custom mean function<a class="headerlink" href="#Defining-a-custom-mean-function" title="Permalink to this headline">¶</a></h2>
-<p>To define a custom mean function, subclass <code class="docutils literal notranslate"><span class="pre">gp.mean.Mean</span></code>, and provide
-<code class="docutils literal notranslate"><span class="pre">__call__</span></code> and <code class="docutils literal notranslate"><span class="pre">__init__</span></code> methods. For example, the code for the
-<code class="docutils literal notranslate"><span class="pre">Constant</span></code> mean function is</p>
+<p>To define a custom mean function, subclass <code class="docutils literal notranslate"><span class="pre">gp.mean.Mean</span></code>, and provide <code class="docutils literal notranslate"><span class="pre">__call__</span></code> and <code class="docutils literal notranslate"><span class="pre">__init__</span></code> methods. For example, the code for the <code class="docutils literal notranslate"><span class="pre">Constant</span></code> mean function is</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">theano.tensor</span> <span class="kn">as</span> <span class="nn">tt</span>
 
 <span class="k">class</span> <span class="nc">Constant</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">mean</span><span class="o">.</span><span class="n">Mean</span><span class="p">):</span>
@@ -362,20 +402,13 @@ vector of intercepts (or a slope and scalar intercept in one dimension).</p>
 </div>
 <div class="section" id="Covariance-functions">
 <h2>Covariance functions<a class="headerlink" href="#Covariance-functions" title="Permalink to this headline">¶</a></h2>
-<p>PyMC3 contains a much larger suite of built-in covariance functions. The
-following shows functions drawn from a GP prior with a given covariance
-function, and demonstrates how composite covariance functions can be
-constructed with Python operators in a straightforward manner. Our goal
-was for our API to follow kernel algebra (see Ch.4 of Rassmussen +
-Williams) as closely as possible. See the main documentation page for an
-overview on their usage in PyMC3.</p>
+<p>PyMC3 contains a much larger suite of built-in covariance functions. The following shows functions drawn from a GP prior with a given covariance function, and demonstrates how composite covariance functions can be constructed with Python operators in a straightforward manner. Our goal was for our API to follow kernel algebra (see Ch.4 of Rassmussen + Williams) as closely as possible. See the main documentation page for an overview on their usage in PyMC3.</p>
 <div class="section" id="Exponentiated-Quadratic">
 <h3>Exponentiated Quadratic<a class="headerlink" href="#Exponentiated-Quadratic" title="Permalink to this headline">¶</a></h3>
 <div class="math notranslate nohighlight">
 \[k(x, x') = \mathrm{exp}\left[ -\frac{(x - x')^2}{2 \ell^2} \right]\]</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -388,6 +421,8 @@ overview on their usage in PyMC3.</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -404,13 +439,9 @@ overview on their usage in PyMC3.</p>
 <h3>Two (and higher) Dimensional Inputs<a class="headerlink" href="#Two-(and-higher)-Dimensional-Inputs" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="Both-dimensions-active">
 <h4>Both dimensions active<a class="headerlink" href="#Both-dimensions-active" title="Permalink to this headline">¶</a></h4>
-<p>It is easy to define kernels with higher dimensional inputs. Notice that
-the <code class="docutils literal notranslate"><span class="pre">ls</span></code> (lengthscale) parameter is an array of length 2. Lists of
-PyMC3 random variables can be used for automatic relevance determination
-(ARD).</p>
+<p>It is easy to define kernels with higher dimensional inputs. Notice that the <code class="docutils literal notranslate"><span class="pre">ls</span></code> (lengthscale) parameter is an array of length 2. Lists of PyMC3 random variables can be used for automatic relevance determination (ARD).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -436,8 +467,7 @@ PyMC3 random variables can be used for automatic relevance determination
 <div class="section" id="One-dimension-active">
 <h4>One dimension active<a class="headerlink" href="#One-dimension-active" title="Permalink to this headline">¶</a></h4>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -459,11 +489,9 @@ PyMC3 random variables can be used for automatic relevance determination
 </div>
 <div class="section" id="Product-of-covariances-over-different-dimensions">
 <h4>Product of covariances over different dimensions<a class="headerlink" href="#Product-of-covariances-over-different-dimensions" title="Permalink to this headline">¶</a></h4>
-<p>Note that this is equivalent to using a two dimensional <code class="docutils literal notranslate"><span class="pre">ExpQuad</span></code> with
-separate lengthscale parameters for each dimension.</p>
+<p>Note that this is equivalent to using a two dimensional <code class="docutils literal notranslate"><span class="pre">ExpQuad</span></code> with separate lengthscale parameters for each dimension.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -492,8 +520,7 @@ separate lengthscale parameters for each dimension.</p>
 <div class="math notranslate nohighlight">
 \[k(x, x') = \sigma^2 \mathrm{I}_{xx}\]</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -505,6 +532,8 @@ separate lengthscale parameters for each dimension.</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -522,8 +551,7 @@ separate lengthscale parameters for each dimension.</p>
 <div class="math notranslate nohighlight">
 \[k(x, x') = c\]</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -535,6 +563,8 @@ separate lengthscale parameters for each dimension.</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -552,8 +582,7 @@ separate lengthscale parameters for each dimension.</p>
 <div class="math notranslate nohighlight">
 \[k(x, x') = \left(1 + \frac{(x - x')^2}{2\alpha\ell^2} \right)^{-\alpha}\]</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -567,6 +596,8 @@ separate lengthscale parameters for each dimension.</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -584,8 +615,7 @@ separate lengthscale parameters for each dimension.</p>
 <div class="math notranslate nohighlight">
 \[k(x, x') = \mathrm{exp}\left[ -\frac{||x - x'||}{2\ell^2} \right]\]</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -597,6 +627,8 @@ separate lengthscale parameters for each dimension.</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -616,8 +648,7 @@ separate lengthscale parameters for each dimension.</p>
             \frac{5(x-x')^2}{3\ell^2}\right)
             \mathrm{exp}\left[ - \frac{\sqrt{5(x - x')^2}}{\ell} \right]\]</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -630,6 +661,8 @@ separate lengthscale parameters for each dimension.</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -648,8 +681,7 @@ separate lengthscale parameters for each dimension.</p>
 \[k(x, x') = \left(1 + \frac{\sqrt{3(x - x')^2}}{\ell}\right)
            \mathrm{exp}\left[ - \frac{\sqrt{3(x - x')^2}}{\ell} \right]\]</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -662,6 +694,8 @@ separate lengthscale parameters for each dimension.</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -679,8 +713,7 @@ separate lengthscale parameters for each dimension.</p>
 <div class="math notranslate nohighlight">
 \[k(x, x') = \mathrm{cos}\left( 2 \pi \frac{||x - x'||}{ \ell^2} \right)\]</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -692,6 +725,8 @@ separate lengthscale parameters for each dimension.</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -709,8 +744,7 @@ separate lengthscale parameters for each dimension.</p>
 <div class="math notranslate nohighlight">
 \[k(x, x') = (x - c)(x' - c)\]</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -723,6 +757,8 @@ separate lengthscale parameters for each dimension.</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -740,8 +776,7 @@ separate lengthscale parameters for each dimension.</p>
 <div class="math notranslate nohighlight">
 \[k(x, x') = [(x - c)(x' - c) + \mathrm{offset}]^{d}\]</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -756,6 +791,8 @@ separate lengthscale parameters for each dimension.</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -770,11 +807,9 @@ separate lengthscale parameters for each dimension.</p>
 </div>
 <div class="section" id="Multiplication-with-a-precomputed-covariance-matrix">
 <h3>Multiplication with a precomputed covariance matrix<a class="headerlink" href="#Multiplication-with-a-precomputed-covariance-matrix" title="Permalink to this headline">¶</a></h3>
-<p>A covariance function <code class="docutils literal notranslate"><span class="pre">cov</span></code> can be multiplied with numpy matrix,
-<code class="docutils literal notranslate"><span class="pre">K_cos</span></code>, as long as the shapes are appropriate.</p>
+<p>A covariance function <code class="docutils literal notranslate"><span class="pre">cov</span></code> can be multiplied with numpy matrix, <code class="docutils literal notranslate"><span class="pre">K_cos</span></code>, as long as the shapes are appropriate.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -791,6 +826,8 @@ separate lengthscale parameters for each dimension.</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -805,13 +842,10 @@ separate lengthscale parameters for each dimension.</p>
 </div>
 <div class="section" id="Applying-an-arbitary-warping-function-on-the-inputs">
 <h3>Applying an arbitary warping function on the inputs<a class="headerlink" href="#Applying-an-arbitary-warping-function-on-the-inputs" title="Permalink to this headline">¶</a></h3>
-<p>If <span class="math notranslate nohighlight">\(k(x, x')\)</span> is a valid covariance function, then so is
-<span class="math notranslate nohighlight">\(k(w(x), w(x'))\)</span>.</p>
-<p>The first argument of the warping function must be the input <code class="docutils literal notranslate"><span class="pre">X</span></code>. The
-remaining arguments can be anything else, including random variables.</p>
+<p>If <span class="math notranslate nohighlight">\(k(x, x')\)</span> is a valid covariance function, then so is <span class="math notranslate nohighlight">\(k(w(x), w(x'))\)</span>.</p>
+<p>The first argument of the warping function must be the input <code class="docutils literal notranslate"><span class="pre">X</span></code>. The remaining arguments can be anything else, including random variables.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -822,17 +856,21 @@ remaining arguments can be anything else, including random variables.</p>
 <span class="n">b</span> <span class="o">=</span> <span class="mf">5.0</span>
 <span class="n">c</span> <span class="o">=</span> <span class="mf">1.0</span>
 
-<span class="n">cov_m52</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
-<span class="n">cov</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">WarpedInput</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">warp_func</span><span class="o">=</span><span class="n">warp_func</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">),</span> <span class="n">cov_func</span><span class="o">=</span><span class="n">cov_m52</span><span class="p">)</span>
+<span class="n">cov_exp</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">WarpedInput</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">warp_func</span><span class="o">=</span><span class="n">warp_func</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">),</span> <span class="n">cov_func</span><span class="o">=</span><span class="n">cov_exp</span><span class="p">)</span>
 
 <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">400</span><span class="p">)[:,</span><span class="bp">None</span><span class="p">]</span>
-<span class="n">wf</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([],</span> <span class="n">warp_func</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">))()</span>
+<span class="n">wf</span> <span class="o">=</span> <span class="n">warp_func</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">wf</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;warp_func(X)&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;The warping function used&quot;</span><span class="p">);</span>
 
 <span class="n">K</span> <span class="o">=</span> <span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -854,22 +892,14 @@ remaining arguments can be anything else, including random variables.</p>
 </div>
 <div class="section" id="Constructing-Periodic-using-WarpedInput">
 <h3>Constructing <code class="docutils literal notranslate"><span class="pre">Periodic</span></code> using <code class="docutils literal notranslate"><span class="pre">WarpedInput</span></code><a class="headerlink" href="#Constructing-Periodic-using-WarpedInput" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">WarpedInput</span></code> kernel can be used to create the <code class="docutils literal notranslate"><span class="pre">Periodic</span></code>
-covariance. This covariance models functions that are periodic, but are
-not an exact sine wave (like the <code class="docutils literal notranslate"><span class="pre">Cosine</span></code> kernel is).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">WarpedInput</span></code> kernel can be used to create the <code class="docutils literal notranslate"><span class="pre">Periodic</span></code> covariance. This covariance models functions that are periodic, but are not an exact sine wave (like the <code class="docutils literal notranslate"><span class="pre">Cosine</span></code> kernel is).</p>
 <p>The periodic kernel is given by</p>
 <div class="math notranslate nohighlight">
 \[k(x, x') = \exp\left( -\frac{2 \sin^{2}(\pi |x - x'|\frac{1}{T})}{\ell^2}     \right)\]</div>
-<p>Where T is the period, and <span class="math notranslate nohighlight">\(\ell\)</span> is the lengthscale. It can be
-derived by warping the input of an <code class="docutils literal notranslate"><span class="pre">ExpQuad</span></code> kernel with the function
-<span class="math notranslate nohighlight">\(\mathbf{u}(x) = (\sin(2\pi x \frac{1}{T})\,, \cos(2 \pi x \frac{1}{T}))\)</span>.
-Here we use the <code class="docutils literal notranslate"><span class="pre">WarpedInput</span></code> kernel to construct it.</p>
-<p>The input <code class="docutils literal notranslate"><span class="pre">X</span></code>, which is defined at the top of this page, is 2
-“seconds” long. We use a period of <span class="math notranslate nohighlight">\(0.5\)</span>, which means that
-functions drawn from this GP prior will repeat 4 times over 2 seconds.</p>
+<p>Where T is the period, and <span class="math notranslate nohighlight">\(\ell\)</span> is the lengthscale. It can be derived by warping the input of an <code class="docutils literal notranslate"><span class="pre">ExpQuad</span></code> kernel with the function <span class="math notranslate nohighlight">\(\mathbf{u}(x) = (\sin(2\pi x \frac{1}{T})\,, \cos(2 \pi x \frac{1}{T}))\)</span>. Here we use the <code class="docutils literal notranslate"><span class="pre">WarpedInput</span></code> kernel to construct it.</p>
+<p>The input <code class="docutils literal notranslate"><span class="pre">X</span></code>, which is defined at the top of this page, is 2 “seconds” long. We use a period of <span class="math notranslate nohighlight">\(0.5\)</span>, which means that functions drawn from this GP prior will repeat 4 times over 2 seconds.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -889,6 +919,8 @@ functions drawn from this GP prior will repeat 4 times over 2 seconds.</p>
 <span class="n">K</span> <span class="o">=</span> <span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -903,12 +935,9 @@ functions drawn from this GP prior will repeat 4 times over 2 seconds.</p>
 </div>
 <div class="section" id="Periodic">
 <h3>Periodic<a class="headerlink" href="#Periodic" title="Permalink to this headline">¶</a></h3>
-<p>There is no need to construct the periodic covariance this way every
-time. A more efficient implementation of this covariance function is
-built in.</p>
+<p>There is no need to construct the periodic covariance this way every time. A more efficient implementation of this covariance function is built in.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -919,6 +948,8 @@ built in.</p>
 <span class="n">K</span> <span class="o">=</span> <span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -933,13 +964,9 @@ built in.</p>
 </div>
 <div class="section" id="Gibbs">
 <h3>Gibbs<a class="headerlink" href="#Gibbs" title="Permalink to this headline">¶</a></h3>
-<p>The Gibbs covariance function applies a positive definite warping
-function to the lengthscale. Similarly to <code class="docutils literal notranslate"><span class="pre">WarpedInput</span></code>, the
-lengthscale warping function can be specified with parameters that are
-either fixed or random variables.</p>
+<p>The Gibbs covariance function applies a positive definite warping function to the lengthscale. Similarly to <code class="docutils literal notranslate"><span class="pre">WarpedInput</span></code>, the lengthscale warping function can be specified with parameters that are either fixed or random variables.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -958,12 +985,15 @@ either fixed or random variables.</p>
 <span class="n">x0</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="n">cov</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">Gibbs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">tanh_func</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">ls1</span><span class="p">,</span> <span class="n">ls2</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">x0</span><span class="p">))</span>
 
-<span class="n">wf</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([],</span> <span class="n">tanh_func</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ls1</span><span class="p">,</span> <span class="n">ls2</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">x0</span><span class="p">))()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">wf</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;tanh_func(X)&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Lengthscale as a function of X&quot;</span><span class="p">);</span>
+<span class="n">wf</span> <span class="o">=</span> <span class="n">tanh_func</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ls1</span><span class="p">,</span> <span class="n">ls2</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">x0</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">wf</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;lengthscale&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Lengthscale as a function of X&quot;</span><span class="p">);</span>
 
 <span class="n">K</span> <span class="o">=</span> <span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -983,17 +1013,125 @@ either fixed or random variables.</p>
 </div>
 </div>
 </div>
+<div class="section" id="Scaled-Covariance">
+<h3>Scaled Covariance<a class="headerlink" href="#Scaled-Covariance" title="Permalink to this headline">¶</a></h3>
+<p>One can construct a new kernel or covariance function by multiplying some base kernel by a nonnegative function <span class="math notranslate nohighlight">\(\phi(x)\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[k_{\mathrm{scaled}}(x, x') = \phi(x) k_{\mathrm{base}}(x, x') \phi(x') \,.\]</div>
+<p>This is useful for specifying covariance functions whose amplitude changes across the domain.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">logistic</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="c1"># a is the slope, x0 is the location</span>
+    <span class="k">return</span> <span class="n">d</span> <span class="o">*</span> <span class="n">pm</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">invlogit</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">))</span> <span class="o">+</span> <span class="n">c</span>
+
+
+<span class="n">a</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mf">2.0</span>
+
+<span class="n">cov_base</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ScaledCov</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">scaling_func</span><span class="o">=</span><span class="n">logistic</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">x0</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">),</span> <span class="n">cov_func</span><span class="o">=</span><span class="n">cov_base</span><span class="p">)</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">400</span><span class="p">)[:,</span><span class="bp">None</span><span class="p">]</span>
+<span class="n">lfunc</span> <span class="o">=</span> <span class="n">logistic</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">lfunc</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$\phi(x)$&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;The scaling function&quot;</span><span class="p">);</span>
+
+<span class="n">K</span> <span class="o">=</span> <span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_GP-MeansAndCovs_48_0.png" src="../_images/notebooks_GP-MeansAndCovs_48_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_GP-MeansAndCovs_48_1.png" src="../_images/notebooks_GP-MeansAndCovs_48_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Constructing-a-Changepoint-kernel-using-ScaledCov">
+<h3>Constructing a Changepoint kernel using <code class="docutils literal notranslate"><span class="pre">ScaledCov</span></code><a class="headerlink" href="#Constructing-a-Changepoint-kernel-using-ScaledCov" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">ScaledCov</span></code> kernel can be used to create the <code class="docutils literal notranslate"><span class="pre">Changepoint</span></code> covariance. This covariance models a process that gradually transitions from one type of behavior to another.</p>
+<p>The changepoint kernel is given by</p>
+<div class="math notranslate nohighlight">
+\[k(x, x') = \phi(x)k_{1}(x, x')\phi(x)  + (1 - \phi(x))k_{2}(x, x')(1 - \phi(x'))\]</div>
+<p>where <span class="math notranslate nohighlight">\(\phi(x)\)</span> is the logistic function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">logistic</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">x0</span><span class="p">):</span>
+    <span class="c1"># a is the slope, x0 is the location</span>
+    <span class="k">return</span> <span class="n">pm</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">invlogit</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">))</span>
+
+
+<span class="n">a</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mf">5.0</span>
+
+<span class="n">cov1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ScaledCov</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">scaling_func</span><span class="o">=</span><span class="n">logistic</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="n">x0</span><span class="p">),</span>
+                           <span class="n">cov_func</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
+<span class="n">cov2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ScaledCov</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">scaling_func</span><span class="o">=</span><span class="n">logistic</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">x0</span><span class="p">),</span>
+                           <span class="n">cov_func</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">Cosine</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">cov1</span> <span class="o">+</span> <span class="n">cov2</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">400</span><span class="p">),</span> <span class="n">logistic</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="n">x0</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;ExpQuad region&quot;</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;slateblue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">400</span><span class="p">),</span> <span class="n">logistic</span><span class="p">(</span><span class="n">X</span><span class="p">,</span>  <span class="n">a</span><span class="p">,</span> <span class="n">x0</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Cosine region&quot;</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;firebrick&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$\phi(x)$&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;The two scaling functions&quot;</span><span class="p">);</span>
+
+<span class="n">K</span> <span class="o">=</span> <span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="bp">None</span><span class="p">])</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">MvNormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Samples from the GP prior&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_GP-MeansAndCovs_50_0.png" src="../_images/notebooks_GP-MeansAndCovs_50_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_GP-MeansAndCovs_50_1.png" src="../_images/notebooks_GP-MeansAndCovs_50_1.png" />
+</div>
+</div>
+</div>
 <div class="section" id="Defining-a-custom-covariance-function">
 <h3>Defining a custom covariance function<a class="headerlink" href="#Defining-a-custom-covariance-function" title="Permalink to this headline">¶</a></h3>
-<p>Covariance function objects in PyMC3 need to implement the <code class="docutils literal notranslate"><span class="pre">__init__</span></code>,
-<code class="docutils literal notranslate"><span class="pre">diag</span></code>, and <code class="docutils literal notranslate"><span class="pre">full</span></code> methods, and subclass <code class="docutils literal notranslate"><span class="pre">gp.cov.Covariance</span></code>.
-<code class="docutils literal notranslate"><span class="pre">diag</span></code> returns only the diagonal of the covariance matrix, and
-<code class="docutils literal notranslate"><span class="pre">full</span></code> returns the full covariance matrix. The <code class="docutils literal notranslate"><span class="pre">full</span></code> method has two
-inputs <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">Xs</span></code>. <code class="docutils literal notranslate"><span class="pre">full(X)</span></code> returns the square covariance
-matrix, and <code class="docutils literal notranslate"><span class="pre">full(X,</span> <span class="pre">Xs)</span></code> returns the cross-covariances between the
-two sets of inputs.</p>
-<p>For example, here is the implementation of the <code class="docutils literal notranslate"><span class="pre">WhiteNoise</span></code> covariance
-function:</p>
+<p>Covariance function objects in PyMC3 need to implement the <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, <code class="docutils literal notranslate"><span class="pre">diag</span></code>, and <code class="docutils literal notranslate"><span class="pre">full</span></code> methods, and subclass <code class="docutils literal notranslate"><span class="pre">gp.cov.Covariance</span></code>. <code class="docutils literal notranslate"><span class="pre">diag</span></code> returns only the diagonal of the covariance matrix, and <code class="docutils literal notranslate"><span class="pre">full</span></code> returns the full covariance matrix. The <code class="docutils literal notranslate"><span class="pre">full</span></code> method has two inputs <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">Xs</span></code>. <code class="docutils literal notranslate"><span class="pre">full(X)</span></code> returns the square covariance matrix, and <code class="docutils literal notranslate"><span class="pre">full(X,</span> <span class="pre">Xs)</span></code> returns the cross-covariances between the two sets of inputs.</p>
+<p>For example, here is the implementation of the <code class="docutils literal notranslate"><span class="pre">WhiteNoise</span></code> covariance function:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">WhiteNoise</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">Covariance</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">WhiteNoise</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
@@ -1009,93 +1147,28 @@ function:</p>
             <span class="k">return</span> <span class="n">tt</span><span class="o">.</span><span class="n">alloc</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Xs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>If we have forgotten an important covariance or mean function, please
-feel free to submit a pull request!</p>
+<p>If we have forgotten an important covariance or mean function, please feel free to submit a pull request!</p>
 </div>
 </div>
 </div>
 
 
-          </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/pymc3_logo.jpg" alt="Logo"/>
-            </a></p>
-<h1 class="logo"><a href="../index.html">PyMC3</a></h1>
-
-
-
-<p class="blurb">Probabilistic Programming in Python: Bayesian Modeling and Probabilistic Machine Learning with Theano</p>
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../prob_dists.html">Probability Distributions</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#howto">Howto</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#applied">Applied</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#glm">GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#survival-analysis">Survival Analysis</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#gaussian-processes">Gaussian Processes</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Mean and Covariance Functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="GP-Marginal.html">Marginal Likelihood Implementation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="GP-Latent.html">Latent Variable Implementation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="GP-SparseApprox.html">Sparse Approximations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="GP-TProcess.html">Student-t Process</a></li>
-<li class="toctree-l3"><a class="reference internal" href="GP-MaunaLoa.html">Example: CO<span class="math notranslate nohighlight">\(_2\)</span> at Mauna Loa</a></li>
-<li class="toctree-l3"><a class="reference internal" href="GP-slice-sampling.html">Gaussian Process Regression and Classification with Elliptical Slice Sampling</a></li>
-<li class="toctree-l3"><a class="reference internal" href="GP-smoothing.html">Gaussian Process (GP) smoothing</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#mixture-models">Mixture Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#variational-inference">Variational Inference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#stochastic-gradient">Stochastic Gradient</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+<div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <a href="https://github.com/pymc-devs/pymc3"><i class="github icon large"></i></a>
+        <a href="https://twitter.com/pymc_devs"><i class="twitter icon large"></i></a>
+        <a href="https://discourse.pymc.io/"><i class="discourse icon large"></i></a>
     </div>
-    <div class="footer">
-      &copy;2017, The PyMC Development Team.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
-      
-      |
-      <a href="../_sources/notebooks/GP-MeansAndCovs.ipynb.txt"
-          rel="nofollow">Page source</a>
+    <div class="ui center aligned container">
+        <p>
+            &copy; Copyright 2018, The PyMC Development Team.
+        </p>
+        <p>
+            Created using <a href="https://sphinx-doc.org/">Sphinx</a> 2.0.1.<br />
+        </p>
     </div>
-
-    
-
-    
+</div>
   </body>
 </html>

@@ -1,39 +1,63 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Convolutional variational autoencoder with PyMC3 and Keras &#8212; PyMC3 3.5.rc1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <title>Convolutional variational autoencoder with PyMC3 and Keras &#8212; PyMC3 3.5 documentation</title>
+    <link rel="stylesheet" href="../_static/semantic-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script type="text/javascript" src="../_static/highlight.min.js"></script>
+    <script type="text/javascript" src="../_static/semantic.min.js"></script>
+    <link rel="shortcut icon" href="../_static/PyMC3.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Empirical Approximation overview" href="empirical-approx-overview.html" />
-    <link rel="prev" title="Variational Inference: Bayesian Neural Networks" href="bayesian_neural_network_advi.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+<script>hljs.initHighlightingOnLoad();</script>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+
 
   </head><body>
-  
+<div class="ui vertical center aligned">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
+    <div class="ui container">
+        <div class="ui large secondary pointing menu">
+            <a class="item" href="/">
+                <img class="ui bottom aligned tiny image" src="https://cdn.rawgit.com/pymc-devs/pymc3/master/docs/logos/svg/PyMC3_banner.svg" />
+            </a>
+             <a href="../nb_tutorials/index.html" class="item">Tutorials</a> <a href="../nb_examples/index.html" class="item">Examples</a> <a href="../learn.html" class="item">Books + Videos</a> <a href="../api.html" class="item">API</a> <a href="../developer_guide.html" class="item">Developer Guide</a> <a href="../history.html" class="item">About PyMC3</a>
             
+            <div class="right menu">
+                <div class="item">
+                    <form class="ui icon input" action="../search.html" method="get">
+                        <input type="text" placeholder="Search..." name="q" />
+                        <i class="search link icon"></i>
+                    </form>
+                </div>
+                <a class="item" href="https://github.com/pymc-devs/pymc3"><i class="github blue icon large"></i></a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="ui container" role="main">
+    
+
+    <div class="ui vertical segment">
+        
   
 <style>
 /* CSS for nbsphinx extension */
@@ -89,18 +113,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 7ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -140,9 +164,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -150,7 +174,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -199,31 +223,51 @@ div.nboutput div.output_area.stderr {
 
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
 </style>
 <div class="section" id="Convolutional-variational-autoencoder-with-PyMC3-and-Keras">
 <h1>Convolutional variational autoencoder with PyMC3 and Keras<a class="headerlink" href="#Convolutional-variational-autoencoder-with-PyMC3-and-Keras" title="Permalink to this headline">¶</a></h1>
-<p>In this document, I will show how autoencoding variational Bayes (AEVB)
-works in PyMC3’s automatic differentiation variational inference (ADVI).
-The example here is borrowed from <a class="reference external" href="https://github.com/fchollet/keras/blob/master/examples/variational_autoencoder_deconv.py">Keras
-example</a>,
-where convolutional variational autoencoder is applied to the MNIST
-dataset. The network architecture of the encoder and decoder are the
-same. However, PyMC3 allows us to define a probabilistic model, which
-combines the encoder and decoder, in the same way as other probabilistic
-models (e.g., generalized linear models), rather than directly
-implementing of Monte Carlo sampling and the loss function, as is done
-in the Keras example. Thus the framework of AEVB in PyMC3 can be
-extended to more complex models such as <a class="reference external" href="https://taku-y.github.io/notebook/20160928/lda-advi-ae.html">latent dirichlet
-allocation</a>.</p>
+<p>In this document, I will show how autoencoding variational Bayes (AEVB) works in PyMC3’s automatic differentiation variational inference (ADVI). The example here is borrowed from <a class="reference external" href="https://github.com/fchollet/keras/blob/master/examples/variational_autoencoder_deconv.py">Keras example</a>, where convolutional variational autoencoder is applied to the MNIST dataset. The network architecture of the encoder and decoder are the same. However, PyMC3 allows us to define a probabilistic model, which
+combines the encoder and decoder, in the same way as other probabilistic models (e.g., generalized linear models), rather than directly implementing of Monte Carlo sampling and the loss function, as is done in the Keras example. Thus the framework of AEVB in PyMC3 can be extended to more complex models such as <a class="reference external" href="https://taku-y.github.io/notebook/20160928/lda-advi-ae.html">latent dirichlet allocation</a>.</p>
 <ul class="simple">
-<li>Notebook Written by Taku Yoshioka (c) 2016</li>
+<li><p>Notebook Written by Taku Yoshioka (c) 2016</p></li>
 </ul>
-<p>To use Keras with PyMC3, we need to choose
-<a class="reference external" href="http://deeplearning.net/software/theano/">Theano</a> as the backend for
-Keras.</p>
+<p>To use Keras with PyMC3, we need to choose <a class="reference external" href="http://deeplearning.net/software/theano/">Theano</a> as the backend for Keras.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -251,8 +295,7 @@ Keras.</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -275,13 +318,9 @@ Keras.</p>
 </div>
 <div class="section" id="Load-images">
 <h2>Load images<a class="headerlink" href="#Load-images" title="Permalink to this headline">¶</a></h2>
-<p>MNIST dataset can be obtained by <a class="reference external" href="http://scikit-learn.org/stable/datasets/">scikit-learn
-API</a> or from <a class="reference external" href="https://keras.io/datasets/">Keras
-datasets</a>. The dataset contains images of
-digits.</p>
+<p>MNIST dataset can be obtained by <a class="reference external" href="http://scikit-learn.org/stable/datasets/">scikit-learn API</a> or from <a class="reference external" href="https://keras.io/datasets/">Keras datasets</a>. The dataset contains images of digits.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -303,22 +342,11 @@ Downloading data from https://s3.amazonaws.com/img-datasets/mnist.npz
 </div>
 <div class="section" id="Use-Keras">
 <h2>Use Keras<a class="headerlink" href="#Use-Keras" title="Permalink to this headline">¶</a></h2>
-<p>We define a utility function to get parameters from Keras models. Since
-we have set the backend to Theano, parameter objects are obtained as
-shared variables of Theano.</p>
-<p>In the code, ‘updates’ are expected to include update objects
-(dictionary of pairs of shared variables and update equation) of scaling
-parameters of batch normalization. While not using batch normalization
-in this example, if we want to use it, we need to pass these update
-objects as an argument of <code class="docutils literal notranslate"><span class="pre">theano.function()</span></code> inside the PyMC3 ADVI
-function. The current version of PyMC3 does not support it, it is easy
-to modify (I want to send PR in future).</p>
-<p>The learning phase below is used for Keras to known the learning phase,
-training or test. This information is important also for batch
-normalization.</p>
+<p>We define a utility function to get parameters from Keras models. Since we have set the backend to Theano, parameter objects are obtained as shared variables of Theano.</p>
+<p>In the code, ‘updates’ are expected to include update objects (dictionary of pairs of shared variables and update equation) of scaling parameters of batch normalization. While not using batch normalization in this example, if we want to use it, we need to pass these update objects as an argument of <code class="docutils literal notranslate"><span class="pre">theano.function()</span></code> inside the PyMC3 ADVI function. The current version of PyMC3 does not support it, it is easy to modify (I want to send PR in future).</p>
+<p>The learning phase below is used for Keras to known the learning phase, training or test. This information is important also for batch normalization.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -357,13 +385,9 @@ normalization.</p>
 </div>
 <div class="section" id="Encoder-and-decoder">
 <h2>Encoder and decoder<a class="headerlink" href="#Encoder-and-decoder" title="Permalink to this headline">¶</a></h2>
-<p>First, we define the convolutional neural network for encoder using the
-Keras API. This function returns a CNN model given the shared variable
-representing observations (images of digits), the dimension of latent
-space, and the parameters of the model architecture.</p>
+<p>First, we define the convolutional neural network for encoder using the Keras API. This function returns a CNN model given the shared variable representing observations (images of digits), the dimension of latent space, and the parameters of the model architecture.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -399,12 +423,9 @@ space, and the parameters of the model architecture.</p>
 </pre></div>
 </div>
 </div>
-<p>Then we define a utility class for encoders. This class does not depend
-on the architecture of the encoder except for input shape (<code class="docutils literal notranslate"><span class="pre">tensor4</span></code>
-for images), so we can use this class for various encoding networks.</p>
+<p>Then we define a utility class for encoders. This class does not depend on the architecture of the encoder except for input shape (<code class="docutils literal notranslate"><span class="pre">tensor4</span></code> for images), so we can use this class for various encoding networks.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -472,11 +493,9 @@ for images), so we can use this class for various encoding networks.</p>
 </pre></div>
 </div>
 </div>
-<p>In a similar way, we define the decoding network and a utility class for
-decoders.</p>
+<p>In a similar way, we define the decoding network and a utility class for decoders.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -515,8 +534,7 @@ decoders.</p>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -564,12 +582,9 @@ decoders.</p>
 </div>
 <div class="section" id="Generative-model">
 <h2>Generative model<a class="headerlink" href="#Generative-model" title="Permalink to this headline">¶</a></h2>
-<p>We can construct the generative model with the PyMC3 API and the
-functions and classes defined above. We set the size of mini-batches to
-100 and the dimension of the latent space to 2 for visualization.</p>
+<p>We can construct the generative model with the PyMC3 API and the functions and classes defined above. We set the size of mini-batches to 100 and the dimension of the latent space to 2 for visualization.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -579,13 +594,9 @@ functions and classes defined above. We set the size of mini-batches to
 </pre></div>
 </div>
 </div>
-<p>We require a placeholder for images, into which mini-batches of images
-will be placed during ADVI inference. It is also the input for the
-encoder. Below, <code class="docutils literal notranslate"><span class="pre">enc.model</span></code> is a Keras model of the encoder network
-and we can check the model architecture using the method <code class="docutils literal notranslate"><span class="pre">summary()</span></code>.</p>
+<p>We require a placeholder for images, into which mini-batches of images will be placed during ADVI inference. It is also the input for the encoder. Below, <code class="docutils literal notranslate"><span class="pre">enc.model</span></code> is a Keras model of the encoder network and we can check the model architecture using the method <code class="docutils literal notranslate"><span class="pre">summary()</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -628,36 +639,27 @@ Non-trainable params: 0
 _________________________________________________________________
 </pre></div></div>
 </div>
-<p>The probabilistic model involves only two random variables; latent
-variable <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> and observation <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>. We put a
-Normal prior on <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>, decode the variational parameters of
-<span class="math notranslate nohighlight">\(q(\mathbf{z}|\mathbf{x})\)</span> and define the likelihood of the
-observation <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
+<p>The probabilistic model involves only two random variables; latent variable <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> and observation <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>. We put a Normal prior on <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>, decode the variational parameters of <span class="math notranslate nohighlight">\(q(\mathbf{z}|\mathbf{x})\)</span> and define the likelihood of the observation <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
     <span class="c1"># Hidden variables</span>
-    <span class="n">zs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;zs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">minibatch_size</span><span class="p">,</span> <span class="n">dim_hidden</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="n">total_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="n">zs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;zs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">minibatch_size</span><span class="p">,</span> <span class="n">dim_hidden</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="n">total_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
     <span class="c1"># Decoder and its parameters</span>
     <span class="n">dec</span> <span class="o">=</span> <span class="n">Decoder</span><span class="p">(</span><span class="n">zs</span><span class="p">,</span> <span class="n">net</span><span class="o">=</span><span class="n">cnn_dec</span><span class="p">)</span>
 
     <span class="c1"># Observation model</span>
-    <span class="n">xs_</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;xs_&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">dec</span><span class="o">.</span><span class="n">out</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">xs_t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="n">total_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="n">xs_</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;xs_&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">dec</span><span class="o">.</span><span class="n">out</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">xs_t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="n">total_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
-<p>In the generative model above, we do not know how the decoded
-variational parameters are passed to <span class="math notranslate nohighlight">\(q(\mathbf{z}|\mathbf{x})\)</span>.
-To do this, we will set the argument <code class="docutils literal notranslate"><span class="pre">local_RVs</span></code> in the ADVI function
-of PyMC3.</p>
+<p>In the generative model above, we do not know how the decoded variational parameters are passed to <span class="math notranslate nohighlight">\(q(\mathbf{z}|\mathbf{x})\)</span>. To do this, we will set the argument <code class="docutils literal notranslate"><span class="pre">local_RVs</span></code> in the ADVI function of PyMC3.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -665,22 +667,12 @@ of PyMC3.</p>
 </pre></div>
 </div>
 </div>
-<p>This argument is an <code class="docutils literal notranslate"><span class="pre">OrderedDict</span></code> whose keys are random variables to
-which the decoded variational parameters are set (<code class="docutils literal notranslate"><span class="pre">zs</span></code> in this model).
-Each value of the dictionary contains two Theano expressions
-representing variational mean (<code class="docutils literal notranslate"><span class="pre">enc.means</span></code>) and rhos (<code class="docutils literal notranslate"><span class="pre">enc.rhos</span></code>). A
-scaling constant (<code class="docutils literal notranslate"><span class="pre">len(data)</span> <span class="pre">/</span> <span class="pre">float(minibatch_size)</span></code>) is set
-automatically (as we specified it in the model saying what’s the
-<code class="docutils literal notranslate"><span class="pre">total_size</span></code>) to compensate for the size of mini-batches of the
-corresponding log probability terms in the evidence lower bound (ELBO),
-the objective of the variational inference.</p>
-<p>The scaling constant for the observed random variables is set in the
-same way.</p>
-<p>We can also check the architecture of the decoding network, as we did
-for the encoding network.</p>
+<p>This argument is an <code class="docutils literal notranslate"><span class="pre">OrderedDict</span></code> whose keys are random variables to which the decoded variational parameters are set (<code class="docutils literal notranslate"><span class="pre">zs</span></code> in this model). Each value of the dictionary contains two Theano expressions representing variational mean (<code class="docutils literal notranslate"><span class="pre">enc.means</span></code>) and rhos (<code class="docutils literal notranslate"><span class="pre">enc.rhos</span></code>). A scaling constant (<code class="docutils literal notranslate"><span class="pre">len(data)</span> <span class="pre">/</span> <span class="pre">float(minibatch_size)</span></code>) is set automatically (as we specified it in the model saying what’s the <code class="docutils literal notranslate"><span class="pre">total_size</span></code>) to compensate for the size of mini-batches of the corresponding log
+probability terms in the evidence lower bound (ELBO), the objective of the variational inference.</p>
+<p>The scaling constant for the observed random variables is set in the same way.</p>
+<p>We can also check the architecture of the decoding network, as we did for the encoding network.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -723,8 +715,7 @@ _________________________________________________________________
 <h2>Inference<a class="headerlink" href="#Inference" title="Permalink to this headline">¶</a></h2>
 <p>Let’s use ADVI to fit the model.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -745,7 +736,7 @@ _________________________________________________________________
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Average Loss = 1.9145e+07: 100%|██████████| 15000/15000 [3:02:18&lt;00:00,  1.28it/s]
 Finished [100%]: Average Loss = 1.9133e+07
@@ -754,11 +745,9 @@ Finished [100%]: Average Loss = 1.9133e+07
 </div>
 <div class="section" id="Results">
 <h2>Results<a class="headerlink" href="#Results" title="Permalink to this headline">¶</a></h2>
-<p>We can plot the trace of the negative ELBO obtained during optimization,
-to verify convergence.</p>
+<p>We can plot the trace of the negative ELBO obtained during optimization, to verify convergence.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -773,13 +762,9 @@ to verify convergence.</p>
 <img alt="../_images/notebooks_convolutional_vae_keras_advi_34_0.png" src="../_images/notebooks_convolutional_vae_keras_advi_34_0.png" />
 </div>
 </div>
-<p>Finally, we can plot the distribution of the images in the latent space.
-To do this, we make a 2-dimensional grid of points and feed them into
-the decoding network. The mean of <span class="math notranslate nohighlight">\(p(\mathbf{x}|\mathbf{z})\)</span> is
-the image corresponding to the samples on the grid.</p>
+<p>Finally, we can plot the distribution of the images in the latent space. To do this, we make a 2-dimensional grid of points and feed them into the decoding network. The mean of <span class="math notranslate nohighlight">\(p(\mathbf{x}|\mathbf{z})\)</span> is the image corresponding to the samples on the grid.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -807,84 +792,22 @@ the image corresponding to the samples on the grid.</p>
 </div>
 
 
-          </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/pymc3_logo.jpg" alt="Logo"/>
-            </a></p>
-<h1 class="logo"><a href="../index.html">PyMC3</a></h1>
-
-
-
-<p class="blurb">Probabilistic Programming in Python: Bayesian Modeling and Probabilistic Machine Learning with Theano</p>
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../prob_dists.html">Probability Distributions</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#howto">Howto</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#applied">Applied</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#glm">GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#survival-analysis">Survival Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#gaussian-processes">Gaussian Processes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#mixture-models">Mixture Models</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#variational-inference">Variational Inference</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="GLM-hierarchical-advi-minibatch.html">GLM: Mini-batch ADVI on hierarchical regression model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lda-advi-aevb.html">Automatic autoencoding variational Bayes for latent dirichlet allocation with PyMC3</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bayesian_neural_network_advi.html">Variational Inference: Bayesian Neural Networks</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Convolutional variational autoencoder with PyMC3 and Keras</a></li>
-<li class="toctree-l3"><a class="reference internal" href="empirical-approx-overview.html">Empirical Approximation overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="normalizing_flows_overview.html">Normalizing Flows Overview</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#stochastic-gradient">Stochastic Gradient</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+<div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <a href="https://github.com/pymc-devs/pymc3"><i class="github icon large"></i></a>
+        <a href="https://twitter.com/pymc_devs"><i class="twitter icon large"></i></a>
+        <a href="https://discourse.pymc.io/"><i class="discourse icon large"></i></a>
     </div>
-    <div class="footer">
-      &copy;2017, The PyMC Development Team.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
-      
-      |
-      <a href="../_sources/notebooks/convolutional_vae_keras_advi.ipynb.txt"
-          rel="nofollow">Page source</a>
+    <div class="ui center aligned container">
+        <p>
+            &copy; Copyright 2018, The PyMC Development Team.
+        </p>
+        <p>
+            Created using <a href="https://sphinx-doc.org/">Sphinx</a> 2.0.1.<br />
+        </p>
     </div>
-
-    
-
-    
+</div>
   </body>
 </html>

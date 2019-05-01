@@ -1,39 +1,63 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>PyMC3 Modeling tips and heuristic &#8212; PyMC3 3.5.rc1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <title>PyMC3 Modeling tips and heuristic &#8212; PyMC3 3.5 documentation</title>
+    <link rel="stylesheet" href="../_static/semantic-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script type="text/javascript" src="../_static/highlight.min.js"></script>
+    <script type="text/javascript" src="../_static/semantic.min.js"></script>
+    <link rel="shortcut icon" href="../_static/PyMC3.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="LKJ Cholesky Covariance Priors for Multivariate Normal Models" href="LKJ.html" />
-    <link rel="prev" title="How to debug a model" href="howto_debugging.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+<script>hljs.initHighlightingOnLoad();</script>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+
 
   </head><body>
-  
+<div class="ui vertical center aligned">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
+    <div class="ui container">
+        <div class="ui large secondary pointing menu">
+            <a class="item" href="/">
+                <img class="ui bottom aligned tiny image" src="https://cdn.rawgit.com/pymc-devs/pymc3/master/docs/logos/svg/PyMC3_banner.svg" />
+            </a>
+             <a href="../nb_tutorials/index.html" class="item">Tutorials</a> <a href="../nb_examples/index.html" class="item">Examples</a> <a href="../learn.html" class="item">Books + Videos</a> <a href="../api.html" class="item">API</a> <a href="../developer_guide.html" class="item">Developer Guide</a> <a href="../history.html" class="item">About PyMC3</a>
             
+            <div class="right menu">
+                <div class="item">
+                    <form class="ui icon input" action="../search.html" method="get">
+                        <input type="text" placeholder="Search..." name="q" />
+                        <i class="search link icon"></i>
+                    </form>
+                </div>
+                <a class="item" href="https://github.com/pymc-devs/pymc3"><i class="github blue icon large"></i></a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="ui container" role="main">
+    
+
+    <div class="ui vertical segment">
+        
   
 <style>
 /* CSS for nbsphinx extension */
@@ -89,18 +113,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 7ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -140,9 +164,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -150,7 +174,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -199,10 +223,43 @@ div.nboutput div.output_area.stderr {
 
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
 </style>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -231,71 +288,32 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 <div class="section" id="PyMC3-Modeling-tips-and-heuristic">
 <h1>PyMC3 Modeling tips and heuristic<a class="headerlink" href="#PyMC3-Modeling-tips-and-heuristic" title="Permalink to this headline">¶</a></h1>
-<p>A walkthrough of implementing a Conditional Autoregressive (CAR) model
-in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>, with <code class="docutils literal notranslate"><span class="pre">WinBugs</span></code>/<code class="docutils literal notranslate"><span class="pre">PyMC2</span></code> and <code class="docutils literal notranslate"><span class="pre">STAN</span></code> code as
-references.</p>
+<p>A walkthrough of implementing a Conditional Autoregressive (CAR) model in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>, with <code class="docutils literal notranslate"><span class="pre">WinBugs</span></code>/<code class="docutils literal notranslate"><span class="pre">PyMC2</span></code> and <code class="docutils literal notranslate"><span class="pre">STAN</span></code> code as references.</p>
 <ul class="simple">
-<li>Notebook Written by <a class="reference external" href="https://www.github.com/junpenglao/">Junpeng
-Lao</a>, inspired by <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>
-<a class="reference external" href="https://github.com/pymc-devs/pymc3/issues/2022">issue#2022</a>,
-<a class="reference external" href="https://github.com/pymc-devs/pymc3/issues/2066">issue#2066</a> and
-<a class="reference external" href="https://github.com/pymc-devs/pymc3/issues/2066#issuecomment-296397012">comments</a>.
-I would like to thank [&#64;denadai2](<a class="reference external" href="https://github.com/denadai2">https://github.com/denadai2</a>),
-[&#64;aseyboldt](<a class="reference external" href="https://github.com/aseyboldt">https://github.com/aseyboldt</a>), and
-[&#64;twiecki](<a class="reference external" href="https://github.com/twiecki">https://github.com/twiecki</a>) for the helpful discussion.</li>
+<li><p>Notebook Written by <a class="reference external" href="https://www.github.com/junpenglao/">Junpeng Lao</a>, inspired by <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> <a class="reference external" href="https://github.com/pymc-devs/pymc3/issues/2022">issue#2022</a>, <a class="reference external" href="https://github.com/pymc-devs/pymc3/issues/2066">issue#2066</a> and <a class="reference external" href="https://github.com/pymc-devs/pymc3/issues/2066#issuecomment-296397012">comments</a>. I would like to thank [&#64;denadai2](<a class="reference external" href="https://github.com/denadai2">https://github.com/denadai2</a>), [&#64;aseyboldt](<a class="reference external" href="https://github.com/aseyboldt">https://github.com/aseyboldt</a>), and [&#64;twiecki](<a class="reference external" href="https://github.com/twiecki">https://github.com/twiecki</a>) for the helpful discussion.</p></li>
 </ul>
-<p>As a probabilistic language, there are some fundamental differences
-between <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> and other alternatives such as <code class="docutils literal notranslate"><span class="pre">WinBugs</span></code>, <code class="docutils literal notranslate"><span class="pre">JAGS</span></code>,
-and <code class="docutils literal notranslate"><span class="pre">STAN</span></code>. In this notebook, I will summarise some heuristics and
-intuition I got over the past two years using <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>. I will outline
-some thinking in how I approach a modelling problem using <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>, and
-how thinking in linear algebra solves most of the programming problems.
-I hope this notebook will shed some light onto the design and features
-of <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>, and similar languages that are built on linear algebra
-packages with a static world view (e.g., Edward, which is based on
-Tensorflow).</p>
-<p>For more resources comparing between PyMC3 codes and other probabilistic
-languages: * <a class="reference external" href="https://github.com/aloctavodia/Doing_bayesian_data_analysis">PyMC3 port of “Doing Bayesian Data Analysis” - PyMC3 vs
-WinBugs/JAGS/STAN</a>
-* <a class="reference external" href="https://github.com/junpenglao/Bayesian-Cognitive-Modeling-in-Pymc3">PyMC3 port of “Bayesian Cognitive Modeling” - PyMC3 vs
-WinBugs/JAGS/STAN</a>
-* <a class="reference external" href="https://github.com/aloctavodia/Statistical-Rethinking-with-Python-and-PyMC3">[WIP] PyMC3 port of “Statistical Rethinking” - PyMC3 vs
+<p>As a probabilistic language, there are some fundamental differences between <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> and other alternatives such as <code class="docutils literal notranslate"><span class="pre">WinBugs</span></code>, <code class="docutils literal notranslate"><span class="pre">JAGS</span></code>, and <code class="docutils literal notranslate"><span class="pre">STAN</span></code>. In this notebook, I will summarise some heuristics and intuition I got over the past two years using <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>. I will outline some thinking in how I approach a modelling problem using <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>, and how thinking in linear algebra solves most of the programming problems. I hope this notebook will shed some light onto the design and features of
+<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>, and similar languages that are built on linear algebra packages with a static world view (e.g., Edward, which is based on Tensorflow).</p>
+<p>For more resources comparing between PyMC3 codes and other probabilistic languages: * <a class="reference external" href="https://github.com/aloctavodia/Doing_bayesian_data_analysis">PyMC3 port of “Doing Bayesian Data Analysis” - PyMC3 vs WinBugs/JAGS/STAN</a> * <a class="reference external" href="https://github.com/junpenglao/Bayesian-Cognitive-Modeling-in-Pymc3">PyMC3 port of “Bayesian Cognitive Modeling” - PyMC3 vs WinBugs/JAGS/STAN</a> * <a class="reference external" href="https://github.com/aloctavodia/Statistical-Rethinking-with-Python-and-PyMC3">[WIP] PyMC3 port of “Statistical Rethinking” - PyMC3 vs
 STAN</a></p>
 <div class="section" id="Background-information">
 <h2>Background information<a class="headerlink" href="#Background-information" title="Permalink to this headline">¶</a></h2>
 <div class="line-block">
-<div class="line">Suppose we want to implement a <a href="#id1"><span class="problematic" id="id2">`</span></a>Conditional Autoregressive (CAR)</div>
+<div class="line">Suppose we want to implement a <a class="reference external" href="http://www.statsref.com/HTML/index.html?car_models.html">Conditional Autoregressive (CAR) model</a> with examples in <a class="reference external" href="http://glau.ca/?p=340">WinBugs/PyMC2</a> and <a class="reference external" href="http://mc-stan.org/documentation/case-studies/mbjoseph-CARStan.html">STAN</a>.</div>
+<div class="line">For the sake of brevity, I will not go into the details of the CAR model. The essential idea is autocorrelation, which is informally “correlation with itself”. In a CAR model, the probability of values estimated at any given location <span class="math notranslate nohighlight">\(y_i\)</span> are conditional on some neighboring values <span class="math notranslate nohighlight">\(y_j, _{j \neq i}\)</span> (in another word, correlated/covariated with these values):</div>
 </div>
-<p>model &lt;<a class="reference external" href="http://www.statsref.com/HTML/index.html?car_models.html">http://www.statsref.com/HTML/index.html?car_models.html</a>&gt;`__ with
-examples in <a class="reference external" href="http://glau.ca/?p=340">WinBugs/PyMC2</a> and
-<a class="reference external" href="http://mc-stan.org/documentation/case-studies/mbjoseph-CARStan.html">STAN</a>.
-| For the sake of brevity, I will not go into the details of the CAR
-model. The essential idea is autocorrelation, which is informally
-“correlation with itself”. In a CAR model, the probability of values
-estimated at any given location <span class="math notranslate nohighlight">\(y_i\)</span> are conditional on some
-neighboring values <span class="math notranslate nohighlight">\(y_j, _{j \neq i}\)</span> (in another word,
-correlated/covariated with these values):</p>
 <div class="math notranslate nohighlight">
 \[y_i \mid y_j, j \neq i \sim \mathcal{N}(\alpha \sum_{j = 1}^n b_{ij} y_j, \sigma_i^{2})\]</div>
-<p>where <span class="math notranslate nohighlight">\(\sigma_i^{2}\)</span> is a spatially varying covariance parameter,
-and <span class="math notranslate nohighlight">\(b_{ii} = 0\)</span>.</p>
-<p>Here we will demonstrate the implementation of a CAR model using a
-canonical example: the lip cancer risk data in Scotland between 1975 and
-1980. The original data is from (Kemp et al. 1985). This dataset
-includes observed lip cancer case counts at 56 spatial units in
-Scotland, with the expected number of cases as intercept, and an
-area-specific continuous variable coded for the proportion of the
-population employed in agriculture, fishing, or forestry (AFF). We want
-to model how lip cancer rates (<code class="docutils literal notranslate"><span class="pre">O</span></code> below) relate to AFF (<code class="docutils literal notranslate"><span class="pre">aff</span></code>
-below), as exposure to sunlight is a risk factor.</p>
+<p>where <span class="math notranslate nohighlight">\(\sigma_i^{2}\)</span> is a spatially varying covariance parameter, and <span class="math notranslate nohighlight">\(b_{ii} = 0\)</span>.</p>
+<p>Here we will demonstrate the implementation of a CAR model using a canonical example: the lip cancer risk data in Scotland between 1975 and 1980. The original data is from (Kemp et al. 1985). This dataset includes observed lip cancer case counts at 56 spatial units in Scotland, with the expected number of cases as intercept, and an area-specific continuous variable coded for the proportion of the population employed in agriculture, fishing, or forestry (AFF). We want to model how lip cancer
+rates (<code class="docutils literal notranslate"><span class="pre">O</span></code> below) relate to AFF (<code class="docutils literal notranslate"><span class="pre">aff</span></code> below), as exposure to sunlight is a risk factor.</p>
 <div class="math notranslate nohighlight">
 \[O_i \sim \mathcal{Poisson}(\text{exp}(\beta_0 + \beta_1*aff + \phi_i + \log(\text{E}_i)))\]</div>
 <div class="math notranslate nohighlight">
 \[\phi_i \mid \phi_j, j \neq i \sim \mathcal{N}(\alpha \sum_{j = 1}^n b_{ij} \phi_j, \sigma_i^{2})\]</div>
 <p>Setting up the data:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -458,8 +476,7 @@ below), as exposure to sunlight is a risk factor.</p>
 </div>
 <div class="section" id="A-WinBugs/PyMC2-implementation">
 <h2>A WinBugs/PyMC2 implementation<a class="headerlink" href="#A-WinBugs/PyMC2-implementation" title="Permalink to this headline">¶</a></h2>
-<p>The classical <code class="docutils literal notranslate"><span class="pre">WinBugs</span></code> implementation (more information
-<a class="reference external" href="http://glau.ca/?p=340">here</a>):</p>
+<p>The classical <code class="docutils literal notranslate"><span class="pre">WinBugs</span></code> implementation (more information <a class="reference external" href="http://glau.ca/?p=340">here</a>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span>
 <span class="p">{</span>
    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">regions</span><span class="p">)</span> <span class="p">{</span>
@@ -482,11 +499,7 @@ below), as exposure to sunlight is a risk factor.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The main challenge to porting this model to <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> is the
-<code class="docutils literal notranslate"><span class="pre">car.normal</span></code> function in <code class="docutils literal notranslate"><span class="pre">WinBugs</span></code>. It is a likelihood function that
-conditions each realization on some neigbour realization (a smoothed
-property). In <code class="docutils literal notranslate"><span class="pre">PyMC2</span></code>, it could be implemented as a <cite>custom likelihood
-function (a ``&#64;stochastic`</cite> node) <code class="docutils literal notranslate"><span class="pre">mu_phi</span></code> &lt;<a class="reference external" href="http://glau.ca/?p=340">http://glau.ca/?p=340</a>&gt;`__:</p>
+<p>The main challenge to porting this model to <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> is the <code class="docutils literal notranslate"><span class="pre">car.normal</span></code> function in <code class="docutils literal notranslate"><span class="pre">WinBugs</span></code>. It is a likelihood function that conditions each realization on some neigbour realization (a smoothed property). In <code class="docutils literal notranslate"><span class="pre">PyMC2</span></code>, it could be implemented as a <cite>custom likelihood function (a ``&#64;stochastic`</cite> node) <code class="docutils literal notranslate"><span class="pre">mu_phi</span></code> &lt;<a class="reference external" href="http://glau.ca/?p=340">http://glau.ca/?p=340</a>&gt;`__:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@stochastic</span>
 <span class="k">def</span> <span class="nf">mu_phi</span><span class="p">(</span><span class="n">tau</span><span class="o">=</span><span class="n">tau_c</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)):</span>
     <span class="c1"># Calculate mu based on average of neighbours</span>
@@ -496,37 +509,16 @@ function (a ``&#64;stochastic`</cite> node) <code class="docutils literal notran
     <span class="k">return</span> <span class="n">normal_like</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">taux</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>We can just define <code class="docutils literal notranslate"><span class="pre">mu_phi</span></code> similarly and wrap it in a
-<code class="docutils literal notranslate"><span class="pre">pymc3.DensityDist</span></code>, however, doing so usually results in a very slow
-model (both in compling and sampling). In general, porting pymc2 code
-into pymc3 (or even generally porting <code class="docutils literal notranslate"><span class="pre">WinBugs</span></code>, <code class="docutils literal notranslate"><span class="pre">JAGS</span></code>, or <code class="docutils literal notranslate"><span class="pre">STAN</span></code>
-code into <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>) that use a <code class="docutils literal notranslate"><span class="pre">for</span></code> loops tend to perform poorly in
-<code class="docutils literal notranslate"><span class="pre">theano</span></code>, the backend of <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>.</p>
-<p>The underlying mechanism in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> is very different compared to
-<code class="docutils literal notranslate"><span class="pre">PyMC2</span></code>, using <code class="docutils literal notranslate"><span class="pre">for</span></code> loops to generate RV or stacking multiple RV
-with arguments such as
-<code class="docutils literal notranslate"><span class="pre">[pm.Binomial('obs%'%i,</span> <span class="pre">p[i],</span> <span class="pre">n)</span> <span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(K)]</span></code> generate
-unnecessary large number of nodes in <code class="docutils literal notranslate"><span class="pre">theano</span></code> graph, which then slows
-down compilation appreciably.</p>
-<p>The easiest way is to move the loop out of <code class="docutils literal notranslate"><span class="pre">pm.Model</span></code>. And usually is
-not difficult to do. For example, in <code class="docutils literal notranslate"><span class="pre">Stan</span></code> you can have a
-<code class="docutils literal notranslate"><span class="pre">transformed</span> <span class="pre">data{}</span></code> block; in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> you just need to compute it
-before defining your Model.</p>
-<p>If it is absolutely necessary to use a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, you can use a
-theano loop (i.e., <code class="docutils literal notranslate"><span class="pre">theano.scan</span></code>), which you can find some
-introduction on the <a class="reference external" href="http://deeplearning.net/software/theano/tutorial/loop.html">theano
-website</a>
-and see a usecase in PyMC3 <a class="reference external" href="https://github.com/pymc-devs/pymc3/blob/master/pymc3/distributions/timeseries.py#L125-L130">timeseries
-distribution</a>.</p>
+<p>We can just define <code class="docutils literal notranslate"><span class="pre">mu_phi</span></code> similarly and wrap it in a <code class="docutils literal notranslate"><span class="pre">pymc3.DensityDist</span></code>, however, doing so usually results in a very slow model (both in compling and sampling). In general, porting pymc2 code into pymc3 (or even generally porting <code class="docutils literal notranslate"><span class="pre">WinBugs</span></code>, <code class="docutils literal notranslate"><span class="pre">JAGS</span></code>, or <code class="docutils literal notranslate"><span class="pre">STAN</span></code> code into <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>) that use a <code class="docutils literal notranslate"><span class="pre">for</span></code> loops tend to perform poorly in <code class="docutils literal notranslate"><span class="pre">theano</span></code>, the backend of <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>.</p>
+<p>The underlying mechanism in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> is very different compared to <code class="docutils literal notranslate"><span class="pre">PyMC2</span></code>, using <code class="docutils literal notranslate"><span class="pre">for</span></code> loops to generate RV or stacking multiple RV with arguments such as <code class="docutils literal notranslate"><span class="pre">[pm.Binomial('obs%'%i,</span> <span class="pre">p[i],</span> <span class="pre">n)</span> <span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(K)]</span></code> generate unnecessary large number of nodes in <code class="docutils literal notranslate"><span class="pre">theano</span></code> graph, which then slows down compilation appreciably.</p>
+<p>The easiest way is to move the loop out of <code class="docutils literal notranslate"><span class="pre">pm.Model</span></code>. And usually is not difficult to do. For example, in <code class="docutils literal notranslate"><span class="pre">Stan</span></code> you can have a <code class="docutils literal notranslate"><span class="pre">transformed</span> <span class="pre">data{}</span></code> block; in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> you just need to compute it before defining your Model.</p>
+<p>If it is absolutely necessary to use a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, you can use a theano loop (i.e., <code class="docutils literal notranslate"><span class="pre">theano.scan</span></code>), which you can find some introduction on the <a class="reference external" href="http://deeplearning.net/software/theano/tutorial/loop.html">theano website</a> and see a usecase in PyMC3 <a class="reference external" href="https://github.com/pymc-devs/pymc3/blob/master/pymc3/distributions/timeseries.py#L125-L130">timeseries distribution</a>.</p>
 </div>
 <div class="section" id="PyMC3-implementation-using-theano.scan">
 <h2>PyMC3 implementation using <code class="docutils literal notranslate"><span class="pre">theano.scan</span></code><a class="headerlink" href="#PyMC3-implementation-using-theano.scan" title="Permalink to this headline">¶</a></h2>
-<p>So lets try to implement the CAR model using <code class="docutils literal notranslate"><span class="pre">theano.scan</span></code>. First we
-create a <code class="docutils literal notranslate"><span class="pre">theano</span></code> function with <code class="docutils literal notranslate"><span class="pre">theano.scan</span></code> and check if it really
-works by comparing its result to the for-loop.</p>
+<p>So lets try to implement the CAR model using <code class="docutils literal notranslate"><span class="pre">theano.scan</span></code>. First we create a <code class="docutils literal notranslate"><span class="pre">theano</span></code> function with <code class="docutils literal notranslate"><span class="pre">theano.scan</span></code> and check if it really works by comparing its result to the for-loop.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -597,11 +589,9 @@ works by comparing its result to the for-loop.</p>
   0.2902995   0.29128088]
 </pre></div></div>
 </div>
-<p>Since it produces the same result as the orignial for-loop, we will wrap
-it as a new distribution with a log-likelihood function in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>.</p>
+<p>Since it produces the same result as the orignial for-loop, we will wrap it as a new distribution with a log-likelihood function in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -614,8 +604,7 @@ it as a new distribution with a log-likelihood function in <code class="docutils
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -656,8 +645,7 @@ it as a new distribution with a log-likelihood function in <code class="docutils
 </div>
 <p>We then use it in our <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> version of the CAR model:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -692,14 +680,14 @@ it as a new distribution with a log-likelihood function in <code class="docutils
     <span class="c1"># Proportion sptial variance</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">sd_c</span><span class="o">/</span><span class="p">(</span><span class="n">sd_h</span><span class="o">+</span><span class="n">sd_c</span><span class="p">))</span>
 
-    <span class="n">trace1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mf">3e3</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nuts_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;max_treedepth&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
+    <span class="n">trace1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mf">3e3</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">max_treedepth</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using ADVI...
@@ -710,8 +698,7 @@ Interrupted at 16,500 [8%]: Average Loss = 337
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -723,12 +710,11 @@ Interrupted at 16,500 [8%]: Average Loss = 337
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_PyMC3_tips_and_heuristic_13_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_13_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_PyMC3_tips_and_heuristic_13_0.png"><img alt="../_images/notebooks_PyMC3_tips_and_heuristic_13_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_13_0.png" style="width: 854px; height: 424px;" /></a>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -740,31 +726,18 @@ Interrupted at 16,500 [8%]: Average Loss = 337
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_PyMC3_tips_and_heuristic_14_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_14_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_PyMC3_tips_and_heuristic_14_0.png"><img alt="../_images/notebooks_PyMC3_tips_and_heuristic_14_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_14_0.png" style="width: 855px; height: 173px;" /></a>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">theano.scan</span></code> is much faster than using a python for loop, but it is
-still quite slow. One approach for improving it is to use linear
-algebra. That is, we should try to find a way to use matrix
-multiplication instead of looping (if you have experience in using
-MATLAB, it is the same philosophy). In our case, we can totally do that.</p>
-<p>For a similar problem, you can also have a look of <a class="reference external" href="https://github.com/junpenglao/Bayesian-Cognitive-Modeling-in-Pymc3">my port of Lee and
-Wagenmakers’
-book</a>.
-For example, in Chapter 19, the STAN code use <a class="reference external" href="https://github.com/stan-dev/example-models/blob/master/Bayesian_Cognitive_Modeling/CaseStudies/NumberConcepts/NumberConcept_1_Stan.R#L28-L59">a for loop to generate
-the likelihood
-function</a>,
-and I <a class="reference external" href="http://nbviewer.jupyter.org/github/junpenglao/Bayesian-Cognitive-Modeling-in-Pymc3/blob/master/CaseStudies/NumberConceptDevelopment.ipynb#19.1-Knower-level-model-for-Give-N">generate the matrix outside and use matrix multiplication
-etc</a>
-to archive the same purpose.</p>
+<p><code class="docutils literal notranslate"><span class="pre">theano.scan</span></code> is much faster than using a python for loop, but it is still quite slow. One approach for improving it is to use linear algebra. That is, we should try to find a way to use matrix multiplication instead of looping (if you have experience in using MATLAB, it is the same philosophy). In our case, we can totally do that.</p>
+<p>For a similar problem, you can also have a look of <a class="reference external" href="https://github.com/junpenglao/Bayesian-Cognitive-Modeling-in-Pymc3">my port of Lee and Wagenmakers’ book</a>. For example, in Chapter 19, the STAN code use <a class="reference external" href="https://github.com/stan-dev/example-models/blob/master/Bayesian_Cognitive_Modeling/CaseStudies/NumberConcepts/NumberConcept_1_Stan.R#L28-L59">a for loop to generate the likelihood function</a>, and I <a class="reference external" href="http://nbviewer.jupyter.org/github/junpenglao/Bayesian-Cognitive-Modeling-in-Pymc3/blob/master/CaseStudies/NumberConceptDevelopment.ipynb#19.1-Knower-level-model-for-Give-N">generate the matrix outside and use matrix multiplication
+etc</a> to archive the same purpose.</p>
 </div>
-<div class="section" id="PyMC3-implementation-using-matrix-&quot;trick&quot;">
-<h2>PyMC3 implementation using matrix “trick”<a class="headerlink" href="#PyMC3-implementation-using-matrix-"trick"" title="Permalink to this headline">¶</a></h2>
-<p>Again, we try on some simulation data to make sure the implementation is
-correct.</p>
+<div class="section" id="PyMC3-implementation-using-matrix-“trick”">
+<h2>PyMC3 implementation using matrix “trick”<a class="headerlink" href="#PyMC3-implementation-using-matrix-“trick”" title="Permalink to this headline">¶</a></h2>
+<p>Again, we try on some simulation data to make sure the implementation is correct.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -818,11 +791,9 @@ correct.</p>
   0.25436263  0.57070506]
 </pre></div></div>
 </div>
-<p>Now create a new CAR distribution with the matrix multiplication instead
-of <code class="docutils literal notranslate"><span class="pre">theano.scan</span></code> to get the <code class="docutils literal notranslate"><span class="pre">mu</span></code></p>
+<p>Now create a new CAR distribution with the matrix multiplication instead of <code class="docutils literal notranslate"><span class="pre">theano.scan</span></code> to get the <code class="docutils literal notranslate"><span class="pre">mu</span></code></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -855,8 +826,7 @@ of <code class="docutils literal notranslate"><span class="pre">theano.scan</spa
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -891,14 +861,14 @@ of <code class="docutils literal notranslate"><span class="pre">theano.scan</spa
     <span class="c1"># Proportion sptial variance</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">sd_c</span><span class="o">/</span><span class="p">(</span><span class="n">sd_h</span><span class="o">+</span><span class="n">sd_c</span><span class="p">))</span>
 
-    <span class="n">trace2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mf">3e3</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nuts_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;max_treedepth&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
+    <span class="n">trace2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mf">3e3</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">max_treedepth</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using ADVI...
@@ -908,11 +878,9 @@ Interrupted at 16,500 [8%]: Average Loss = 337
 100%|██████████| 4000/4000.0 [02:36&lt;00:00, 25.58it/s]
 </pre></div></div>
 </div>
-<p><strong>As you can see, it is appreciably faster using matrix
-multiplication.</strong></p>
+<p><strong>As you can see, it is appreciably faster using matrix multiplication.</strong></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -924,12 +892,11 @@ multiplication.</strong></p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_PyMC3_tips_and_heuristic_22_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_22_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_PyMC3_tips_and_heuristic_22_0.png"><img alt="../_images/notebooks_PyMC3_tips_and_heuristic_22_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_22_0.png" style="width: 854px; height: 424px;" /></a>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -941,26 +908,19 @@ multiplication.</strong></p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_PyMC3_tips_and_heuristic_23_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_23_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_PyMC3_tips_and_heuristic_23_0.png"><img alt="../_images/notebooks_PyMC3_tips_and_heuristic_23_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_23_0.png" style="width: 855px; height: 173px;" /></a>
 </div>
 </div>
 </div>
 <div class="section" id="PyMC3-implementation-using-Matrix-multiplication">
 <h2>PyMC3 implementation using Matrix multiplication<a class="headerlink" href="#PyMC3-implementation-using-Matrix-multiplication" title="Permalink to this headline">¶</a></h2>
-<p>There are almost always multiple ways to formulate a particular model.
-Some approaches work better than the others under different contexts
-(size of your dataset, properties of the sampler, etc).</p>
+<p>There are almost always multiple ways to formulate a particular model. Some approaches work better than the others under different contexts (size of your dataset, properties of the sampler, etc).</p>
 <p>In this case, we can expressed the CAR prior as:</p>
 <div class="math notranslate nohighlight">
 \[\phi \sim \mathcal{N}(0, [D_\tau (I - \alpha B)]^{-1}).\]</div>
-<p>You can find more details in the original <a class="reference external" href="http://mc-stan.org/documentation/case-studies/mbjoseph-CARStan.html">Stan case
-study</a>.
-You might come across similar constructs in Gaussian Process, which
-result in a zero-mean Gaussian distribution conditioned on a covariance
-function.</p>
-<p>In the <code class="docutils literal notranslate"><span class="pre">Stan</span></code> Code, matrix D is generated in the model using a
-<code class="docutils literal notranslate"><span class="pre">transformed</span> <span class="pre">data{}</span></code> block:</p>
-<div class="highlight-Stan notranslate"><div class="highlight"><pre><span></span><span class="kn">transformed data</span><span class="p">{</span>
+<p>You can find more details in the original <a class="reference external" href="http://mc-stan.org/documentation/case-studies/mbjoseph-CARStan.html">Stan case study</a>. You might come across similar constructs in Gaussian Process, which result in a zero-mean Gaussian distribution conditioned on a covariance function.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">Stan</span></code> Code, matrix D is generated in the model using a <code class="docutils literal notranslate"><span class="pre">transformed</span> <span class="pre">data{}</span></code> block:</p>
+<div class="highlight-stan notranslate"><div class="highlight"><pre><span></span><span class="kn">transformed data</span><span class="p">{</span>
   <span class="kt">vector</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="n">zeros</span><span class="p">;</span>
   <span class="kt">matrix</span><span class="o">&lt;</span><span class="n">lower</span> <span class="o">=</span> <span class="mi">0</span><span class="o">&gt;</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">]</span> <span class="n">D</span><span class="p">;</span>
   <span class="p">{</span>
@@ -976,8 +936,7 @@ function.</p>
 </div>
 <p>We can generate the same matrix quite easily:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -995,11 +954,9 @@ function.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>since the precision matrix just generated by some matrix multiplication,
-we can do just that in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>:</p>
+<p>since the precision matrix just generated by some matrix multiplication, we can do just that in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1025,7 +982,7 @@ we can do just that in <code class="docutils literal notranslate"><span class="p
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using ADVI...
@@ -1036,8 +993,7 @@ Interrupted at 16,700 [8%]: Average Loss = 265.66
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1049,12 +1005,11 @@ Interrupted at 16,700 [8%]: Average Loss = 265.66
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_PyMC3_tips_and_heuristic_28_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_28_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_PyMC3_tips_and_heuristic_28_0.png"><img alt="../_images/notebooks_PyMC3_tips_and_heuristic_28_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_28_0.png" style="width: 854px; height: 424px;" /></a>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1066,23 +1021,15 @@ Interrupted at 16,700 [8%]: Average Loss = 265.66
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_PyMC3_tips_and_heuristic_29_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_29_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_PyMC3_tips_and_heuristic_29_0.png"><img alt="../_images/notebooks_PyMC3_tips_and_heuristic_29_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_29_0.png" style="width: 855px; height: 173px;" /></a>
 </div>
 </div>
-<p>Notice that since the model parameterization is different than in the
-<code class="docutils literal notranslate"><span class="pre">WinBugs</span></code> model, the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> can’t be interpreted in the same way.</p>
+<p>Notice that since the model parameterization is different than in the <code class="docutils literal notranslate"><span class="pre">WinBugs</span></code> model, the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> can’t be interpreted in the same way.</p>
 </div>
 <div class="section" id="PyMC3-implementation-using-Sparse-Matrix">
 <h2>PyMC3 implementation using Sparse Matrix<a class="headerlink" href="#PyMC3-implementation-using-Sparse-Matrix" title="Permalink to this headline">¶</a></h2>
-<p>Note that in the node
-<span class="math notranslate nohighlight">\(\phi \sim \mathcal{N}(0, [D_\tau (I - \alpha B)]^{-1})\)</span>, we are
-computing the log-likelihood for a multivariate Gaussian distribution,
-which might not scale well in high-dimensions. We can take advantage of
-the fact that the covariance matrix here
-<span class="math notranslate nohighlight">\([D_\tau (I - \alpha B)]^{-1}\)</span> is <strong>sparse</strong>, and there are faster
-ways to compute its log-likelihood.</p>
-<p>For example, a more efficient sparse representation of the CAR in
-<code class="docutils literal notranslate"><span class="pre">STAN</span></code>:</p>
+<p>Note that in the node <span class="math notranslate nohighlight">\(\phi \sim \mathcal{N}(0, [D_\tau (I - \alpha B)]^{-1})\)</span>, we are computing the log-likelihood for a multivariate Gaussian distribution, which might not scale well in high-dimensions. We can take advantage of the fact that the covariance matrix here <span class="math notranslate nohighlight">\([D_\tau (I - \alpha B)]^{-1}\)</span> is <strong>sparse</strong>, and there are faster ways to compute its log-likelihood.</p>
+<p>For example, a more efficient sparse representation of the CAR in <code class="docutils literal notranslate"><span class="pre">STAN</span></code>:</p>
 <div class="highlight-stan notranslate"><div class="highlight"><pre><span></span><span class="kn">functions</span> <span class="p">{</span>
   <span class="cm">/**</span>
 <span class="cm">  * Return the log probability of a proper conditional autoregressive (CAR) prior</span>
@@ -1157,17 +1104,10 @@ ways to compute its log-likelihood.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This is quite a lot of code to digest, so my general approach is to
-compare the intermediate steps (whenever possible) with <code class="docutils literal notranslate"><span class="pre">Stan</span></code>. In
-this case, I will try to compute
-<code class="docutils literal notranslate"><span class="pre">tau,</span> <span class="pre">alpha,</span> <span class="pre">W_sparse,</span> <span class="pre">D_sparse,</span> <span class="pre">lambda,</span> <span class="pre">n,</span> <span class="pre">W_n</span></code> outside of the
-<code class="docutils literal notranslate"><span class="pre">Stan</span></code> model in <code class="docutils literal notranslate"><span class="pre">R</span></code> and compare with my own implementation.</p>
-<p>Below is a Sparse CAR implementation in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> (<a class="reference external" href="https://github.com/pymc-devs/pymc3/issues/2066#issuecomment-296397012">see also
-here</a>).
-Again, we try to avoid using any looping, as in <code class="docutils literal notranslate"><span class="pre">STAN</span></code>.</p>
+<p>This is quite a lot of code to digest, so my general approach is to compare the intermediate steps (whenever possible) with <code class="docutils literal notranslate"><span class="pre">Stan</span></code>. In this case, I will try to compute <code class="docutils literal notranslate"><span class="pre">tau,</span> <span class="pre">alpha,</span> <span class="pre">W_sparse,</span> <span class="pre">D_sparse,</span> <span class="pre">lambda,</span> <span class="pre">n,</span> <span class="pre">W_n</span></code> outside of the <code class="docutils literal notranslate"><span class="pre">Stan</span></code> model in <code class="docutils literal notranslate"><span class="pre">R</span></code> and compare with my own implementation.</p>
+<p>Below is a Sparse CAR implementation in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> (<a class="reference external" href="https://github.com/pymc-devs/pymc3/issues/2066#issuecomment-296397012">see also here</a>). Again, we try to avoid using any looping, as in <code class="docutils literal notranslate"><span class="pre">STAN</span></code>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1223,8 +1163,7 @@ Again, we try to avoid using any looping, as in <code class="docutils literal no
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1250,7 +1189,7 @@ Again, we try to avoid using any looping, as in <code class="docutils literal no
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using ADVI...
@@ -1261,8 +1200,7 @@ Interrupted at 16,700 [8%]: Average Loss = 255.36
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1274,12 +1212,11 @@ Interrupted at 16,700 [8%]: Average Loss = 255.36
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_PyMC3_tips_and_heuristic_35_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_35_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_PyMC3_tips_and_heuristic_35_0.png"><img alt="../_images/notebooks_PyMC3_tips_and_heuristic_35_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_35_0.png" style="width: 854px; height: 424px;" /></a>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1291,17 +1228,14 @@ Interrupted at 16,700 [8%]: Average Loss = 255.36
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_PyMC3_tips_and_heuristic_36_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_36_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_PyMC3_tips_and_heuristic_36_0.png"><img alt="../_images/notebooks_PyMC3_tips_and_heuristic_36_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_36_0.png" style="width: 855px; height: 173px;" /></a>
 </div>
 </div>
-<p>As you can see above, the sparse representation returns the same
-estimates, while being much faster than any other implementation.</p>
+<p>As you can see above, the sparse representation returns the same estimates, while being much faster than any other implementation.</p>
 </div>
 <div class="section" id="A-few-other-warnings">
 <h2>A few other warnings<a class="headerlink" href="#A-few-other-warnings" title="Permalink to this headline">¶</a></h2>
-<p>In <code class="docutils literal notranslate"><span class="pre">Stan</span></code>, there is an option to write a <code class="docutils literal notranslate"><span class="pre">generated</span> <span class="pre">quantities</span></code>
-block for sample generation. Doing the similar in pymc3, however, is not
-recommended.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">Stan</span></code>, there is an option to write a <code class="docutils literal notranslate"><span class="pre">generated</span> <span class="pre">quantities</span></code> block for sample generation. Doing the similar in pymc3, however, is not recommended.</p>
 <p>Consider the following simple sample:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Data</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.9</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">])</span>
@@ -1318,52 +1252,17 @@ recommended.</p>
     <span class="n">count</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>where we intended to use
-<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">count</span> <span class="pre">=</span> <span class="pre">pm.Binomial('count',</span> <span class="pre">n=10,</span> <span class="pre">p=p,</span> <span class="pre">shape=10)</span></code> to generate
-posterior prediction. However, if the new RV added to the model is a
-discrete variable it can cause weird turbulence to the trace. You can
-see <a class="reference external" href="https://github.com/pymc-devs/pymc3/issues/1990">issue #1990</a> for
-related discussion.</p>
+<p>where we intended to use <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">count</span> <span class="pre">=</span> <span class="pre">pm.Binomial('count',</span> <span class="pre">n=10,</span> <span class="pre">p=p,</span> <span class="pre">shape=10)</span></code> to generate posterior prediction. However, if the new RV added to the model is a discrete variable it can cause weird turbulence to the trace. You can see <a class="reference external" href="https://github.com/pymc-devs/pymc3/issues/1990">issue #1990</a> for related discussion.</p>
 </div>
 <div class="section" id="Final-remarks">
 <h2>Final remarks<a class="headerlink" href="#Final-remarks" title="Permalink to this headline">¶</a></h2>
-<p>In this notebook, most of the parameter conventions (e.g., using <code class="docutils literal notranslate"><span class="pre">tau</span></code>
-when defining a Normal distribution) and choice of priors are strictly
-matched with the original code in <code class="docutils literal notranslate"><span class="pre">Winbugs</span></code> or <code class="docutils literal notranslate"><span class="pre">Stan</span></code>. However, it
-is important to note that merely porting the code from one probabilistic
-programming language to the another is not necessarily the best
-practice. The aim is not just to run the code in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>, but to make
-sure the model is appropriate so that it returns correct estimates, and
-runs efficiently (fast sampling).</p>
-<p>For example, as [&#64;aseyboldt](<a class="reference external" href="https://github.com/aseyboldt">https://github.com/aseyboldt</a>) pointed out
-<a class="reference external" href="https://github.com/pymc-devs/pymc3/pull/2080#issuecomment-297456574">here</a>
-and
-<a class="reference external" href="https://github.com/pymc-devs/pymc3/issues/1924#issue-215496293">here</a>,
-non-centered parametrizations are often a better choice than the
-centered parametrizations. In our case here, <code class="docutils literal notranslate"><span class="pre">phi</span></code> is following a
-zero-mean Normal distribution, thus it can be left out in the beginning
-and used to scale the values afterwards. Often, doing this can avoid
-correlations in the posterior (it will be slower in some cases,
-however).</p>
-<p>Another thing to keep in mind is that models can be sensitive to choices
-of prior distributions; for example, you can have a hard time using
-Normal variables with a large sd as prior. Gelman often recommends
-Cauchy or StudentT (<em>i.e.</em>, weakly-informative priors). More information
-on prior choice can be found on the <a class="reference external" href="https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations">Stan
-wiki</a>.</p>
-<p>There are always ways to improve code. Since our computational graph
-with <code class="docutils literal notranslate"><span class="pre">pm.Model()</span></code> consist of <code class="docutils literal notranslate"><span class="pre">theano</span></code> objects, we can always do
-<code class="docutils literal notranslate"><span class="pre">print(VAR_TO_CHECK.tag.test_value)</span></code> right after the declaration or
-computation to check the shape. For example, in our last example, as
-suggested by
-[&#64;aseyboldt](<a class="reference external" href="https://github.com/pymc-devs/pymc3/pull/2080#issuecomment-297456574">https://github.com/pymc-devs/pymc3/pull/2080#issuecomment-297456574</a>)
-there seem to be a lot of correlation in the posterior. That probably
-slows down NUTS quite a bit. As a debugging tool and guide for
-reparametrization you can look at the singular value decomposition of
-the standardized samples from the trace – basically the eigenvalues of
-the correlation matrix. If the problem is high dimensional you can use
-stuff from <code class="docutils literal notranslate"><span class="pre">scipy.sparse.linalg</span></code> to only compute the largest singular
-value:</p>
+<p>In this notebook, most of the parameter conventions (e.g., using <code class="docutils literal notranslate"><span class="pre">tau</span></code> when defining a Normal distribution) and choice of priors are strictly matched with the original code in <code class="docutils literal notranslate"><span class="pre">Winbugs</span></code> or <code class="docutils literal notranslate"><span class="pre">Stan</span></code>. However, it is important to note that merely porting the code from one probabilistic programming language to the another is not necessarily the best practice. The aim is not just to run the code in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>, but to make sure the model is appropriate so that it returns correct estimates, and runs
+efficiently (fast sampling).</p>
+<p>For example, as [&#64;aseyboldt](<a class="reference external" href="https://github.com/aseyboldt">https://github.com/aseyboldt</a>) pointed out <a class="reference external" href="https://github.com/pymc-devs/pymc3/pull/2080#issuecomment-297456574">here</a> and <a class="reference external" href="https://github.com/pymc-devs/pymc3/issues/1924#issue-215496293">here</a>, non-centered parametrizations are often a better choice than the centered parametrizations. In our case here, <code class="docutils literal notranslate"><span class="pre">phi</span></code> is following a zero-mean Normal distribution, thus it can be left out in the beginning and used to scale the values afterwards. Often, doing this can
+avoid correlations in the posterior (it will be slower in some cases, however).</p>
+<p>Another thing to keep in mind is that models can be sensitive to choices of prior distributions; for example, you can have a hard time using Normal variables with a large sd as prior. Gelman often recommends Cauchy or StudentT (<em>i.e.</em>, weakly-informative priors). More information on prior choice can be found on the <a class="reference external" href="https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations">Stan wiki</a>.</p>
+<p>There are always ways to improve code. Since our computational graph with <code class="docutils literal notranslate"><span class="pre">pm.Model()</span></code> consist of <code class="docutils literal notranslate"><span class="pre">theano</span></code> objects, we can always do <code class="docutils literal notranslate"><span class="pre">print(VAR_TO_CHECK.tag.test_value)</span></code> right after the declaration or computation to check the shape. For example, in our last example, as suggested by [&#64;aseyboldt](<a class="reference external" href="https://github.com/pymc-devs/pymc3/pull/2080#issuecomment-297456574">https://github.com/pymc-devs/pymc3/pull/2080#issuecomment-297456574</a>) there seem to be a lot of correlation in the posterior. That probably slows down NUTS quite a bit. As a debugging tool and guide
+for reparametrization you can look at the singular value decomposition of the standardized samples from the trace – basically the eigenvalues of the correlation matrix. If the problem is high dimensional you can use stuff from <code class="docutils literal notranslate"><span class="pre">scipy.sparse.linalg</span></code> to only compute the largest singular value:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">linalg</span><span class="p">,</span> <span class="n">sparse</span>
 
 <span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">model</span><span class="o">.</span><span class="n">dict_to_array</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">trace</span><span class="p">[</span><span class="mi">1000</span><span class="p">:]])</span><span class="o">.</span><span class="n">T</span>
@@ -1373,17 +1272,10 @@ value:</p>
 <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vh</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svds</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Then look at <code class="docutils literal notranslate"><span class="pre">plt.plot(S)</span></code> to see if any principal components are
-obvious, and check which variables are contributing by looking at the
-singular vectors: <code class="docutils literal notranslate"><span class="pre">plt.plot(U[:,</span> <span class="pre">-1]</span> <span class="pre">**</span> <span class="pre">2)</span></code>. You can get the indices
-by looking at <code class="docutils literal notranslate"><span class="pre">model.bijection.ordering.vmap</span></code>.</p>
-<p>Another great way to check the correlations in the posterior is to do a
-pairplot of the posterior (if your model doesn’t contain too many
-parameters). You can see quite clearly if and where the the posterior
-parameters are correlated.</p>
+<p>Then look at <code class="docutils literal notranslate"><span class="pre">plt.plot(S)</span></code> to see if any principal components are obvious, and check which variables are contributing by looking at the singular vectors: <code class="docutils literal notranslate"><span class="pre">plt.plot(U[:,</span> <span class="pre">-1]</span> <span class="pre">**</span> <span class="pre">2)</span></code>. You can get the indices by looking at <code class="docutils literal notranslate"><span class="pre">model.bijection.ordering.vmap</span></code>.</p>
+<p>Another great way to check the correlations in the posterior is to do a pairplot of the posterior (if your model doesn’t contain too many parameters). You can see quite clearly if and where the the posterior parameters are correlated.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1397,12 +1289,11 @@ parameters are correlated.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_PyMC3_tips_and_heuristic_40_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_40_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_PyMC3_tips_and_heuristic_40_0.png"><img alt="../_images/notebooks_PyMC3_tips_and_heuristic_40_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_40_0.png" style="width: 711px; height: 705px;" /></a>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1415,12 +1306,11 @@ parameters are correlated.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_PyMC3_tips_and_heuristic_41_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_41_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_PyMC3_tips_and_heuristic_41_0.png"><img alt="../_images/notebooks_PyMC3_tips_and_heuristic_41_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_41_0.png" style="width: 704px; height: 705px;" /></a>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1433,12 +1323,11 @@ parameters are correlated.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_PyMC3_tips_and_heuristic_42_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_42_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_PyMC3_tips_and_heuristic_42_0.png"><img alt="../_images/notebooks_PyMC3_tips_and_heuristic_42_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_42_0.png" style="width: 704px; height: 705px;" /></a>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1451,95 +1340,29 @@ parameters are correlated.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_PyMC3_tips_and_heuristic_43_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_43_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_PyMC3_tips_and_heuristic_43_0.png"><img alt="../_images/notebooks_PyMC3_tips_and_heuristic_43_0.png" src="../_images/notebooks_PyMC3_tips_and_heuristic_43_0.png" style="width: 704px; height: 705px;" /></a>
 </div>
 </div>
 </div>
 </div>
 
 
-          </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/pymc3_logo.jpg" alt="Logo"/>
-            </a></p>
-<h1 class="logo"><a href="../index.html">PyMC3</a></h1>
-
-
-
-<p class="blurb">Probabilistic Programming in Python: Bayesian Modeling and Probabilistic Machine Learning with Theano</p>
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../prob_dists.html">Probability Distributions</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#howto">Howto</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="sampler-stats.html">Sampler statistics</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Diagnosing_biased_Inference_with_Divergences.html">Diagnosing Biased Inference with Divergences</a></li>
-<li class="toctree-l3"><a class="reference internal" href="posterior_predictive.html">Posterior Predictive Checks</a></li>
-<li class="toctree-l3"><a class="reference internal" href="model_comparison.html">Model comparison</a></li>
-<li class="toctree-l3"><a class="reference internal" href="model_averaging.html">Model averaging</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Bayes_factor.html">Bayes Factors and Marginal Likelihood</a></li>
-<li class="toctree-l3"><a class="reference internal" href="howto_debugging.html">How to debug a model</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">PyMC3 Modeling tips and heuristic</a></li>
-<li class="toctree-l3"><a class="reference internal" href="LKJ.html">LKJ Cholesky Covariance Priors for Multivariate Normal Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="live_sample_plots.html">Live sample plots</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#applied">Applied</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#glm">GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#survival-analysis">Survival Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#gaussian-processes">Gaussian Processes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#mixture-models">Mixture Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#variational-inference">Variational Inference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#stochastic-gradient">Stochastic Gradient</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+<div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <a href="https://github.com/pymc-devs/pymc3"><i class="github icon large"></i></a>
+        <a href="https://twitter.com/pymc_devs"><i class="twitter icon large"></i></a>
+        <a href="https://discourse.pymc.io/"><i class="discourse icon large"></i></a>
     </div>
-    <div class="footer">
-      &copy;2017, The PyMC Development Team.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
-      
-      |
-      <a href="../_sources/notebooks/PyMC3_tips_and_heuristic.ipynb.txt"
-          rel="nofollow">Page source</a>
+    <div class="ui center aligned container">
+        <p>
+            &copy; Copyright 2018, The PyMC Development Team.
+        </p>
+        <p>
+            Created using <a href="https://sphinx-doc.org/">Sphinx</a> 2.0.1.<br />
+        </p>
     </div>
-
-    
-
-    
+</div>
   </body>
 </html>

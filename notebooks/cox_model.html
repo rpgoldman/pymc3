@@ -1,37 +1,63 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>&lt;no title&gt; &#8212; PyMC3 3.5.rc1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <title>Cox model &#8212; PyMC3 3.5 documentation</title>
+    <link rel="stylesheet" href="../_static/semantic-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script type="text/javascript" src="../_static/highlight.min.js"></script>
+    <script type="text/javascript" src="../_static/semantic.min.js"></script>
+    <link rel="shortcut icon" href="../_static/PyMC3.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+<script>hljs.initHighlightingOnLoad();</script>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+
 
   </head><body>
-  
+<div class="ui vertical center aligned">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
+    <div class="ui container">
+        <div class="ui large secondary pointing menu">
+            <a class="item" href="/">
+                <img class="ui bottom aligned tiny image" src="https://cdn.rawgit.com/pymc-devs/pymc3/master/docs/logos/svg/PyMC3_banner.svg" />
+            </a>
+             <a href="../nb_tutorials/index.html" class="item">Tutorials</a> <a href="../nb_examples/index.html" class="item">Examples</a> <a href="../learn.html" class="item">Books + Videos</a> <a href="../api.html" class="item">API</a> <a href="../developer_guide.html" class="item">Developer Guide</a> <a href="../history.html" class="item">About PyMC3</a>
             
+            <div class="right menu">
+                <div class="item">
+                    <form class="ui icon input" action="../search.html" method="get">
+                        <input type="text" placeholder="Search..." name="q" />
+                        <i class="search link icon"></i>
+                    </form>
+                </div>
+                <a class="item" href="https://github.com/pymc-devs/pymc3"><i class="github blue icon large"></i></a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="ui container" role="main">
+    
+
+    <div class="ui vertical segment">
+        
   
 <style>
 /* CSS for nbsphinx extension */
@@ -87,18 +113,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 7ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -138,9 +164,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -148,7 +174,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -197,10 +223,45 @@ div.nboutput div.output_area.stderr {
 
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
 </style>
+<div class="section" id="Cox-model">
+<h1>Cox model<a class="headerlink" href="#Cox-model" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -215,46 +276,45 @@ div.nboutput div.output_area.stderr {
 </div>
 </div>
 <p>Here is the original model, implemented in BUGS:</p>
-<div class="highlight-R notranslate"><div class="highlight"><pre><span></span>model
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">model</span>
 <span class="p">{</span>
     <span class="c1"># Set up data</span>
-        <span class="kr">for</span><span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span><span class="o">:</span>Nsubj<span class="p">)</span> <span class="p">{</span>
-            <span class="kr">for</span><span class="p">(</span>j <span class="kr">in</span> <span class="m">1</span><span class="o">:</span><span class="bp">T</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">for</span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="n">Nsubj</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nf">for</span><span class="p">(</span><span class="n">j</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="bp">T</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1"># risk set = 1 if obs.t &gt;= t</span>
-                Y<span class="p">[</span>i<span class="p">,</span>j<span class="p">]</span> <span class="o">&lt;-</span> step<span class="p">(</span>obs.t<span class="p">[</span>i<span class="p">]</span> <span class="o">-</span> <span class="kp">t</span><span class="p">[</span>j<span class="p">]</span> <span class="o">+</span> eps<span class="p">)</span>
+                <span class="n">Y[i</span><span class="p">,</span><span class="n">j]</span> <span class="o">&lt;-</span> <span class="nf">step</span><span class="p">(</span><span class="n">obs.t[i]</span> <span class="o">-</span> <span class="n">t[j]</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span>
     <span class="c1"># counting process jump = 1 if obs.t in [ t[j], t[j+1] )</span>
     <span class="c1">#                      i.e. if t[j] &lt;= obs.t &lt; t[j+1]</span>
-                dN<span class="p">[</span>i<span class="p">,</span> j<span class="p">]</span> <span class="o">&lt;-</span> Y<span class="p">[</span>i<span class="p">,</span> j<span class="p">]</span> <span class="o">*</span> step<span class="p">(</span><span class="kp">t</span><span class="p">[</span>j <span class="o">+</span> <span class="m">1</span><span class="p">]</span> <span class="o">-</span> obs.t<span class="p">[</span>i<span class="p">]</span> <span class="o">-</span> eps<span class="p">)</span> <span class="o">*</span> FAIL<span class="p">[</span>i<span class="p">]</span>
+                <span class="n">dN[i</span><span class="p">,</span> <span class="n">j]</span> <span class="o">&lt;-</span> <span class="n">Y[i</span><span class="p">,</span> <span class="n">j]</span> <span class="o">*</span> <span class="nf">step</span><span class="p">(</span><span class="n">t[j</span> <span class="o">+</span> <span class="m">1</span><span class="n">]</span> <span class="o">-</span> <span class="n">obs.t[i]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">)</span> <span class="o">*</span> <span class="n">FAIL[i]</span>
             <span class="p">}</span>
         <span class="p">}</span>
 
     <span class="c1"># Model</span>
-        <span class="kr">for</span><span class="p">(</span>j <span class="kr">in</span> <span class="m">1</span><span class="o">:</span><span class="bp">T</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kr">for</span><span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span><span class="o">:</span>Nsubj<span class="p">)</span> <span class="p">{</span>
-                dN<span class="p">[</span>i<span class="p">,</span> j<span class="p">]</span>   <span class="o">~</span> dpois<span class="p">(</span>Idt<span class="p">[</span>i<span class="p">,</span> j<span class="p">])</span>              <span class="c1"># Likelihood</span>
-                Idt<span class="p">[</span>i<span class="p">,</span> j<span class="p">]</span> <span class="o">&lt;-</span> Y<span class="p">[</span>i<span class="p">,</span> j<span class="p">]</span> <span class="o">*</span> <span class="kp">exp</span><span class="p">(</span><span class="kp">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="o">*</span>pscenter<span class="p">[</span>i<span class="p">]</span> <span class="o">+</span> <span class="kp">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="o">*</span>
-                hhcenter<span class="p">[</span>i<span class="p">]</span> <span class="o">+</span> <span class="kp">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span><span class="o">*</span>ncomact<span class="p">[</span>i<span class="p">]</span> <span class="o">+</span> <span class="kp">beta</span><span class="p">[</span><span class="m">4</span><span class="p">]</span><span class="o">*</span>rleader<span class="p">[</span>i<span class="p">]</span> <span class="o">+</span> <span class="kp">beta</span><span class="p">[</span><span class="m">5</span><span class="p">]</span><span class="o">*</span>dleader<span class="p">[</span>i<span class="p">]</span> <span class="o">+</span> <span class="kp">beta</span><span class="p">[</span><span class="m">6</span><span class="p">]</span><span class="o">*</span>inter1<span class="p">[</span>i<span class="p">]</span> <span class="o">+</span> <span class="kp">beta</span><span class="p">[</span><span class="m">7</span><span class="p">]</span><span class="o">*</span>inter2<span class="p">[</span>i<span class="p">])</span> <span class="o">*</span> dL0<span class="p">[</span>j<span class="p">]</span>    <span class="c1"># Intensity</span>
+        <span class="nf">for</span><span class="p">(</span><span class="n">j</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="bp">T</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nf">for</span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="n">Nsubj</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">dN[i</span><span class="p">,</span> <span class="n">j]</span>   <span class="o">~</span> <span class="nf">dpois</span><span class="p">(</span><span class="n">Idt[i</span><span class="p">,</span> <span class="n">j]</span><span class="p">)</span>              <span class="c1"># Likelihood</span>
+                <span class="n">Idt[i</span><span class="p">,</span> <span class="n">j]</span> <span class="o">&lt;-</span> <span class="n">Y[i</span><span class="p">,</span> <span class="n">j]</span> <span class="o">*</span> <span class="nf">exp</span><span class="p">(</span><span class="n">beta[1]</span><span class="o">*</span><span class="n">pscenter[i]</span> <span class="o">+</span> <span class="n">beta[2]</span><span class="o">*</span>
+                <span class="n">hhcenter[i]</span> <span class="o">+</span> <span class="n">beta[3]</span><span class="o">*</span><span class="n">ncomact[i]</span> <span class="o">+</span> <span class="n">beta[4]</span><span class="o">*</span><span class="n">rleader[i]</span> <span class="o">+</span> <span class="n">beta[5]</span><span class="o">*</span><span class="n">dleader[i]</span> <span class="o">+</span> <span class="n">beta[6]</span><span class="o">*</span><span class="n">inter1[i]</span> <span class="o">+</span> <span class="n">beta[7]</span><span class="o">*</span><span class="n">inter2[i]</span><span class="p">)</span> <span class="o">*</span> <span class="n">dL0[j]</span>    <span class="c1"># Intensity</span>
             <span class="p">}</span>
-            dL0<span class="p">[</span>j<span class="p">]</span> <span class="o">~</span> dgamma<span class="p">(</span>mu<span class="p">[</span>j<span class="p">],</span> <span class="kt">c</span><span class="p">)</span>
-            mu<span class="p">[</span>j<span class="p">]</span> <span class="o">&lt;-</span> dL0.star<span class="p">[</span>j<span class="p">]</span> <span class="o">*</span> <span class="kt">c</span>    <span class="c1"># prior mean hazard</span>
+            <span class="n">dL0[j]</span> <span class="o">~</span> <span class="nf">dgamma</span><span class="p">(</span><span class="n">mu[j]</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+            <span class="n">mu[j]</span> <span class="o">&lt;-</span> <span class="n">dL0.star[j]</span> <span class="o">*</span> <span class="n">c</span>    <span class="c1"># prior mean hazard</span>
         <span class="p">}</span>
 
 
-    <span class="kt">c</span> <span class="o">~</span> dgamma<span class="p">(</span><span class="m">0.0001</span><span class="p">,</span> <span class="m">0.00001</span><span class="p">)</span>
-    r <span class="o">~</span> dgamma<span class="p">(</span><span class="m">0.001</span><span class="p">,</span> <span class="m">0.0001</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">~</span> <span class="nf">dgamma</span><span class="p">(</span><span class="m">0.0001</span><span class="p">,</span> <span class="m">0.00001</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">~</span> <span class="nf">dgamma</span><span class="p">(</span><span class="m">0.001</span><span class="p">,</span> <span class="m">0.0001</span><span class="p">)</span>
 
 
-    <span class="kr">for</span> <span class="p">(</span>j <span class="kr">in</span> <span class="m">1</span> <span class="o">:</span> <span class="bp">T</span><span class="p">)</span> <span class="p">{</span>  dL0.star<span class="p">[</span>j<span class="p">]</span> <span class="o">&lt;-</span> r <span class="o">*</span> <span class="p">(</span><span class="kp">t</span><span class="p">[</span>j <span class="o">+</span> <span class="m">1</span><span class="p">]</span> <span class="o">-</span> <span class="kp">t</span><span class="p">[</span>j<span class="p">])</span>  <span class="p">}</span>
+    <span class="nf">for </span><span class="p">(</span><span class="n">j</span> <span class="n">in</span> <span class="m">1</span> <span class="o">:</span> <span class="bp">T</span><span class="p">)</span> <span class="p">{</span>  <span class="n">dL0.star[j]</span> <span class="o">&lt;-</span> <span class="n">r</span> <span class="o">*</span> <span class="p">(</span><span class="n">t[j</span> <span class="o">+</span> <span class="m">1</span><span class="n">]</span> <span class="o">-</span> <span class="n">t[j]</span><span class="p">)</span>  <span class="p">}</span>
     <span class="c1"># next line indicates number of covariates and is for the corresponding betas</span>
-    <span class="kr">for</span><span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span><span class="o">:</span><span class="m">7</span><span class="p">)</span> <span class="p">{</span><span class="kp">beta</span><span class="p">[</span>i<span class="p">]</span> <span class="o">~</span> dnorm<span class="p">(</span><span class="m">0.0</span><span class="p">,</span><span class="m">0.00001</span><span class="p">)}</span>
+    <span class="nf">for</span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="m">7</span><span class="p">)</span> <span class="p">{</span><span class="n">beta[i]</span> <span class="o">~</span> <span class="nf">dnorm</span><span class="p">(</span><span class="m">0.0</span><span class="p">,</span><span class="m">0.00001</span><span class="p">)}</span>
 
 
 <span class="p">}</span>
 </pre></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -284,8 +344,7 @@ div.nboutput div.output_area.stderr {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -307,8 +366,7 @@ div.nboutput div.output_area.stderr {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -318,8 +376,7 @@ div.nboutput div.output_area.stderr {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -328,8 +385,7 @@ div.nboutput div.output_area.stderr {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -338,8 +394,7 @@ div.nboutput div.output_area.stderr {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -348,8 +403,7 @@ div.nboutput div.output_area.stderr {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -385,8 +439,7 @@ div.nboutput div.output_area.stderr {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -398,7 +451,7 @@ div.nboutput div.output_area.stderr {
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using advi_map...
@@ -419,7 +472,7 @@ Warning: Desired error not necessarily achieved due to precision loss.
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Average Loss = 85,779: 100%|██████████| 10000/10000 [00:06&lt;00:00, 1476.40it/s]
 Finished [100%]: Average Loss = 85,557
@@ -427,8 +480,7 @@ Finished [100%]: Average Loss = 85,557
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -440,12 +492,11 @@ Finished [100%]: Average Loss = 85,557
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_cox_model_9_0.png" src="../_images/notebooks_cox_model_9_0.png" />
+<img alt="../_images/notebooks_cox_model_10_0.png" src="../_images/notebooks_cox_model_10_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -458,71 +509,28 @@ Finished [100%]: Average Loss = 85,557
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_cox_model_10_0.png" src="../_images/notebooks_cox_model_10_0.png" />
+<img alt="../_images/notebooks_cox_model_11_0.png" src="../_images/notebooks_cox_model_11_0.png" />
 </div>
 </div>
+</div>
 
 
-          </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/pymc3_logo.jpg" alt="Logo"/>
-            </a></p>
-<h1 class="logo"><a href="../index.html">PyMC3</a></h1>
-
-
-
-<p class="blurb">Probabilistic Programming in Python: Bayesian Modeling and Probabilistic Machine Learning with Theano</p>
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../prob_dists.html">Probability Distributions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+<div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <a href="https://github.com/pymc-devs/pymc3"><i class="github icon large"></i></a>
+        <a href="https://twitter.com/pymc_devs"><i class="twitter icon large"></i></a>
+        <a href="https://discourse.pymc.io/"><i class="discourse icon large"></i></a>
     </div>
-    <div class="footer">
-      &copy;2017, The PyMC Development Team.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
-      
-      |
-      <a href="../_sources/notebooks/cox_model.ipynb.txt"
-          rel="nofollow">Page source</a>
+    <div class="ui center aligned container">
+        <p>
+            &copy; Copyright 2018, The PyMC Development Team.
+        </p>
+        <p>
+            Created using <a href="https://sphinx-doc.org/">Sphinx</a> 2.0.1.<br />
+        </p>
     </div>
-
-    
-
-    
+</div>
   </body>
 </html>

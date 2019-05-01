@@ -1,39 +1,63 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Dependent density regression &#8212; PyMC3 3.5.rc1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <title>Dependent density regression &#8212; PyMC3 3.5 documentation</title>
+    <link rel="stylesheet" href="../_static/semantic-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script type="text/javascript" src="../_static/highlight.min.js"></script>
+    <script type="text/javascript" src="../_static/semantic.min.js"></script>
+    <link rel="shortcut icon" href="../_static/PyMC3.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="GLM: Mini-batch ADVI on hierarchical regression model" href="GLM-hierarchical-advi-minibatch.html" />
-    <link rel="prev" title="Dirichlet process mixtures for density estimation" href="dp_mix.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+<script>hljs.initHighlightingOnLoad();</script>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+
 
   </head><body>
-  
+<div class="ui vertical center aligned">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
+    <div class="ui container">
+        <div class="ui large secondary pointing menu">
+            <a class="item" href="/">
+                <img class="ui bottom aligned tiny image" src="https://cdn.rawgit.com/pymc-devs/pymc3/master/docs/logos/svg/PyMC3_banner.svg" />
+            </a>
+             <a href="../nb_tutorials/index.html" class="item">Tutorials</a> <a href="../nb_examples/index.html" class="item">Examples</a> <a href="../learn.html" class="item">Books + Videos</a> <a href="../api.html" class="item">API</a> <a href="../developer_guide.html" class="item">Developer Guide</a> <a href="../history.html" class="item">About PyMC3</a>
             
+            <div class="right menu">
+                <div class="item">
+                    <form class="ui icon input" action="../search.html" method="get">
+                        <input type="text" placeholder="Search..." name="q" />
+                        <i class="search link icon"></i>
+                    </form>
+                </div>
+                <a class="item" href="https://github.com/pymc-devs/pymc3"><i class="github blue icon large"></i></a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="ui container" role="main">
+    
+
+    <div class="ui vertical segment">
+        
   
 <style>
 /* CSS for nbsphinx extension */
@@ -89,18 +113,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 7ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -140,9 +164,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -150,7 +174,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -199,23 +223,47 @@ div.nboutput div.output_area.stderr {
 
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
 </style>
 <div class="section" id="Dependent-density-regression">
 <h1>Dependent density regression<a class="headerlink" href="#Dependent-density-regression" title="Permalink to this headline">¶</a></h1>
-<p>In another <a class="reference internal" href="dp_mix.html"><span class="doc">example</span></a>, we showed how to use Dirichlet
-processes to perform Bayesian nonparametric density estimation. This
-example expands on the previous one, illustrating dependent density
-regression.</p>
-<p>Just as Dirichlet process mixtures can be thought of as infinite mixture
-models that select the number of active components as part of inference,
-dependent density regression can be thought of as infinite <a class="reference external" href="https://en.wikipedia.org/wiki/Committee_machine">mixtures of
-experts</a> that select
-the active experts as part of inference. Their flexibility and
-modularity make them powerful tools for performing nonparametric
-Bayesian Data analysis.</p>
+<p>In another <a class="reference internal" href="dp_mix.html"><span class="doc">example</span></a>, we showed how to use Dirichlet processes to perform Bayesian nonparametric density estimation. This example expands on the previous one, illustrating dependent density regression.</p>
+<p>Just as Dirichlet process mixtures can be thought of as infinite mixture models that select the number of active components as part of inference, dependent density regression can be thought of as infinite <a class="reference external" href="https://en.wikipedia.org/wiki/Committee_machine">mixtures of experts</a> that select the active experts as part of inference. Their flexibility and modularity make them powerful tools for performing nonparametric Bayesian Data analysis.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -237,7 +285,7 @@ Bayesian Data analysis.</p>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
   from ._conv import register_converters as _register_converters
@@ -252,8 +300,7 @@ Running on PyMC3 v3.4.1
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -263,8 +310,7 @@ Running on PyMC3 v3.4.1
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -273,14 +319,9 @@ Running on PyMC3 v3.4.1
 </pre></div>
 </div>
 </div>
-<p>We will use the LIDAR data set from Larry Wasserman’s excellent book,
-<a class="reference external" href="http://www.stat.cmu.edu/~larry/all-of-nonpar/">*All of Nonparametric
-Statistics*</a>. We
-standardize the data set to improve the rate of convergence of our
-samples.</p>
+<p>We will use the LIDAR data set from Larry Wasserman’s excellent book, <a class="reference external" href="http://www.stat.cmu.edu/~larry/all-of-nonpar/">All of Nonparametric Statistics</a>. We standardize the data set to improve the rate of convergence of our samples.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -298,7 +339,7 @@ samples.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/pandas/io/parsers.py:2218: FutureWarning: split() requires a non-empty pattern match.
   yield pat.split(line.strip())
@@ -307,8 +348,7 @@ samples.</p>
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -317,11 +357,10 @@ samples.</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="output_area docutils container">
+<div class="output_area rendered_html docutils container">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -388,8 +427,7 @@ samples.</p>
 </div>
 <p>We plot the LIDAR data below.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -413,21 +451,14 @@ samples.</p>
 <img alt="../_images/notebooks_dependent_density_regression_8_0.png" src="../_images/notebooks_dependent_density_regression_8_0.png" />
 </div>
 </div>
-<p>This data set has a two interesting properties that make it useful for
-illustrating dependent density regression.</p>
+<p>This data set has a two interesting properties that make it useful for illustrating dependent density regression.</p>
 <ol class="arabic simple">
-<li>The relationship between range and log ratio is nonlinear, but has
-locally linear components.</li>
-<li>The observation noise is
-<a class="reference external" href="https://en.wikipedia.org/wiki/Heteroscedasticity">heteroskedastic</a>;
-that is, the magnitude of the variance varies with the range.</li>
+<li><p>The relationship between range and log ratio is nonlinear, but has locally linear components.</p></li>
+<li><p>The observation noise is <a class="reference external" href="https://en.wikipedia.org/wiki/Heteroscedasticity">heteroskedastic</a>; that is, the magnitude of the variance varies with the range.</p></li>
 </ol>
-<p>The intuitive idea behind dependent density regression is to reduce the
-problem to many (related) density estimates, conditioned on fixed values
-of the predictors. The following animation illustrates this intuition.</p>
+<p>The intuitive idea behind dependent density regression is to reduce the problem to many (related) density estimates, conditioned on fixed values of the predictors. The following animation illustrates this intuition.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -476,8 +507,7 @@ of the predictors. The following animation illustrates this intuition.</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -486,11 +516,10 @@ of the predictors. The following animation illustrates this intuition.</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="output_area docutils container">
+<div class="output_area rendered_html docutils container">
 <video width="1152" height="432" controls autoplay loop>
   <source type="video/mp4" src="data:video/mp4;base64,AAAAHGZ0eXBNNFYgAAACAGlzb21pc28yYXZjMQAAAAhmcmVlAACLHW1kYXQAAAKtBgX//6ncRem9
 5tlIt5Ys2CDZI+7veDI2NCAtIGNvcmUgMTQ4IHIyNzQ4IDk3ZWFlZjIgLSBILjI2NC9NUEVHLTQg
@@ -1139,44 +1168,23 @@ HWRhdGEAAAABAAAAAExhdmY1Ny41Ni4xMDE=
   Your browser does not support the video tag.
 </video></div>
 </div>
-<p>As we slice the data with a window sliding along the x-axis in the left
-plot, the empirical distribution of the y-values of the points in the
-window varies in the right plot. An important aspect of this approach is
-that the density estimates that correspond to close values of the
-predictor are similar.</p>
-<p>In the previous example, we saw that a Dirichlet process estimates a
-probability density as a mixture model with infinitely many components.
-In the case of normal component distributions,</p>
+<p>As we slice the data with a window sliding along the x-axis in the left plot, the empirical distribution of the y-values of the points in the window varies in the right plot. An important aspect of this approach is that the density estimates that correspond to close values of the predictor are similar.</p>
+<p>In the previous example, we saw that a Dirichlet process estimates a probability density as a mixture model with infinitely many components. In the case of normal component distributions,</p>
 <div class="math notranslate nohighlight">
 \[y \sim \sum_{i = 1}^{\infty} w_i \cdot N(\mu_i, \tau_i^{-1}),\]</div>
-<p>where the mixture weights, <span class="math notranslate nohighlight">\(w_1, w_2, \ldots\)</span>, are generated by a
-<a class="reference external" href="https://en.wikipedia.org/wiki/Dirichlet_process#The_stick-breaking_process">stick-breaking
-process</a>.</p>
-<p>Dependent density regression generalizes this representation of the
-Dirichlet process mixture model by allowing the mixture weights and
-component means to vary conditioned on the value of the predictor,
-<span class="math notranslate nohighlight">\(x\)</span>. That is,</p>
+<p>where the mixture weights, <span class="math notranslate nohighlight">\(w_1, w_2, \ldots\)</span>, are generated by a <a class="reference external" href="https://en.wikipedia.org/wiki/Dirichlet_process#The_stick-breaking_process">stick-breaking process</a>.</p>
+<p>Dependent density regression generalizes this representation of the Dirichlet process mixture model by allowing the mixture weights and component means to vary conditioned on the value of the predictor, <span class="math notranslate nohighlight">\(x\)</span>. That is,</p>
 <div class="math notranslate nohighlight">
 \[y\ |\ x \sim \sum_{i = 1}^{\infty} w_i\ |\ x \cdot N(\mu_i\ |\ x, \tau_i^{-1}).\]</div>
-<p>In this example, we will follow Chapter 23 of <a class="reference external" href="http://www.stat.columbia.edu/~gelman/book/">*Bayesian Data
-Analysis*</a> and use a
-probit stick-breaking process to determine the conditional mixture
-weights, <span class="math notranslate nohighlight">\(w_i\ |\ x\)</span>. The probit stick-breaking process starts by
-defining</p>
+<p>In this example, we will follow Chapter 23 of <a class="reference external" href="http://www.stat.columbia.edu/~gelman/book/">Bayesian Data Analysis</a> and use a probit stick-breaking process to determine the conditional mixture weights, <span class="math notranslate nohighlight">\(w_i\ |\ x\)</span>. The probit stick-breaking process starts by defining</p>
 <div class="math notranslate nohighlight">
 \[v_i\ |\ x = \Phi(\alpha_i + \beta_i x),\]</div>
-<p>where <span class="math notranslate nohighlight">\(\Phi\)</span> is the cumulative distribution function of the
-standard normal distribution. We then obtain <span class="math notranslate nohighlight">\(w_i\ |\ x\)</span> by
-applying the stick breaking process to <span class="math notranslate nohighlight">\(v_i\ |\ x\)</span>. That is,</p>
+<p>where <span class="math notranslate nohighlight">\(\Phi\)</span> is the cumulative distribution function of the standard normal distribution. We then obtain <span class="math notranslate nohighlight">\(w_i\ |\ x\)</span> by applying the stick breaking process to <span class="math notranslate nohighlight">\(v_i\ |\ x\)</span>. That is,</p>
 <div class="math notranslate nohighlight">
 \[w_i\ |\ x = v_i\ |\ x \cdot \prod_{j = 1}^{i - 1} (1 - v_j\ |\ x).\]</div>
-<p>For the LIDAR data set, we use independent normal priors
-<span class="math notranslate nohighlight">\(\alpha_i \sim N(0, 5^2)\)</span> and <span class="math notranslate nohighlight">\(\beta_i \sim N(0, 5^2)\)</span>. We
-now express this this model for the conditional mixture weights using
-<code class="docutils literal notranslate"><span class="pre">pymc3</span></code>.</p>
+<p>For the LIDAR data set, we use independent normal priors <span class="math notranslate nohighlight">\(\alpha_i \sim N(0, 5^2)\)</span> and <span class="math notranslate nohighlight">\(\beta_i \sim N(0, 5^2)\)</span>. We now express this this model for the conditional mixture weights using <code class="docutils literal notranslate"><span class="pre">pymc3</span></code>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1191,8 +1199,7 @@ now express this this model for the conditional mixture weights using
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1215,23 +1222,15 @@ now express this this model for the conditional mixture weights using
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 WARNING (theano.gof.cmodule): The same cache key is associated to different modules (/Users/jlao/.theano/compiledir_Darwin-17.5.0-x86_64-i386-64bit-i386-3.5.1-64/tmp6mq4zwxw and /Users/jlao/.theano/compiledir_Darwin-17.5.0-x86_64-i386-64bit-i386-3.5.1-64/tmprc22erpn). This is not supposed to happen! You may need to manually delete your cache directory to fix this.
 WARNING (theano.gof.cmodule): The same cache key is associated to different modules (/Users/jlao/.theano/compiledir_Darwin-17.5.0-x86_64-i386-64bit-i386-3.5.1-64/tmp6mq4zwxw and /Users/jlao/.theano/compiledir_Darwin-17.5.0-x86_64-i386-64bit-i386-3.5.1-64/tmprc22erpn). This is not supposed to happen! You may need to manually delete your cache directory to fix this.
 </pre></div></div>
 </div>
-<p>We have defined <code class="docutils literal notranslate"><span class="pre">x_lidar</span></code> as a <code class="docutils literal notranslate"><span class="pre">theano</span></code>
-<code class="docutils literal notranslate"><span class="pre">`shared</span></code> &lt;<a class="reference external" href="http://deeplearning.net/software/theano/library/compile/shared.html">http://deeplearning.net/software/theano/library/compile/shared.html</a>&gt;`__
-variable in order to use <code class="docutils literal notranslate"><span class="pre">pymc3</span></code>’s posterior prediction capabilities
-later.</p>
-<p>While the dependent density regression model theoretically has
-infinitely many components, we must truncate the model to finitely many
-components (in this case, twenty) in order to express it using
-<code class="docutils literal notranslate"><span class="pre">pymc3</span></code>. After sampling from the model, we will verify that truncation
-did not unduly influence our results.</p>
-<p>Since the LIDAR data seems to have several linear components, we use the
-linear models</p>
+<p>We have defined <code class="docutils literal notranslate"><span class="pre">x_lidar</span></code> as a <code class="docutils literal notranslate"><span class="pre">theano</span></code> <code class="docutils literal notranslate"><span class="pre">`shared</span></code> &lt;<a class="reference external" href="http://deeplearning.net/software/theano/library/compile/shared.html">http://deeplearning.net/software/theano/library/compile/shared.html</a>&gt;`__ variable in order to use <code class="docutils literal notranslate"><span class="pre">pymc3</span></code>’s posterior prediction capabilities later.</p>
+<p>While the dependent density regression model theoretically has infinitely many components, we must truncate the model to finitely many components (in this case, twenty) in order to express it using <code class="docutils literal notranslate"><span class="pre">pymc3</span></code>. After sampling from the model, we will verify that truncation did not unduly influence our results.</p>
+<p>Since the LIDAR data seems to have several linear components, we use the linear models</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
 \mu_i\ |\ x
@@ -1243,8 +1242,7 @@ linear models</p>
 \end{align*}\end{split}\]</div>
 <p>for the conditional component means.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1255,11 +1253,9 @@ linear models</p>
 </pre></div>
 </div>
 </div>
-<p>Finally, we place the prior <span class="math notranslate nohighlight">\(\tau_i \sim \textrm{Gamma}(1, 1)\)</span> on
-the component precisions.</p>
+<p>Finally, we place the prior <span class="math notranslate nohighlight">\(\tau_i \sim \textrm{Gamma}(1, 1)\)</span> on the component precisions.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1271,8 +1267,7 @@ the component precisions.</p>
 </div>
 <p>We now sample from the dependent density regression model.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1288,7 +1283,7 @@ the component precisions.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Sequential sampling (1 chains in 1 job)
 CompoundStep
@@ -1301,15 +1296,9 @@ CompoundStep
 Only one chain was sampled, this makes it impossible to run some convergence checks
 </pre></div></div>
 </div>
-<p>To verify that truncation did not unduly influence our results, we plot
-the largest posterior expected mixture weight for each component. (In
-this model, each point has a mixture weight for each component, so we
-plot the maximum mixture weight for each component across all data
-points in order to judge if the component exerts any influence on the
-posterior.)</p>
+<p>To verify that truncation did not unduly influence our results, we plot the largest posterior expected mixture weight for each component. (In this model, each point has a mixture weight for each component, so we plot the maximum mixture weight for each component across all data points in order to judge if the component exerts any influence on the posterior.)</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1333,19 +1322,10 @@ posterior.)</p>
 <img alt="../_images/notebooks_dependent_density_regression_22_0.png" src="../_images/notebooks_dependent_density_regression_22_0.png" />
 </div>
 </div>
-<p>Since only three mixture components have appreciable posterior expected
-weight for any data point, we can be fairly certain that truncation did
-not unduly influence our results. (If most components had appreciable
-posterior expected weight, truncation may have influenced the results,
-and we would have increased the number of components and sampled again.)</p>
-<p>Visually, it is reasonable that the LIDAR data has three linear
-components, so these posterior expected weights seem to have identified
-the structure of the data well. We now sample from the posterior
-predictive distribution to get a better understand the model’s
-performance.</p>
+<p>Since only three mixture components have appreciable posterior expected weight for any data point, we can be fairly certain that truncation did not unduly influence our results. (If most components had appreciable posterior expected weight, truncation may have influenced the results, and we would have increased the number of components and sampled again.)</p>
+<p>Visually, it is reasonable that the LIDAR data has three linear components, so these posterior expected weights seem to have identified the structure of the data well. We now sample from the posterior predictive distribution to get a better understand the model’s performance.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1355,23 +1335,21 @@ performance.</p>
 <span class="n">x_lidar</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">lidar_pp_x</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span>
 
 <span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">pp_trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_ppc</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">PP_SAMPLES</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">SEED</span><span class="p">)</span>
+    <span class="n">pp_trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">PP_SAMPLES</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">SEED</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 100%|██████████| 5000/5000 [00:33&lt;00:00, 151.39it/s]
 </pre></div></div>
 </div>
-<p>Below we plot the posterior expected value and the 95% posterior
-credible interval.</p>
+<p>Below we plot the posterior expected value and the 95% posterior credible interval.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1408,101 +1386,29 @@ credible interval.</p>
 <img alt="../_images/notebooks_dependent_density_regression_26_0.png" src="../_images/notebooks_dependent_density_regression_26_0.png" />
 </div>
 </div>
-<p>The model has fit the linear components of the data well, and also
-accomodated its heteroskedasticity. This flexibility, along with the
-ability to modularly specify the conditional mixture weights and
-conditional component densities, makes dependent density regression an
-extremely useful nonparametric Bayesian model.</p>
-<p>To learn more about depdendent density regression and related models,
-consult <a class="reference external" href="http://www.stat.columbia.edu/~gelman/book/">*Bayesian Data
-Analysis*</a>, <a class="reference external" href="http://www.springer.com/us/book/9783319189673">*Bayesian
-Nonparametric Data
-Analysis*</a>, or
-<a class="reference external" href="https://www.google.com/webhp?sourceid=chrome-instant&amp;ion=1&amp;espv=2&amp;ie=UTF-8#q=bayesian+nonparametrics+book">*Bayesian
-Nonparametrics*</a>.</p>
-<p>This example first appeared
-<a class="reference external" href="http://austinrochford.com/posts/2017-01-18-ddp-pymc3.html">here</a>.</p>
+<p>The model has fit the linear components of the data well, and also accomodated its heteroskedasticity. This flexibility, along with the ability to modularly specify the conditional mixture weights and conditional component densities, makes dependent density regression an extremely useful nonparametric Bayesian model.</p>
+<p>To learn more about depdendent density regression and related models, consult <a class="reference external" href="http://www.stat.columbia.edu/~gelman/book/">Bayesian Data Analysis</a>, <a class="reference external" href="http://www.springer.com/us/book/9783319189673">Bayesian Nonparametric Data Analysis</a>, or <a class="reference external" href="https://www.google.com/webhp?sourceid=chrome-instant&amp;ion=1&amp;espv=2&amp;ie=UTF-8#q=bayesian+nonparametrics+book">Bayesian Nonparametrics</a>.</p>
+<p>This example first appeared <a class="reference external" href="http://austinrochford.com/posts/2017-01-18-ddp-pymc3.html">here</a>.</p>
 <p>Author: <a class="reference external" href="https://github.com/AustinRochford/">Austin Rochford</a></p>
 </div>
 
 
-          </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/pymc3_logo.jpg" alt="Logo"/>
-            </a></p>
-<h1 class="logo"><a href="../index.html">PyMC3</a></h1>
-
-
-
-<p class="blurb">Probabilistic Programming in Python: Bayesian Modeling and Probabilistic Machine Learning with Theano</p>
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../prob_dists.html">Probability Distributions</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#howto">Howto</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#applied">Applied</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#glm">GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#survival-analysis">Survival Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#gaussian-processes">Gaussian Processes</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#mixture-models">Mixture Models</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="gaussian_mixture_model.html">Gaussian Mixture Model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="marginalized_gaussian_mixture_model.html">Marginalized Gaussian Mixture Model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="gaussian-mixture-model-advi.html">Gaussian Mixture Model with ADVI</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dp_mix.html">Dirichlet process mixtures for density estimation</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Dependent density regression</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#variational-inference">Variational Inference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#stochastic-gradient">Stochastic Gradient</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+<div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <a href="https://github.com/pymc-devs/pymc3"><i class="github icon large"></i></a>
+        <a href="https://twitter.com/pymc_devs"><i class="twitter icon large"></i></a>
+        <a href="https://discourse.pymc.io/"><i class="discourse icon large"></i></a>
     </div>
-    <div class="footer">
-      &copy;2017, The PyMC Development Team.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
-      
-      |
-      <a href="../_sources/notebooks/dependent_density_regression.ipynb.txt"
-          rel="nofollow">Page source</a>
+    <div class="ui center aligned container">
+        <p>
+            &copy; Copyright 2018, The PyMC Development Team.
+        </p>
+        <p>
+            Created using <a href="https://sphinx-doc.org/">Sphinx</a> 2.0.1.<br />
+        </p>
     </div>
-
-    
-
-    
+</div>
   </body>
 </html>

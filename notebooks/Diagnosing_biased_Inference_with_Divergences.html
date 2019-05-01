@@ -1,39 +1,63 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Diagnosing Biased Inference with Divergences &#8212; PyMC3 3.5.rc1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <title>Diagnosing Biased Inference with Divergences &#8212; PyMC3 3.5 documentation</title>
+    <link rel="stylesheet" href="../_static/semantic-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script type="text/javascript" src="../_static/highlight.min.js"></script>
+    <script type="text/javascript" src="../_static/semantic.min.js"></script>
+    <link rel="shortcut icon" href="../_static/PyMC3.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Posterior Predictive Checks" href="posterior_predictive.html" />
-    <link rel="prev" title="Sampler statistics" href="sampler-stats.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+<script>hljs.initHighlightingOnLoad();</script>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+
 
   </head><body>
-  
+<div class="ui vertical center aligned">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
+    <div class="ui container">
+        <div class="ui large secondary pointing menu">
+            <a class="item" href="/">
+                <img class="ui bottom aligned tiny image" src="https://cdn.rawgit.com/pymc-devs/pymc3/master/docs/logos/svg/PyMC3_banner.svg" />
+            </a>
+             <a href="../nb_tutorials/index.html" class="item">Tutorials</a> <a href="../nb_examples/index.html" class="item">Examples</a> <a href="../learn.html" class="item">Books + Videos</a> <a href="../api.html" class="item">API</a> <a href="../developer_guide.html" class="item">Developer Guide</a> <a href="../history.html" class="item">About PyMC3</a>
             
+            <div class="right menu">
+                <div class="item">
+                    <form class="ui icon input" action="../search.html" method="get">
+                        <input type="text" placeholder="Search..." name="q" />
+                        <i class="search link icon"></i>
+                    </form>
+                </div>
+                <a class="item" href="https://github.com/pymc-devs/pymc3"><i class="github blue icon large"></i></a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="ui container" role="main">
+    
+
+    <div class="ui vertical segment">
+        
   
 <style>
 /* CSS for nbsphinx extension */
@@ -89,18 +113,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 7ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -140,9 +164,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -150,7 +174,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -199,12 +223,45 @@ div.nboutput div.output_area.stderr {
 
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
 </style>
 <div class="section" id="Diagnosing-Biased-Inference-with-Divergences">
 <h1>Diagnosing Biased Inference with Divergences<a class="headerlink" href="#Diagnosing-Biased-Inference-with-Divergences" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -233,69 +290,33 @@ Runing on PyMC3 v3.3
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 /home/osvaldo/anaconda3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
   from ._conv import register_converters as _register_converters
 </pre></div></div>
 </div>
-<p>This notebook is a PyMC3 port of <a class="reference external" href="http://mc-stan.org/documentation/case-studies/divergences_and_bias.html">Michael Betancourt’s post on
-ms-stan</a>.
-For detailed explanation of the underlying mechanism please check <a class="reference external" href="http://mc-stan.org/documentation/case-studies/divergences_and_bias.html">the
-original
-post</a>
-and Betancourt’s <a class="reference external" href="https://arxiv.org/abs/1701.02434">excellent paper</a>.</p>
-<p>Bayesian statistics is all about building a model and estimating the
-parameters in that model. However, a naive or direct parameterization of
-our probability model can sometimes be ineffective, you can check out
-<a class="reference external" href="http://twiecki.github.io/blog/2017/02/08/bayesian-hierchical-non-centered/">Thomas Wiecki’s blog
-post</a>
-on the same issue in PyMC3. Suboptimal parameterization often leads to
-slow sampling, and more problematic, biased MCMC estimators.</p>
-<p>More formally, as explained in <a class="reference external" href="http://mc-stan.org/documentation/case-studies/divergences_and_bias.html">the original
-post</a>:</p>
-<p>Markov chain Monte Carlo (MCMC) approximates expectations with respect
-to a given target distribution,</p>
+<p>This notebook is a PyMC3 port of <a class="reference external" href="http://mc-stan.org/documentation/case-studies/divergences_and_bias.html">Michael Betancourt’s post on ms-stan</a>. For detailed explanation of the underlying mechanism please check <a class="reference external" href="http://mc-stan.org/documentation/case-studies/divergences_and_bias.html">the original post</a> and Betancourt’s <a class="reference external" href="https://arxiv.org/abs/1701.02434">excellent paper</a>.</p>
+<p>Bayesian statistics is all about building a model and estimating the parameters in that model. However, a naive or direct parameterization of our probability model can sometimes be ineffective, you can check out <a class="reference external" href="http://twiecki.github.io/blog/2017/02/08/bayesian-hierchical-non-centered/">Thomas Wiecki’s blog post</a> on the same issue in PyMC3. Suboptimal parameterization often leads to slow sampling, and more problematic, biased MCMC estimators.</p>
+<p>More formally, as explained in <a class="reference external" href="http://mc-stan.org/documentation/case-studies/divergences_and_bias.html">the original post</a>:</p>
+<p>Markov chain Monte Carlo (MCMC) approximates expectations with respect to a given target distribution,</p>
 <div class="math notranslate nohighlight">
 \[\mathbb{E}{\pi} [ f ] = \int \mathrm{d}q \, \pi (q) \, f(q)\]</div>
 <p>using the states of a Markov chain, <span class="math notranslate nohighlight">\({q{0}, \ldots, q_{N} }\)</span>,</p>
 <div class="math notranslate nohighlight">
 \[\mathbb{E}{\pi} [ f ] \approx \hat{f}{N} = \frac{1}{N + 1} \sum_{n = 0}^{N} f(q_{n})\]</div>
-<p>These estimators, however, are guaranteed to be accurate only
-asymptotically as the chain grows to be infinitely long,</p>
+<p>These estimators, however, are guaranteed to be accurate only asymptotically as the chain grows to be infinitely long,</p>
 <div class="math notranslate nohighlight">
 \[\lim_{N \rightarrow \infty} \hat{f}{N} = \mathbb{E}{\pi} [ f ]\]</div>
-<p>To be useful in applied analyses, we need MCMC estimators to converge to
-the true expectation values sufficiently quickly that they are
-reasonably accurate before we exhaust our finite computational
-resources. This fast convergence requires strong ergodicity conditions
-to hold, in particular geometric ergodicity between a Markov transition
-and a target distribution. Geometric ergodicity is usually the necessary
-condition for MCMC estimators to follow a central limit theorem, which
-ensures not only that they are unbiased even after only a finite number
-of iterations but also that we can empirically quantify their precision
-using the MCMC standard error.</p>
-<p>Unfortunately, proving geometric ergodicity is infeasible for any
-nontrivial problem. Instead we must rely on empirical diagnostics that
-identify obstructions to geometric ergodicity, and hence well-behaved
-MCMC estimators. For a general Markov transition and target
-distribution, the best known diagnostic is the split <span class="math notranslate nohighlight">\(\hat{R}\)</span>
-statistic over an ensemble of Markov chains initialized from diffuse
-points in parameter space; to do any better we need to exploit the
-particular structure of a given transition or target distribution.</p>
-<p>Hamiltonian Monte Carlo, for example, is especially powerful in this
-regard as its failures to be geometrically ergodic with respect to any
-target distribution manifest in distinct behaviors that have been
-developed into sensitive diagnostics. One of these behaviors is the
-appearance of divergences that indicate the Hamiltonian Markov chain has
-encountered regions of high curvature in the target distribution which
-it cannot adequately explore.</p>
-<p>In this notebook we aim to identify divergences and the underlying
-pathologies in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>.</p>
+<p>To be useful in applied analyses, we need MCMC estimators to converge to the true expectation values sufficiently quickly that they are reasonably accurate before we exhaust our finite computational resources. This fast convergence requires strong ergodicity conditions to hold, in particular geometric ergodicity between a Markov transition and a target distribution. Geometric ergodicity is usually the necessary condition for MCMC estimators to follow a central limit theorem, which ensures not
+only that they are unbiased even after only a finite number of iterations but also that we can empirically quantify their precision using the MCMC standard error.</p>
+<p>Unfortunately, proving geometric ergodicity is infeasible for any nontrivial problem. Instead we must rely on empirical diagnostics that identify obstructions to geometric ergodicity, and hence well-behaved MCMC estimators. For a general Markov transition and target distribution, the best known diagnostic is the split <span class="math notranslate nohighlight">\(\hat{R}\)</span> statistic over an ensemble of Markov chains initialized from diffuse points in parameter space; to do any better we need to exploit the particular structure of a
+given transition or target distribution.</p>
+<p>Hamiltonian Monte Carlo, for example, is especially powerful in this regard as its failures to be geometrically ergodic with respect to any target distribution manifest in distinct behaviors that have been developed into sensitive diagnostics. One of these behaviors is the appearance of divergences that indicate the Hamiltonian Markov chain has encountered regions of high curvature in the target distribution which it cannot adequately explore.</p>
+<p>In this notebook we aim to identify divergences and the underlying pathologies in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>.</p>
 <div class="section" id="The-Eight-Schools-Model">
 <h2>The Eight Schools Model<a class="headerlink" href="#The-Eight-Schools-Model" title="Permalink to this headline">¶</a></h2>
-<p>The hierarchical model of the Eight Schools dataset (Rubin 1981) as seen
-in <code class="docutils literal notranslate"><span class="pre">Stan</span></code>:</p>
+<p>The hierarchical model of the Eight Schools dataset (Rubin 1981) as seen in <code class="docutils literal notranslate"><span class="pre">Stan</span></code>:</p>
 <div class="math notranslate nohighlight">
 \[\mu \sim \mathcal{N}(0, 5)\]</div>
 <div class="math notranslate nohighlight">
@@ -304,18 +325,10 @@ in <code class="docutils literal notranslate"><span class="pre">Stan</span></cod
 \[\theta_{n} \sim \mathcal{N}(\mu, \tau)\]</div>
 <div class="math notranslate nohighlight">
 \[y_{n} \sim \mathcal{N}(\theta_{n}, \sigma_{n}),\]</div>
-<p>where <span class="math notranslate nohighlight">\(n \in \{1, \ldots, 8 \}\)</span> and the
-<span class="math notranslate nohighlight">\(\{ y_{n}, \sigma_{n} \}\)</span> are given as data.</p>
-<p>Inferring the hierarchical hyperparameters, <span class="math notranslate nohighlight">\(\mu\)</span> and
-<span class="math notranslate nohighlight">\(\sigma\)</span>, together with the group-level parameters,
-<span class="math notranslate nohighlight">\(\theta_{1}, \ldots, \theta_{8}\)</span>, allows the model to pool data
-across the groups and reduce their posterior variance. Unfortunately,
-the direct <em>centered</em> parameterization also squeezes the posterior
-distribution into a particularly challenging geometry that obstructs
-geometric ergodicity and hence biases MCMC estimation.</p>
+<p>where <span class="math notranslate nohighlight">\(n \in \{1, \ldots, 8 \}\)</span> and the <span class="math notranslate nohighlight">\(\{ y_{n}, \sigma_{n} \}\)</span> are given as data.</p>
+<p>Inferring the hierarchical hyperparameters, <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>, together with the group-level parameters, <span class="math notranslate nohighlight">\(\theta_{1}, \ldots, \theta_{8}\)</span>, allows the model to pool data across the groups and reduce their posterior variance. Unfortunately, the direct <em>centered</em> parameterization also squeezes the posterior distribution into a particularly challenging geometry that obstructs geometric ergodicity and hence biases MCMC estimation.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -331,7 +344,7 @@ geometric ergodicity and hence biases MCMC estimation.</p>
 <div class="section" id="A-Centered-Eight-Schools-Implementation">
 <h2>A Centered Eight Schools Implementation<a class="headerlink" href="#A-Centered-Eight-Schools-Implementation" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Stan</span></code> model:</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="p">{</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="p">{</span>
   <span class="kt">int</span><span class="o">&lt;</span><span class="n">lower</span><span class="o">=</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">J</span><span class="p">;</span>
   <span class="n">real</span> <span class="n">y</span><span class="p">[</span><span class="n">J</span><span class="p">];</span>
   <span class="n">real</span><span class="o">&lt;</span><span class="n">lower</span><span class="o">=</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">sigma</span><span class="p">[</span><span class="n">J</span><span class="p">];</span>
@@ -351,33 +364,25 @@ geometric ergodicity and hence biases MCMC estimation.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Similarly, we can easily implemented it in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code></p>
+<p>Similarly, we can easily implement it in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">Centered_eight</span><span class="p">:</span>
-    <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
     <span class="n">tau</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;tau&#39;</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-    <span class="n">theta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">J</span><span class="p">)</span>
-    <span class="n">obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;obs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">J</span><span class="p">)</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;obs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<p>Unfortunately, this direct implementation of the model exhibits a
-pathological geometry that frustrates geometric ergodicity. Even more
-worrisome, the resulting bias is subtle and may not be obvious upon
-inspection of the Markov chain alone. To understand this bias, let’s
-consider first a short Markov chain, commonly used when computational
-expediency is a motivating factor, and only afterwards a longer Markov
-chain.</p>
+<p>Unfortunately, this direct implementation of the model exhibits a pathological geometry that frustrates geometric ergodicity. Even more worrisome, the resulting bias is subtle and may not be obvious upon inspection of the Markov chain alone. To understand this bias, let’s consider first a short Markov chain, commonly used when computational expediency is a motivating factor, and only afterwards a longer Markov chain.</p>
 <div class="section" id="A-Dangerously-Short-Markov-Chain">
 <h3>A Dangerously-Short Markov Chain<a class="headerlink" href="#A-Dangerously-Short-Markov-Chain" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -389,7 +394,7 @@ chain.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -401,17 +406,10 @@ There were 9 divergences after tuning. Increase `target_accept` or reparameteriz
 The estimated number of effective samples is smaller than 200 for some parameters.
 </pre></div></div>
 </div>
-<p>In the <a class="reference external" href="http://mc-stan.org/documentation/case-studies/divergences_and_bias.html">original
-post</a>
-a single chain of 1200 sample is applied. However, since split
-<span class="math notranslate nohighlight">\(\hat{R}\)</span> is not implemented in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> we fit 2 chains with 600
-sample each instead.</p>
-<p>The Gelman-Rubin diagnostic <span class="math notranslate nohighlight">\(\hat{R}\)</span> doesn’t indicate any
-problems (values are all close to 1). You could try re-running the model
-with a different seed and see if this still holds.</p>
+<p>In the <a class="reference external" href="http://mc-stan.org/documentation/case-studies/divergences_and_bias.html">original post</a> a single chain of 1200 sample is applied. However, since split <span class="math notranslate nohighlight">\(\hat{R}\)</span> is not implemented in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> we fit 2 chains with 600 sample each instead.</p>
+<p>The Gelman-Rubin diagnostic <span class="math notranslate nohighlight">\(\hat{R}\)</span> doesn’t indicate any problem (values are all close to 1). You could try re-running the model with a different seed and see if this still holds.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -420,11 +418,10 @@ with a different seed and see if this still holds.</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="output_area docutils container">
+<div class="output_area rendered_html docutils container">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -557,15 +554,9 @@ with a different seed and see if this still holds.</p>
 </table>
 </div></div>
 </div>
-<p>Moreover, the trace plots all look fine. Let’s consider, for example,
-the hierarchical standard deviation <span class="math notranslate nohighlight">\(\tau\)</span>, or more specifically,
-its logarithm, <span class="math notranslate nohighlight">\(log(\tau)\)</span>. Because <span class="math notranslate nohighlight">\(\tau\)</span> is constrained to
-be positive, its logarithm will allow us to better resolve behavior for
-small values. Indeed the chains seems to be exploring both small and
-large values reasonably well,</p>
+<p>Moreover, the trace plots all look fine. Let’s consider, for example, the hierarchical standard deviation <span class="math notranslate nohighlight">\(\tau\)</span>, or more specifically, its logarithm, <span class="math notranslate nohighlight">\(log(\tau)\)</span>. Because <span class="math notranslate nohighlight">\(\tau\)</span> is constrained to be positive, its logarithm will allow us to better resolve behavior for small values. Indeed the chains seems to be exploring both small and large values reasonably well,</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -578,14 +569,12 @@ large values reasonably well,</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_14_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_14_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_14_0.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_14_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_14_0.png" style="width: 861px; height: 135px;" /></a>
 </div>
 </div>
-<p>Unfortunately, the resulting estimate for the mean of <span class="math notranslate nohighlight">\(log(\tau)\)</span>
-is strongly biased away from the true value, here shown in grey.</p>
+<p>Unfortunately, the resulting estimate for the mean of <span class="math notranslate nohighlight">\(log(\tau)\)</span> is strongly biased away from the true value, here shown in grey.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -606,15 +595,12 @@ is strongly biased away from the true value, here shown in grey.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_16_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_16_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_16_0.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_16_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_16_0.png" style="width: 887px; height: 272px;" /></a>
 </div>
 </div>
-<p>Hamiltonian Monte Carlo, however, is not so oblivious to these issues as
-<span class="math notranslate nohighlight">\(\approx\)</span> 3% of the iterations in our lone Markov chain ended with
-a divergence.</p>
+<p>Hamiltonian Monte Carlo, however, is not so oblivious to these issues as <span class="math notranslate nohighlight">\(\approx\)</span> 3% of the iterations in our lone Markov chain ended with a divergence.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -635,14 +621,10 @@ Number of Divergent 19
 Percentage of Divergent 3.2
 </pre></div></div>
 </div>
-<p>Even with a single short chain these divergences are able to identity
-the bias and advise skepticism of any resulting MCMC estimators.</p>
-<p>Additionally, because the divergent transitions, here shown in green,
-tend to be located near the pathologies we can use them to identify the
-location of the problematic neighborhoods in parameter space.</p>
+<p>Even with a single short chain these divergences are able to identity the bias and advise skepticism of any resulting MCMC estimators.</p>
+<p>Additionally, because the divergent transitions, here shown in green, tend to be located near the pathologies we can use them to identify the location of the problematic neighborhoods in parameter space.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -658,28 +640,15 @@ location of the problematic neighborhoods in parameter space.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_20_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_20_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_20_0.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_20_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_20_0.png" style="width: 711px; height: 365px;" /></a>
 </div>
 </div>
-<p>It is important to point out that the pathological samples from the
-trace are not necessarily concentrated at the funnel: when a divergence
-is encountered, the subtree being constructed is rejected and the
-transition samples uniformly from the existing discrete trajectory.
-Consequently, divergent samples will not be located exactly in the
-region of high curvature.</p>
-<p>In <code class="docutils literal notranslate"><span class="pre">pymc3</span></code>, we recently implemented a warning system that also saves
-the information of <em>where</em> the divergence occurs, and hence you can
-visualize them directly. To be more precise, what we include as the
-divergence point in the warning is the point where that problematic
-leapfrog step started. Some could also be because the divergence happens
-in one of the leapfrog step (which strictly speaking is not a point).
-But nonetheless, visualizing these should give a closer proximate where
-the funnel is.</p>
-<p>Notices that only the first 100 divergences are stored, so that we don’t
-eat all memory.</p>
+<p>It is important to point out that the pathological samples from the trace are not necessarily concentrated at the funnel: when a divergence is encountered, the subtree being constructed is rejected and the transition samples uniformly from the existing discrete trajectory. Consequently, divergent samples will not be located exactly in the region of high curvature.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">pymc3</span></code>, we recently implemented a warning system that also saves the information of <em>where</em> the divergence occurs, and hence you can visualize them directly. To be more precise, what we include as the divergence point in the warning is the point where that problematic leapfrog step started. Some could also be because the divergence happens in one of the leapfrog step (which strictly speaking is not a point). But nonetheless, visualizing these should give a closer proximate where the funnel
+is.</p>
+<p>Notices that only the first 100 divergences are stored, so that we don’t eat all memory.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -705,8 +674,7 @@ eat all memory.</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -747,16 +715,12 @@ eat all memory.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_23_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_23_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_23_0.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_23_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_23_0.png" style="width: 1078px; height: 422px;" /></a>
 </div>
 </div>
-<p>There are many other ways to explore and visualize the pathological
-region in the parameter space. For example, we can reproduce Figure 5b
-in <a class="reference external" href="https://arxiv.org/pdf/1709.01449.pdf">Visualization in Bayesian
-workflow</a></p>
+<p>There are many other ways to explore and visualize the pathological region in the parameter space. For example, we can reproduce Figure 5b in <a class="reference external" href="https://arxiv.org/pdf/1709.01449.pdf">Visualization in Bayesian workflow</a></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -785,12 +749,11 @@ workflow</a></p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_25_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_25_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_25_0.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_25_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_25_0.png" style="width: 1070px; height: 280px;" /></a>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -830,15 +793,9 @@ workflow</a></p>
 </div>
 <div class="section" id="A-Safer,-Longer-Markov-Chain">
 <h3>A Safer, Longer Markov Chain<a class="headerlink" href="#A-Safer,-Longer-Markov-Chain" title="Permalink to this headline">¶</a></h3>
-<p>Given the potential insensitivity of split <span class="math notranslate nohighlight">\(\hat{R}\)</span> on single
-short chains, <code class="docutils literal notranslate"><span class="pre">Stan</span></code> recommend always running multiple chains as long
-as possible to have the best chance to observe any obstructions to
-geometric ergodicity. Because it is not always possible to run long
-chains for complex models, however, divergences are an incredibly
-powerful diagnostic for biased MCMC estimation.</p>
+<p>Given the potential insensitivity of split <span class="math notranslate nohighlight">\(\hat{R}\)</span> on single short chains, <code class="docutils literal notranslate"><span class="pre">Stan</span></code> recommend always running multiple chains as long as possible to have the best chance to observe any obstructions to geometric ergodicity. Because it is not always possible to run long chains for complex models, however, divergences are an incredibly powerful diagnostic for biased MCMC estimation.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -850,7 +807,7 @@ powerful diagnostic for biased MCMC estimation.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -864,8 +821,7 @@ The estimated number of effective samples is smaller than 200 for some parameter
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -877,14 +833,14 @@ The estimated number of effective samples is smaller than 200 for some parameter
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_0.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_0.png" style="width: 856px; height: 135px;" /></a>
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_1.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_1.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_1.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_1.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_1.png" style="width: 887px; height: 272px;" /></a>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -900,12 +856,11 @@ Percentage of Divergent 8.3
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_3.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_3.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_3.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_3.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_29_3.png" style="width: 711px; height: 365px;" /></a>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -914,11 +869,10 @@ Percentage of Divergent 8.3
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="output_area docutils container">
+<div class="output_area rendered_html docutils container">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1051,73 +1005,36 @@ Percentage of Divergent 8.3
 </table>
 </div></div>
 </div>
-<p>Similar to the result in <code class="docutils literal notranslate"><span class="pre">Stan</span></code>, <span class="math notranslate nohighlight">\(\hat{R}\)</span> does not indicate any
-serious issues. However, the effective sample size per iteration has
-drastically fallen, indicating that we are exploring less efficiently
-the longer we run. This odd behavior is a clear sign that something
-problematic is afoot. As shown in the trace plot, the chain occasionally
-“sticks” as it approaches small values of <span class="math notranslate nohighlight">\(\tau\)</span>, exactly where we
-saw the divergences concentrating. This is a clear indication of the
-underlying pathologies. These sticky intervals induce severe
-oscillations in the MCMC estimators early on, until they seem to finally
-settle into biased values.</p>
-<p>In fact the sticky intervals are the Markov chain trying to correct the
-biased exploration. If we ran the chain even longer then it would
-eventually get stuck again and drag the MCMC estimator down towards the
-true value. Given an infinite number of iterations this delicate balance
-asymptotes to the true expectation as we’d expect given the consistency
-guarantee of MCMC. Stopping after any finite number of iterations,
-however, destroys this balance and leaves us with a significant bias.</p>
-<p>More details can be found in Betancourt’s <a class="reference external" href="https://arxiv.org/abs/1701.02434">recent
-paper</a>.</p>
+<p>Similar to the result in <code class="docutils literal notranslate"><span class="pre">Stan</span></code>, <span class="math notranslate nohighlight">\(\hat{R}\)</span> does not indicate any serious issues. However, the effective sample size per iteration has drastically fallen, indicating that we are exploring less efficiently the longer we run. This odd behavior is a clear sign that something problematic is afoot. As shown in the trace plot, the chain occasionally “sticks” as it approaches small values of <span class="math notranslate nohighlight">\(\tau\)</span>, exactly where we saw the divergences concentrating. This is a clear indication of the
+underlying pathologies. These sticky intervals induce severe oscillations in the MCMC estimators early on, until they seem to finally settle into biased values.</p>
+<p>In fact the sticky intervals are the Markov chain trying to correct the biased exploration. If we ran the chain even longer then it would eventually get stuck again and drag the MCMC estimator down towards the true value. Given an infinite number of iterations this delicate balance asymptotes to the true expectation as we’d expect given the consistency guarantee of MCMC. Stopping after any finite number of iterations, however, destroys this balance and leaves us with a significant bias.</p>
+<p>More details can be found in Betancourt’s <a class="reference external" href="https://arxiv.org/abs/1701.02434">recent paper</a>.</p>
 </div>
 </div>
-<div class="section" id="Mitigating-Divergences-by-Adjusting-PyMC3's-Adaptation-Routine">
-<h2>Mitigating Divergences by Adjusting PyMC3’s Adaptation Routine<a class="headerlink" href="#Mitigating-Divergences-by-Adjusting-PyMC3's-Adaptation-Routine" title="Permalink to this headline">¶</a></h2>
-<p>Divergences in Hamiltonian Monte Carlo arise when the Hamiltonian
-transition encounters regions of extremely large curvature, such as the
-opening of the hierarchical funnel. Unable to accurate resolve these
-regions, the transition malfunctions and flies off towards infinity.
-With the transitions unable to completely explore these regions of
-extreme curvature, we lose geometric ergodicity and our MCMC estimators
-become biased.</p>
-<p>Algorithm implemented in <code class="docutils literal notranslate"><span class="pre">Stan</span></code> uses a heuristic to quickly identify
-these misbehaving trajectories, and hence label divergences, without
-having to wait for them to run all the way to infinity. This heuristic
-can be a bit aggressive, however, and sometimes label transitions as
-divergent even when we have not lost geometric ergodicity.</p>
-<p>To resolve this potential ambiguity we can adjust the step size,
-<span class="math notranslate nohighlight">\(\epsilon\)</span>, of the Hamiltonian transition. The smaller the step
-size the more accurate the trajectory and the less likely it will be
-mislabeled as a divergence. In other words, if we have geometric
-ergodicity between the Hamiltonian transition and the target
-distribution then decreasing the step size will reduce and then
-ultimately remove the divergences entirely. If we do not have geometric
-ergodicity, however, then decreasing the step size will not completely
-remove the divergences.</p>
-<p>Like <code class="docutils literal notranslate"><span class="pre">Stan</span></code>, the step size in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> is tuned automatically during
-warm up, but we can coerce smaller step sizes by tweaking the
-configuration of <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>’s adaptation routine. In particular, we can
-increase the <code class="docutils literal notranslate"><span class="pre">target_accept</span></code> parameter from its default value of 0.8
-closer to its maximum value of 1.</p>
+<div class="section" id="Mitigating-Divergences-by-Adjusting-PyMC3’s-Adaptation-Routine">
+<h2>Mitigating Divergences by Adjusting PyMC3’s Adaptation Routine<a class="headerlink" href="#Mitigating-Divergences-by-Adjusting-PyMC3’s-Adaptation-Routine" title="Permalink to this headline">¶</a></h2>
+<p>Divergences in Hamiltonian Monte Carlo arise when the Hamiltonian transition encounters regions of extremely large curvature, such as the opening of the hierarchical funnel. Unable to accurate resolve these regions, the transition malfunctions and flies off towards infinity. With the transitions unable to completely explore these regions of extreme curvature, we lose geometric ergodicity and our MCMC estimators become biased.</p>
+<p>Algorithm implemented in <code class="docutils literal notranslate"><span class="pre">Stan</span></code> uses a heuristic to quickly identify these misbehaving trajectories, and hence label divergences, without having to wait for them to run all the way to infinity. This heuristic can be a bit aggressive, however, and sometimes label transitions as divergent even when we have not lost geometric ergodicity.</p>
+<p>To resolve this potential ambiguity we can adjust the step size, <span class="math notranslate nohighlight">\(\epsilon\)</span>, of the Hamiltonian transition. The smaller the step size the more accurate the trajectory and the less likely it will be mislabeled as a divergence. In other words, if we have geometric ergodicity between the Hamiltonian transition and the target distribution then decreasing the step size will reduce and then ultimately remove the divergences entirely. If we do not have geometric ergodicity, however, then
+decreasing the step size will not completely remove the divergences.</p>
+<p>Like <code class="docutils literal notranslate"><span class="pre">Stan</span></code>, the step size in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> is tuned automatically during warm up, but we can coerce smaller step sizes by tweaking the configuration of <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>’s adaptation routine. In particular, we can increase the <code class="docutils literal notranslate"><span class="pre">target_accept</span></code> parameter from its default value of 0.8 closer to its maximum value of 1.</p>
 <div class="section" id="Adjusting-Adaptation-Routine">
 <h3>Adjusting Adaptation Routine<a class="headerlink" href="#Adjusting-Adaptation-Routine" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">Centered_eight</span><span class="p">:</span>
     <span class="n">fit_cp85</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
-                         <span class="n">nuts_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">target_accept</span><span class="o">=.</span><span class="mi">85</span><span class="p">))</span>
+                         <span class="n">target_accept</span><span class="o">=.</span><span class="mi">85</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -1130,21 +1047,20 @@ The number of effective samples is smaller than 10% for some parameters.
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">Centered_eight</span><span class="p">:</span>
     <span class="n">fit_cp90</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
-                         <span class="n">nuts_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">target_accept</span><span class="o">=.</span><span class="mi">90</span><span class="p">))</span>
+                         <span class="n">target_accept</span><span class="o">=.</span><span class="mi">90</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -1158,21 +1074,20 @@ The number of effective samples is smaller than 10% for some parameters.
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">Centered_eight</span><span class="p">:</span>
     <span class="n">fit_cp95</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
-                         <span class="n">nuts_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">target_accept</span><span class="o">=.</span><span class="mi">95</span><span class="p">))</span>
+                         <span class="n">target_accept</span><span class="o">=.</span><span class="mi">95</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -1186,21 +1101,20 @@ The number of effective samples is smaller than 10% for some parameters.
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">Centered_eight</span><span class="p">:</span>
     <span class="n">fit_cp99</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
-                         <span class="n">nuts_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">target_accept</span><span class="o">=.</span><span class="mi">99</span><span class="p">))</span>
+                         <span class="n">target_accept</span><span class="o">=.</span><span class="mi">99</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -1214,8 +1128,7 @@ The number of effective samples is smaller than 10% for some parameters.
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1235,11 +1148,10 @@ The number of effective samples is smaller than 10% for some parameters.
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="output_area docutils container">
+<div class="output_area rendered_html docutils container">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1298,21 +1210,12 @@ The number of effective samples is smaller than 10% for some parameters.
 </table>
 </div></div>
 </div>
-<p>Here, the number of divergent transitions dropped dramatically when
-delta was increased to 0.99.</p>
-<p>This behavior also has a nice geometric intuition. The more we decrease
-the step size the more the Hamiltonian Markov chain can explore the neck
-of the funnel. Consequently, the marginal posterior distribution for
-<span class="math notranslate nohighlight">\(log (\tau)\)</span> stretches further and further towards negative values
-with the decreasing step size.</p>
-<p>Since in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> after tuning we have a smaller step size than
-<code class="docutils literal notranslate"><span class="pre">Stan</span></code>, the geometery is better explored.</p>
-<p>However, the Hamiltonian transition is still not geometrically ergodic
-with respect to the centered implementation of the Eight Schools model.
-Indeed, this is expected given the observed bias.</p>
+<p>Here, the number of divergent transitions dropped dramatically when delta was increased to 0.99.</p>
+<p>This behavior also has a nice geometric intuition. The more we decrease the step size the more the Hamiltonian Markov chain can explore the neck of the funnel. Consequently, the marginal posterior distribution for <span class="math notranslate nohighlight">\(log (\tau)\)</span> stretches further and further towards negative values with the decreasing step size.</p>
+<p>Since in <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> after tuning we have a smaller step size than <code class="docutils literal notranslate"><span class="pre">Stan</span></code>, the geometery is better explored.</p>
+<p>However, the Hamiltonian transition is still not geometrically ergodic with respect to the centered implementation of the Eight Schools model. Indeed, this is expected given the observed bias.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1333,12 +1236,11 @@ Indeed, this is expected given the observed bias.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_40_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_40_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_40_0.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_40_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_40_0.png" style="width: 712px; height: 438px;" /></a>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1366,21 +1268,15 @@ Indeed, this is expected given the observed bias.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_41_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_41_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_41_0.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_41_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_41_0.png" style="width: 887px; height: 272px;" /></a>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="A-Non-Centered-Eight-Schools-Implementation">
 <h2>A Non-Centered Eight Schools Implementation<a class="headerlink" href="#A-Non-Centered-Eight-Schools-Implementation" title="Permalink to this headline">¶</a></h2>
-<p>Although reducing the step size improves exploration, ultimately it only
-reveals the true extent the pathology in the centered implementation.
-Fortunately, there is another way to implement hierarchical models that
-does not suffer from the same pathologies.</p>
-<p>In a non-centered parameterization we do not try to fit the group-level
-parameters directly, rather we fit a latent Gaussian variable from which
-we can recover the group-level parameters with a scaling and a
-translation.</p>
+<p>Although reducing the step size improves exploration, ultimately it only reveals the true extent the pathology in the centered implementation. Fortunately, there is another way to implement hierarchical models that does not suffer from the same pathologies.</p>
+<p>In a non-centered parameterization we do not try to fit the group-level parameters directly, rather we fit a latent Gaussian variable from which we can recover the group-level parameters with a scaling and a translation.</p>
 <div class="math notranslate nohighlight">
 \[\mu \sim \mathcal{N}(0, 5)\]</div>
 <div class="math notranslate nohighlight">
@@ -1390,7 +1286,7 @@ translation.</p>
 <div class="math notranslate nohighlight">
 \[\theta_{n} = \mu + \tau \cdot \tilde{\theta}_{n}.\]</div>
 <p>Stan model:</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="p">{</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="p">{</span>
   <span class="kt">int</span><span class="o">&lt;</span><span class="n">lower</span><span class="o">=</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">J</span><span class="p">;</span>
   <span class="n">real</span> <span class="n">y</span><span class="p">[</span><span class="n">J</span><span class="p">];</span>
   <span class="n">real</span><span class="o">&lt;</span><span class="n">lower</span><span class="o">=</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">sigma</span><span class="p">[</span><span class="n">J</span><span class="p">];</span>
@@ -1417,36 +1313,34 @@ translation.</p>
 </pre></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">NonCentered_eight</span><span class="p">:</span>
-    <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
     <span class="n">tau</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;tau&#39;</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-    <span class="n">theta_tilde</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;theta_t&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">J</span><span class="p">)</span>
+    <span class="n">theta_tilde</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;theta_t&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">J</span><span class="p">)</span>
     <span class="n">theta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">tau</span> <span class="o">*</span> <span class="n">theta_tilde</span><span class="p">)</span>
-    <span class="n">obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;obs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;obs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">NonCentered_eight</span><span class="p">:</span>
     <span class="n">fit_ncp80</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">SEED</span><span class="p">,</span>
-                         <span class="n">nuts_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">target_accept</span><span class="o">=.</span><span class="mi">80</span><span class="p">))</span>
+                         <span class="n">target_accept</span><span class="o">=.</span><span class="mi">80</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -1458,8 +1352,7 @@ There were 3 divergences after tuning. Increase `target_accept` or reparameteriz
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1468,11 +1361,10 @@ There were 3 divergences after tuning. Increase `target_accept` or reparameteriz
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
-<div class="output_area docutils container">
+<div class="output_area rendered_html docutils container">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1685,14 +1577,9 @@ There were 3 divergences after tuning. Increase `target_accept` or reparameteriz
 </table>
 </div></div>
 </div>
-<p>As shown above, the effective sample size per iteration has drastically
-improved, and the trace plots no longer show any “stickyness”. However,
-we do still see the rare divergence. These infrequent divergences do not
-seem concentrate anywhere in parameter space, which is indicative of the
-divergences being false positives.</p>
+<p>As shown above, the effective sample size per iteration has drastically improved, and the trace plots no longer show any “stickyness”. However, we do still see the rare divergence. These infrequent divergences do not seem concentrate anywhere in parameter space, which is indicative of the divergences being false positives.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1704,14 +1591,14 @@ divergences being false positives.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_0.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_0.png" style="width: 856px; height: 135px;" /></a>
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_1.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_1.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_1.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_1.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_1.png" style="width: 887px; height: 272px;" /></a>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -1727,20 +1614,18 @@ Percentage of Divergent 0.2
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_3.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_3.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_3.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_3.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_47_3.png" style="width: 711px; height: 365px;" /></a>
 </div>
 </div>
-<p>As expected of false positives, we can remove the divergences entirely
-by decreasing the step size,</p>
+<p>As expected of false positives, we can remove the divergences entirely by decreasing the step size,</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">NonCentered_eight</span><span class="p">:</span>
     <span class="n">fit_ncp90</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">SEED</span><span class="p">,</span>
-                         <span class="n">nuts_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">target_accept</span><span class="o">=.</span><span class="mi">90</span><span class="p">))</span>
+                         <span class="n">target_accept</span><span class="o">=.</span><span class="mi">90</span><span class="p">)</span>
 
 <span class="c1"># display the total number and percentage of divergent</span>
 <span class="n">divergent</span> <span class="o">=</span> <span class="n">fit_ncp90</span><span class="p">[</span><span class="s1">&#39;diverging&#39;</span><span class="p">]</span>
@@ -1751,7 +1636,7 @@ by decreasing the step size,</p>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -1768,14 +1653,9 @@ NUTS: [theta_t, tau_log__, mu]
 Number of Divergent 0
 </pre></div></div>
 </div>
-<p>The more agreeable geometry of the non-centered implementation allows
-the Markov chain to explore deep into the neck of the funnel, capturing
-even the smallest values of <span class="math notranslate nohighlight">\(\tau\)</span> that are consistent with the
-measurements. Consequently, MCMC estimators from the non-centered chain
-rapidly converge towards their true expectation values.</p>
+<p>The more agreeable geometry of the non-centered implementation allows the Markov chain to explore deep into the neck of the funnel, capturing even the smallest values of <span class="math notranslate nohighlight">\(\tau\)</span> that are consistent with the measurements. Consequently, MCMC estimators from the non-centered chain rapidly converge towards their true expectation values.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1799,12 +1679,11 @@ rapidly converge towards their true expectation values.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_51_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_51_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_51_0.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_51_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_51_0.png" style="width: 712px; height: 438px;" /></a>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1832,95 +1711,29 @@ rapidly converge towards their true expectation values.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_52_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_52_0.png" />
+<a class="reference internal image-reference" href="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_52_0.png"><img alt="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_52_0.png" src="../_images/notebooks_Diagnosing_biased_Inference_with_Divergences_52_0.png" style="width: 887px; height: 272px;" /></a>
 </div>
 </div>
 </div>
 </div>
 
 
-          </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/pymc3_logo.jpg" alt="Logo"/>
-            </a></p>
-<h1 class="logo"><a href="../index.html">PyMC3</a></h1>
-
-
-
-<p class="blurb">Probabilistic Programming in Python: Bayesian Modeling and Probabilistic Machine Learning with Theano</p>
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../prob_dists.html">Probability Distributions</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#howto">Howto</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="sampler-stats.html">Sampler statistics</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Diagnosing Biased Inference with Divergences</a></li>
-<li class="toctree-l3"><a class="reference internal" href="posterior_predictive.html">Posterior Predictive Checks</a></li>
-<li class="toctree-l3"><a class="reference internal" href="model_comparison.html">Model comparison</a></li>
-<li class="toctree-l3"><a class="reference internal" href="model_averaging.html">Model averaging</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Bayes_factor.html">Bayes Factors and Marginal Likelihood</a></li>
-<li class="toctree-l3"><a class="reference internal" href="howto_debugging.html">How to debug a model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="PyMC3_tips_and_heuristic.html">PyMC3 Modeling tips and heuristic</a></li>
-<li class="toctree-l3"><a class="reference internal" href="LKJ.html">LKJ Cholesky Covariance Priors for Multivariate Normal Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="live_sample_plots.html">Live sample plots</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#applied">Applied</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#glm">GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#survival-analysis">Survival Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#gaussian-processes">Gaussian Processes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#mixture-models">Mixture Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#variational-inference">Variational Inference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html#stochastic-gradient">Stochastic Gradient</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+<div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <a href="https://github.com/pymc-devs/pymc3"><i class="github icon large"></i></a>
+        <a href="https://twitter.com/pymc_devs"><i class="twitter icon large"></i></a>
+        <a href="https://discourse.pymc.io/"><i class="discourse icon large"></i></a>
     </div>
-    <div class="footer">
-      &copy;2017, The PyMC Development Team.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
-      
-      |
-      <a href="../_sources/notebooks/Diagnosing_biased_Inference_with_Divergences.ipynb.txt"
-          rel="nofollow">Page source</a>
+    <div class="ui center aligned container">
+        <p>
+            &copy; Copyright 2018, The PyMC Development Team.
+        </p>
+        <p>
+            Created using <a href="https://sphinx-doc.org/">Sphinx</a> 2.0.1.<br />
+        </p>
     </div>
-
-    
-
-    
+</div>
   </body>
 </html>

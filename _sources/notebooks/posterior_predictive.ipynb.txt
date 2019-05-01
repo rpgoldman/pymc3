@@ -75,9 +75,9 @@
     "data = np.random.randn(100)\n",
     "\n",
     "with pm.Model() as model: \n",
-    "    mu = pm.Normal('mu', mu=0, sd=1, testval=0)\n",
-    "    sd = pm.HalfNormal('sd', sd=1)\n",
-    "    n = pm.Normal('n', mu=mu, sd=sd, observed=data)\n",
+    "    mu = pm.Normal('mu', mu=0, sigma=1, testval=0)\n",
+    "    sd = pm.HalfNormal('sd', sigma=1)\n",
+    "    n = pm.Normal('n', mu=mu, sigma=sd, observed=data)\n",
     "    \n",
     "    trace = pm.sample(5000)"
    ]
@@ -123,7 +123,7 @@
     }
    ],
    "source": [
-    "ppc = pm.sample_ppc(trace, samples=500, model=model)"
+    "ppc = pm.sample_posterior_predictive(trace, samples=500, model=model)"
    ]
   },
   {
@@ -283,7 +283,7 @@
    ],
    "source": [
     "with pm.Model() as model:\n",
-    "    coeff = pm.Normal('coeff', mu=0, sd=1)\n",
+    "    coeff = pm.Normal('coeff', mu=0, sigma=1)\n",
     "    outcome = pm.Bernoulli('outcome', logit_p=coeff*predictors_shared, observed=outcomes)    \n",
     "    trace = pm.sample(5000)"
    ]
@@ -313,7 +313,7 @@
    ],
    "source": [
     "# Simply running PPC will use the updated values and do prediction\n",
-    "ppc = pm.sample_ppc(trace, model=model, samples=100)"
+    "ppc = pm.sample_posterior_predictive(trace, model=model, samples=100)"
    ]
   },
   {
@@ -322,7 +322,7 @@
    "source": [
     "### Mean predicted values plus error bars to give sense of uncertainty in prediction\n",
     "\n",
-    "Note that these are uncertainty caused by MCMC estimation, and not from the underlying model.  If we had taken more samples in `sample_ppc`, the error bars would get smaller quite quickly."
+    "Note that these are uncertainty caused by MCMC estimation, and not from the underlying model.  If we had taken more samples in `sample_posterior_predictive`, the error bars would get smaller quite quickly."
    ]
   },
   {

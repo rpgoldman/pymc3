@@ -1,39 +1,63 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Variational API quickstart &#8212; PyMC3 3.5.rc1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <title>Variational API quickstart &#8212; PyMC3 3.5 documentation</title>
+    <link rel="stylesheet" href="../_static/semantic-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script type="text/javascript" src="../_static/highlight.min.js"></script>
+    <script type="text/javascript" src="../_static/semantic.min.js"></script>
+    <link rel="shortcut icon" href="../_static/PyMC3.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Gaussian Processes" href="../gp.html" />
-    <link rel="prev" title="API quickstart" href="api_quickstart.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+<script>hljs.initHighlightingOnLoad();</script>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+
 
   </head><body>
-  
+<div class="ui vertical center aligned">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
+    <div class="ui container">
+        <div class="ui large secondary pointing menu">
+            <a class="item" href="/">
+                <img class="ui bottom aligned tiny image" src="https://cdn.rawgit.com/pymc-devs/pymc3/master/docs/logos/svg/PyMC3_banner.svg" />
+            </a>
+             <a href="../nb_tutorials/index.html" class="item">Tutorials</a> <a href="../nb_examples/index.html" class="item">Examples</a> <a href="../learn.html" class="item">Books + Videos</a> <a href="../api.html" class="item">API</a> <a href="../developer_guide.html" class="item">Developer Guide</a> <a href="../history.html" class="item">About PyMC3</a>
             
+            <div class="right menu">
+                <div class="item">
+                    <form class="ui icon input" action="../search.html" method="get">
+                        <input type="text" placeholder="Search..." name="q" />
+                        <i class="search link icon"></i>
+                    </form>
+                </div>
+                <a class="item" href="https://github.com/pymc-devs/pymc3"><i class="github blue icon large"></i></a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="ui container" role="main">
+    
+
+    <div class="ui vertical segment">
+        
   
 <style>
 /* CSS for nbsphinx extension */
@@ -89,18 +113,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 7ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -140,9 +164,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -150,7 +174,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -199,26 +223,54 @@ div.nboutput div.output_area.stderr {
 
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
 </style>
 <div class="section" id="Variational-API-quickstart">
 <h1>Variational API quickstart<a class="headerlink" href="#Variational-API-quickstart" title="Permalink to this headline">¶</a></h1>
-<p>The variational inference (VI) API is focused on approximating posterior
-distributions for Bayesian models. Common use cases to which this module
-can be applied include:</p>
+<p>The variational inference (VI) API is focused on approximating posterior distributions for Bayesian models. Common use cases to which this module can be applied include:</p>
 <ul class="simple">
-<li>Sampling from model posterior and computing arbitrary expressions</li>
-<li>Conduct Monte Carlo approximation of expectation, variance, and other
-statistics</li>
-<li>Remove symbolic dependence on PyMC3 random nodes and evaluate
-expressions (using <code class="docutils literal notranslate"><span class="pre">eval</span></code>)</li>
-<li>Provide a bridge to arbitrary Theano code</li>
+<li><p>Sampling from model posterior and computing arbitrary expressions</p></li>
+<li><p>Conduct Monte Carlo approximation of expectation, variance, and other statistics</p></li>
+<li><p>Remove symbolic dependence on PyMC3 random nodes and evaluate expressions (using <code class="docutils literal notranslate"><span class="pre">eval</span></code>)</p></li>
+<li><p>Provide a bridge to arbitrary Theano code</p></li>
 </ul>
 <p>Sounds good, doesn’t it?</p>
-<p>The module provides an interface to a variety of inference methods, so
-you are free to choose what is most appropriate for the problem.</p>
+<p>The module provides an interface to a variety of inference methods, so you are free to choose what is most appropriate for the problem.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -235,11 +287,9 @@ you are free to choose what is most appropriate for the problem.</p>
 </div>
 <div class="section" id="Basic-setup">
 <h2>Basic setup<a class="headerlink" href="#Basic-setup" title="Permalink to this headline">¶</a></h2>
-<p>We do not need complex models to play with the VI API; let’s begin with
-a simple mixture model:</p>
+<p>We do not need complex models to play with the VI API; let’s begin with a simple mixture model:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -248,20 +298,16 @@ a simple mixture model:</p>
 <span class="n">sd</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">floatX</span><span class="p">([</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">])</span>
 
 <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">NormalMixture</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">w</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">sd</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">NormalMixture</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">w</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sd</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
     <span class="n">x2</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
     <span class="n">sin_x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<p>We can’t compute analytical expectations for this model. However, we can
-obtain an approximation using Markov chain Monte Carlo methods; let’s
-use NUTS first.</p>
-<p>To allow samples of the expressions to be saved, we need to wrap them in
-<code class="docutils literal notranslate"><span class="pre">Deterministic</span></code> objects:</p>
+<p>We can’t compute analytical expectations for this model. However, we can obtain an approximation using Markov chain Monte Carlo methods; let’s use NUTS first.</p>
+<p>To allow samples of the expressions to be saved, we need to wrap them in <code class="docutils literal notranslate"><span class="pre">Deterministic</span></code> objects:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -272,8 +318,7 @@ use NUTS first.</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -285,7 +330,7 @@ use NUTS first.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -293,8 +338,7 @@ Initializing NUTS using jitter+adapt_diag...
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -309,22 +353,17 @@ Initializing NUTS using jitter+adapt_diag...
 <img alt="../_images/notebooks_variational_api_quickstart_7_0.png" src="../_images/notebooks_variational_api_quickstart_7_0.png" />
 </div>
 </div>
-<p>Above are traces for <span class="math notranslate nohighlight">\(x^2\)</span> and <span class="math notranslate nohighlight">\(sin(x)\)</span>. We can see there is
-clear multi-modality in this model. One drawback, is that you need to
-know in advance what exactly you want to see in trace and wrap it with
-<code class="docutils literal notranslate"><span class="pre">Deterministic</span></code>.</p>
-<p>The VI API takes an alternate approach: You obtain inference from model,
-then calculate expressions based on this model afterwards.</p>
+<p>Above are traces for <span class="math notranslate nohighlight">\(x^2\)</span> and <span class="math notranslate nohighlight">\(sin(x)\)</span>. We can see there is clear multi-modality in this model. One drawback, is that you need to know in advance what exactly you want to see in trace and wrap it with <code class="docutils literal notranslate"><span class="pre">Deterministic</span></code>.</p>
+<p>The VI API takes an alternate approach: You obtain inference from model, then calculate expressions based on this model afterwards.</p>
 <p>Let’s use the same model:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
 
-    <span class="n">x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">NormalMixture</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">w</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">sd</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">NormalMixture</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">w</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sd</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
     <span class="n">x2</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
     <span class="n">sin_x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
@@ -332,8 +371,7 @@ then calculate expressions based on this model afterwards.</p>
 </div>
 <p>Here we will use automatic differentiation variational inference (ADVI).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -345,15 +383,14 @@ then calculate expressions based on this model afterwards.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Average Loss = 2.2413: 100%|██████████| 10000/10000 [00:02&lt;00:00, 4653.71it/s]
 Finished [100%]: Average Loss = 2.2687
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -368,14 +405,12 @@ Finished [100%]: Average Loss = 2.2687
 <img alt="../_images/notebooks_variational_api_quickstart_12_0.png" src="../_images/notebooks_variational_api_quickstart_12_0.png" />
 </div>
 </div>
-<p>Notice that ADVI has failed to approximate the multimodal distribution,
-since it uses a Gaussian distribution that has a single mode.</p>
+<p>Notice that ADVI has failed to approximate the multimodal distribution, since it uses a Gaussian distribution that has a single mode.</p>
 </div>
 <div class="section" id="Checking-convergence">
 <h2>Checking convergence<a class="headerlink" href="#Checking-convergence" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -444,11 +479,9 @@ class CheckParametersConvergence(Callback)
 
 </pre></div></div>
 </div>
-<p>Let’s use the default arguments for <code class="docutils literal notranslate"><span class="pre">CheckParametersConvergence</span></code> as
-they seem to be reasonable.</p>
+<p>Let’s use the default arguments for <code class="docutils literal notranslate"><span class="pre">CheckParametersConvergence</span></code> as they seem to be reasonable.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -462,7 +495,7 @@ they seem to be reasonable.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Average Loss = 2.2559: 100%|██████████| 10000/10000 [00:01&lt;00:00, 7581.25it/s]
 Finished [100%]: Average Loss = 2.2763
@@ -470,8 +503,7 @@ Finished [100%]: Average Loss = 2.2763
 </div>
 <p>We can access inference history via <code class="docutils literal notranslate"><span class="pre">.hist</span></code> attribute.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -486,13 +518,9 @@ Finished [100%]: Average Loss = 2.2763
 <img alt="../_images/notebooks_variational_api_quickstart_18_0.png" src="../_images/notebooks_variational_api_quickstart_18_0.png" />
 </div>
 </div>
-<p>This is not a good convergence plot, despite the fact that we ran many
-iterations. The reason is that the mean of the ADVI approximation is
-close to zero, and therefore taking the relative difference (the default
-method) is unstable for checking convergence.</p>
+<p>This is not a good convergence plot, despite the fact that we ran many iterations. The reason is that the mean of the ADVI approximation is close to zero, and therefore taking the relative difference (the default method) is unstable for checking convergence.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -504,7 +532,7 @@ method) is unstable for checking convergence.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Average Loss = 3.1313:  47%|████▋     | 4688/10000 [00:00&lt;00:00, 7060.06it/s]
 Convergence archived at 4700
@@ -512,8 +540,7 @@ Interrupted at 4,700 [47%]: Average Loss = 4.7995
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -528,20 +555,13 @@ Interrupted at 4,700 [47%]: Average Loss = 4.7995
 <img alt="../_images/notebooks_variational_api_quickstart_21_0.png" src="../_images/notebooks_variational_api_quickstart_21_0.png" />
 </div>
 </div>
-<p>That’s much better! We’ve reached convergence after less than 5000
-iterations.</p>
+<p>That’s much better! We’ve reached convergence after less than 5000 iterations.</p>
 </div>
 <div class="section" id="Tracking-parameters">
 <h2>Tracking parameters<a class="headerlink" href="#Tracking-parameters" title="Permalink to this headline">¶</a></h2>
-<p>Another usefull callback allows users to track parameters. It allows for
-the tracking of arbitrary statistics during inference, though it can be
-memory-hungry. Using the <code class="docutils literal notranslate"><span class="pre">fit</span></code> function, we do not have direct access
-to the approximation before inference. However, tracking parameters
-requires access to the approximation. We can get around this constraint
-by using the object-oriented (OO) API for inference.</p>
+<p>Another usefull callback allows users to track parameters. It allows for the tracking of arbitrary statistics during inference, though it can be memory-hungry. Using the <code class="docutils literal notranslate"><span class="pre">fit</span></code> function, we do not have direct access to the approximation before inference. However, tracking parameters requires access to the approximation. We can get around this constraint by using the object-oriented (OO) API for inference.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -551,8 +571,7 @@ by using the object-oriented (OO) API for inference.</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -561,8 +580,7 @@ by using the object-oriented (OO) API for inference.</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -570,12 +588,9 @@ by using the object-oriented (OO) API for inference.</p>
 </pre></div>
 </div>
 </div>
-<p>Different approximations have different hyperparameters. In mean-field
-ADVI, we have <span class="math notranslate nohighlight">\(\rho\)</span> and <span class="math notranslate nohighlight">\(\mu\)</span> (inspired by <a class="reference external" href="https://arxiv.org/abs/1505.05424">Bayes by
-BackProp</a>).</p>
+<p>Different approximations have different hyperparameters. In mean-field ADVI, we have <span class="math notranslate nohighlight">\(\rho\)</span> and <span class="math notranslate nohighlight">\(\mu\)</span> (inspired by <a class="reference external" href="https://arxiv.org/abs/1505.05424">Bayes by BackProp</a>).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -584,8 +599,7 @@ BackProp</a>).</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -593,12 +607,9 @@ BackProp</a>).</p>
 </pre></div>
 </div>
 </div>
-<p>There are convenient shortcuts to relevant statistics associated with
-the approximation. This can be useful, for example, when specifying a
-mass matrix for NUTS sampling:</p>
+<p>There are convenient shortcuts to relevant statistics associated with the approximation. This can be useful, for example, when specifying a mass matrix for NUTS sampling:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -607,8 +618,7 @@ mass matrix for NUTS sampling:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -618,8 +628,7 @@ mass matrix for NUTS sampling:</p>
 </div>
 <p>We can roll these statistics into the <code class="docutils literal notranslate"><span class="pre">Tracker</span></code> callback.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -630,11 +639,9 @@ mass matrix for NUTS sampling:</p>
 </pre></div>
 </div>
 </div>
-<p>Now, calling <code class="docutils literal notranslate"><span class="pre">advi.fit</span></code> will record the mean and standard deviation of
-the approximation as it runs.</p>
+<p>Now, calling <code class="docutils literal notranslate"><span class="pre">advi.fit</span></code> will record the mean and standard deviation of the approximation as it runs.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -645,7 +652,7 @@ the approximation as it runs.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Average Loss = 1.9568: 100%|██████████| 20000/20000 [00:03&lt;00:00, 6098.12it/s]
 Finished [100%]: Average Loss = 1.9589
@@ -653,8 +660,7 @@ Finished [100%]: Average Loss = 1.9589
 </div>
 <p>We can now plot both the evidence lower bound and parameter traces:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -678,13 +684,9 @@ Finished [100%]: Average Loss = 1.9589
 <img alt="../_images/notebooks_variational_api_quickstart_36_0.png" src="../_images/notebooks_variational_api_quickstart_36_0.png" />
 </div>
 </div>
-<p>Notice that there are convergence issues with the mean, and that lack of
-convergence does not seem to change the ELBO trajectory significantly.
-As we are using the OO API, we can run the approximation longer until
-convergence is achieved.</p>
+<p>Notice that there are convergence issues with the mean, and that lack of convergence does not seem to change the ELBO trajectory significantly. As we are using the OO API, we can run the approximation longer until convergence is achieved.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -695,7 +697,7 @@ convergence is achieved.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Average Loss = 1.8638: 100%|██████████| 100000/100000 [00:16&lt;00:00, 6032.70it/s]
 Finished [100%]: Average Loss = 1.8422
@@ -703,8 +705,7 @@ Finished [100%]: Average Loss = 1.8422
 </div>
 <p>Let’s take a look:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -728,14 +729,10 @@ Finished [100%]: Average Loss = 1.8422
 <img alt="../_images/notebooks_variational_api_quickstart_40_0.png" src="../_images/notebooks_variational_api_quickstart_40_0.png" />
 </div>
 </div>
-<p>We still see evidence for lack of convergence, as the mean has devolved
-into a random walk. This could be the result of choosing a poor
-algorithm for inference. At any rate, it is unstable and can produce
-very different results even using different random seeds.</p>
+<p>We still see evidence for lack of convergence, as the mean has devolved into a random walk. This could be the result of choosing a poor algorithm for inference. At any rate, it is unstable and can produce very different results even using different random seeds.</p>
 <p>Let’s compare results with the NUTS output:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -752,12 +749,9 @@ very different results even using different random seeds.</p>
 <img alt="../_images/notebooks_variational_api_quickstart_42_0.png" src="../_images/notebooks_variational_api_quickstart_42_0.png" />
 </div>
 </div>
-<p>Again, we see that ADVI is not able to cope with multimodality; we can
-instead use SVGD, which generates an approximation based on a large
-number of particles.</p>
+<p>Again, we see that ADVI is not able to cope with multimodality; we can instead use SVGD, which generates an approximation based on a large number of particles.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -770,14 +764,13 @@ number of particles.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 100%|██████████| 300/300 [00:47&lt;00:00,  6.62it/s]
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -794,14 +787,10 @@ number of particles.</p>
 <img alt="../_images/notebooks_variational_api_quickstart_45_0.png" src="../_images/notebooks_variational_api_quickstart_45_0.png" />
 </div>
 </div>
-<p>That did the trick, as we now have a multimodal approximation using
-SVGD.</p>
-<p>With this, it is possible to calculate arbitrary functions of the
-parameters with this variational approximation. For example we can
-calculate <span class="math notranslate nohighlight">\(x^2\)</span> and <span class="math notranslate nohighlight">\(sin(x)\)</span>, as with the NUTS model.</p>
+<p>That did the trick, as we now have a multimodal approximation using SVGD.</p>
+<p>With this, it is possible to calculate arbitrary functions of the parameters with this variational approximation. For example we can calculate <span class="math notranslate nohighlight">\(x^2\)</span> and <span class="math notranslate nohighlight">\(sin(x)\)</span>, as with the NUTS model.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -811,11 +800,9 @@ calculate <span class="math notranslate nohighlight">\(x^2\)</span> and <span cl
 </pre></div>
 </div>
 </div>
-<p>To evaluate these expressions with the approximation, we need
-<code class="docutils literal notranslate"><span class="pre">approx.sample_node</span></code>.</p>
+<p>To evaluate these expressions with the approximation, we need <code class="docutils literal notranslate"><span class="pre">approx.sample_node</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -851,8 +838,7 @@ sample_node(node, size=None, deterministic=False, more_replacements=None) method
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -862,8 +848,7 @@ sample_node(node, size=None, deterministic=False, more_replacements=None) method
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -872,8 +857,7 @@ sample_node(node, size=None, deterministic=False, more_replacements=None) method
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -882,8 +866,7 @@ sample_node(node, size=None, deterministic=False, more_replacements=None) method
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -892,8 +875,7 @@ sample_node(node, size=None, deterministic=False, more_replacements=None) method
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -902,8 +884,7 @@ sample_node(node, size=None, deterministic=False, more_replacements=None) method
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -911,14 +892,10 @@ sample_node(node, size=None, deterministic=False, more_replacements=None) method
 </pre></div>
 </div>
 </div>
-<p>Every call yields a different value from the same theano node. This is
-because it is <strong>stochastic</strong>.</p>
-<p>By applying replacements, we are now free of the dependence on the PyMC3
-model; instead, we now depend on the approximation. Changing it will
-change the distribution for stochastic nodes:</p>
+<p>Every call yields a different value from the same theano node. This is because it is <strong>stochastic</strong>.</p>
+<p>By applying replacements, we are now free of the dependence on the PyMC3 model; instead, we now depend on the approximation. Changing it will change the distribution for stochastic nodes:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -934,11 +911,9 @@ change the distribution for stochastic nodes:</p>
 <img alt="../_images/notebooks_variational_api_quickstart_54_0.png" src="../_images/notebooks_variational_api_quickstart_54_0.png" />
 </div>
 </div>
-<p>There is a more convinient way to get lots of samples at once:
-<code class="docutils literal notranslate"><span class="pre">sample_node</span></code></p>
+<p>There is a more convinient way to get lots of samples at once: <code class="docutils literal notranslate"><span class="pre">sample_node</span></code></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -947,8 +922,7 @@ change the distribution for stochastic nodes:</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -964,11 +938,9 @@ change the distribution for stochastic nodes:</p>
 <img alt="../_images/notebooks_variational_api_quickstart_57_0.png" src="../_images/notebooks_variational_api_quickstart_57_0.png" />
 </div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">sample_node</span></code> function includes an additional dimension, so taking
-expectations or calculating variance is specified by <code class="docutils literal notranslate"><span class="pre">axis=0</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">sample_node</span></code> function includes an additional dimension, so taking expectations or calculating variance is specified by <code class="docutils literal notranslate"><span class="pre">axis=0</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -977,8 +949,7 @@ expectations or calculating variance is specified by <code class="docutils liter
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -987,8 +958,7 @@ expectations or calculating variance is specified by <code class="docutils liter
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -997,8 +967,7 @@ expectations or calculating variance is specified by <code class="docutils liter
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -1008,8 +977,7 @@ expectations or calculating variance is specified by <code class="docutils liter
 </div>
 <p>A symbolic sample size can also be specified:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1020,8 +988,7 @@ expectations or calculating variance is specified by <code class="docutils liter
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1030,8 +997,7 @@ expectations or calculating variance is specified by <code class="docutils liter
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -1040,8 +1006,7 @@ expectations or calculating variance is specified by <code class="docutils liter
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1050,8 +1015,7 @@ expectations or calculating variance is specified by <code class="docutils liter
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -1062,11 +1026,9 @@ expectations or calculating variance is specified by <code class="docutils liter
 <p>Unfortunately the size must be a scalar value.</p>
 <div class="section" id="Converting-a-Trace-to-an-Approximation">
 <h3>Converting a Trace to an Approximation<a class="headerlink" href="#Converting-a-Trace-to-an-Approximation" title="Permalink to this headline">¶</a></h3>
-<p>We can convert a MCMC trace into an Approximation. It will have the same
-API as approximations above with same <code class="docutils literal notranslate"><span class="pre">sample_node</span></code> methods:</p>
+<p>We can convert a MCMC trace into an Approximation. It will have the same API as approximations above with same <code class="docutils literal notranslate"><span class="pre">sample_node</span></code> methods:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1076,8 +1038,7 @@ API as approximations above with same <code class="docutils literal notranslate"
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -1087,8 +1048,7 @@ API as approximations above with same <code class="docutils literal notranslate"
 </div>
 <p>We can then draw samples from the <code class="docutils literal notranslate"><span class="pre">Emipirical</span></code> object:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [40]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1107,12 +1067,9 @@ API as approximations above with same <code class="docutils literal notranslate"
 </div>
 <div class="section" id="Multilabel-logistic-regression">
 <h2>Multilabel logistic regression<a class="headerlink" href="#Multilabel-logistic-regression" title="Permalink to this headline">¶</a></h2>
-<p>Let’s illustrate the use of <code class="docutils literal notranslate"><span class="pre">Tracker</span></code> with the famous Iris dataset.
-We’ll attempy multi-label classification and compute the expected
-accuracy score as a diagnostic.</p>
+<p>Let’s illustrate the use of <code class="docutils literal notranslate"><span class="pre">Tracker</span></code> with the famous Iris dataset. We’ll attempy multi-label classification and compute the expected accuracy score as a diagnostic.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [41]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1126,15 +1083,10 @@ accuracy score as a diagnostic.</p>
 </pre></div>
 </div>
 </div>
-<div class="figure">
-<img alt="" src="http://5047-presscdn.pagely.netdna-cdn.com/wp-content/uploads/2015/04/iris_petal_sepal.png" />
-</div>
-<p>A relatively simple model will be sufficient here because the classes
-are roughly linearly separable; we are going to fit multinomial logistic
-regression.</p>
+<p><img alt="image0" src="http://5047-presscdn.pagely.netdna-cdn.com/wp-content/uploads/2015/04/iris_petal_sepal.png" /></p>
+<p>A relatively simple model will be sufficient here because the classes are roughly linearly separable; we are going to fit multinomial logistic regression.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [42]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1144,7 +1096,7 @@ regression.</p>
 <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">iris_model</span><span class="p">:</span>
 
     <span class="c1"># Coefficients for features</span>
-    <span class="err">β</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mf">1e2</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="err">β</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1e2</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
     <span class="c1"># Transoform to unit interval</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Flat</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">tt</span><span class="o">.</span><span class="n">nnet</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">Xt</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="err">β</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span><span class="p">)</span>
@@ -1155,22 +1107,13 @@ regression.</p>
 </div>
 <div class="section" id="Applying-replacements-in-practice">
 <h3>Applying replacements in practice<a class="headerlink" href="#Applying-replacements-in-practice" title="Permalink to this headline">¶</a></h3>
-<p>PyMC3 models have symbolic inputs for latent variables. To evaluate an
-espression that requires knowledge of latent variables, one needs to
-provide fixed values. We can use values approximated by VI for this
-purpose. The function <code class="docutils literal notranslate"><span class="pre">sample_node</span></code> removes the symbolic dependenices.</p>
-<p><code class="docutils literal notranslate"><span class="pre">sample_node</span></code> will use the whole distribution at each step, so we will
-use it here. We can apply more replacements in single function call
-using the <code class="docutils literal notranslate"><span class="pre">more_replacements</span></code> keyword argument in both replacement
-functions.</p>
+<p>PyMC3 models have symbolic inputs for latent variables. To evaluate an espression that requires knowledge of latent variables, one needs to provide fixed values. We can use values approximated by VI for this purpose. The function <code class="docutils literal notranslate"><span class="pre">sample_node</span></code> removes the symbolic dependenices.</p>
+<p><code class="docutils literal notranslate"><span class="pre">sample_node</span></code> will use the whole distribution at each step, so we will use it here. We can apply more replacements in single function call using the <code class="docutils literal notranslate"><span class="pre">more_replacements</span></code> keyword argument in both replacement functions.</p>
 <blockquote>
-<div><strong>HINT:</strong> You can use <code class="docutils literal notranslate"><span class="pre">more_replacements</span></code> argument when calling
-<code class="docutils literal notranslate"><span class="pre">fit</span></code> too: *
-<code class="docutils literal notranslate"><span class="pre">pm.fit(more_replacements={full_data:</span> <span class="pre">minibatch_data})</span></code> *
-<code class="docutils literal notranslate"><span class="pre">inference.fit(more_replacements={full_data:</span> <span class="pre">minibatch_data})</span></code></div></blockquote>
+<div><p><strong>HINT:</strong> You can use <code class="docutils literal notranslate"><span class="pre">more_replacements</span></code> argument when calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> too: * <code class="docutils literal notranslate"><span class="pre">pm.fit(more_replacements={full_data:</span> <span class="pre">minibatch_data})</span></code> * <code class="docutils literal notranslate"><span class="pre">inference.fit(more_replacements={full_data:</span> <span class="pre">minibatch_data})</span></code></p>
+</div></blockquote>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1190,12 +1133,10 @@ functions.</p>
 </pre></div>
 </div>
 </div>
-<p>By applying the code above, we now have 100 sampled probabilities
-(default number for <code class="docutils literal notranslate"><span class="pre">sample_node</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>) for each observation.</p>
+<p>By applying the code above, we now have 100 sampled probabilities (default number for <code class="docutils literal notranslate"><span class="pre">sample_node</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>) for each observation.</p>
 <p>Next we create symbolic expressions for sampled accuracy scores:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1206,12 +1147,10 @@ functions.</p>
 </pre></div>
 </div>
 </div>
-<p>Tracker expects callables so we can pass <code class="docutils literal notranslate"><span class="pre">.eval</span></code> method of theano node
-that is function itself.</p>
+<p>Tracker expects callables so we can pass <code class="docutils literal notranslate"><span class="pre">.eval</span></code> method of theano node that is function itself.</p>
 <p>Calls to this function are cached so they can be reused.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [45]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1223,8 +1162,7 @@ that is function itself.</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [46]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1235,14 +1173,13 @@ that is function itself.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 100%|██████████| 100/100 [00:10&lt;00:00,  9.93it/s]
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [47]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1256,8 +1193,7 @@ that is function itself.</p>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[47]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -1272,11 +1208,9 @@ that is function itself.</p>
 <img alt="../_images/notebooks_variational_api_quickstart_83_1.png" src="../_images/notebooks_variational_api_quickstart_83_1.png" />
 </div>
 </div>
-<p>Training does not seem to be working here. Let’s use a different
-optimizer and boost the learning rate.</p>
+<p>Training does not seem to be working here. Let’s use a different optimizer and boost the learning rate.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [48]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1287,14 +1221,13 @@ optimizer and boost the learning rate.</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 100%|██████████| 400/400 [00:40&lt;00:00,  8.76it/s]
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [49]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1313,21 +1246,15 @@ optimizer and boost the learning rate.</p>
 </div>
 </div>
 <p>This is much better!</p>
-<p>So, <code class="docutils literal notranslate"><span class="pre">Tracker</span></code> allows us to monitor our approximation and choose good
-training schedule.</p>
+<p>So, <code class="docutils literal notranslate"><span class="pre">Tracker</span></code> allows us to monitor our approximation and choose good training schedule.</p>
 </div>
 </div>
 <div class="section" id="Minibatches">
 <h2>Minibatches<a class="headerlink" href="#Minibatches" title="Permalink to this headline">¶</a></h2>
-<p>When dealing with large datasets, using minibatch training can
-drastically speed up and improve approximation performance. Large
-datasets impose a hefty cost on the computation of gradients.</p>
-<p>There is a nice API in pymc3 to handle these cases, which is avaliable
-through the <code class="docutils literal notranslate"><span class="pre">pm.Minibatch</span></code> class. The minibatch is just a highly
-specialized Theano tensor:</p>
+<p>When dealing with large datasets, using minibatch training can drastically speed up and improve approximation performance. Large datasets impose a hefty cost on the computation of gradients.</p>
+<p>There is a nice API in pymc3 to handle these cases, which is avaliable through the <code class="docutils literal notranslate"><span class="pre">pm.Minibatch</span></code> class. The minibatch is just a highly specialized Theano tensor:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [50]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1336,8 +1263,7 @@ specialized Theano tensor:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[50]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -1347,8 +1273,7 @@ specialized Theano tensor:</p>
 </div>
 <p>To demonstrate, let’s simulate a large quantity of data:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [55]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1363,8 +1288,7 @@ specialized Theano tensor:</p>
 </div>
 <p>For comparison, let’s fit a model without minibatch processing:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [56]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1375,12 +1299,9 @@ specialized Theano tensor:</p>
 </pre></div>
 </div>
 </div>
-<p>Just for fun, let’s create a custom special purpose callback to halt
-slow optimization. Here we define a callback that causes a hard stop
-when approximation runs too slowly:</p>
+<p>Just for fun, let’s create a custom special purpose callback to halt slow optimization. Here we define a callback that causes a hard stop when approximation runs too slowly:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [57]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1391,8 +1312,7 @@ when approximation runs too slowly:</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [58]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1404,22 +1324,21 @@ when approximation runs too slowly:</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Average Loss = 4.2374e+08:   0%|          | 10/10000 [00:02&lt;36:08,  4.61it/s]
 I was slow, sorry
 Interrupted at 10 [0%]: Average Loss = 4.6469e+08
 </pre></div></div>
 </div>
-<p>Inference is too slow, taking several seconds per iteration; fitting the
-approximation would have taken hours!</p>
-<p>Now let’s use minibatches. At every iteration, we will draw 500 random
-values:</p>
+<p>Inference is too slow, taking several seconds per iteration; fitting the approximation would have taken hours!</p>
+<p>Now let’s use minibatches. At every iteration, we will draw 500 random values:</p>
 <blockquote>
-<div>Remember to set <code class="docutils literal notranslate"><span class="pre">total_size</span></code> in observed</div></blockquote>
+<div><p>Remember to set <code class="docutils literal notranslate"><span class="pre">total_size</span></code> in observed</p>
+</div></blockquote>
+<p><strong>total_size</strong> is an important parameter that allows pymc3 to infer the right way of rescaling densities. If it is not set, you are likely to get completely wrong results. For more information please refer to the comprehensive documentation of <code class="docutils literal notranslate"><span class="pre">pm.Minibatch</span></code>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [59]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1434,8 +1353,7 @@ values:</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [60]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1447,15 +1365,14 @@ values:</p>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="stderr output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Average Loss = 1.1379e+07: 100%|██████████| 10000/10000 [01:40&lt;00:00, 99.73it/s]
 Finished [100%]: Average Loss = 1.1374e+07
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [61]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1470,14 +1387,10 @@ Finished [100%]: Average Loss = 1.1374e+07
 <img alt="../_images/notebooks_variational_api_quickstart_100_0.png" src="../_images/notebooks_variational_api_quickstart_100_0.png" />
 </div>
 </div>
-<p>Minibatch inference is dramatically faster. Multidimensional minibatches
-may be needed for some corner cases where you do matrix factorization or
-model is very wide.</p>
-<p>Here is the docstring for <code class="docutils literal notranslate"><span class="pre">Minibatch</span></code> to illustrate how it can be
-customized.</p>
+<p>Minibatch inference is dramatically faster. Multidimensional minibatches may be needed for some corner cases where you do matrix factorization or model is very wide.</p>
+<p>Here is the docstring for <code class="docutils literal notranslate"><span class="pre">Minibatch</span></code> to illustrate how it can be customized.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [62]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1626,81 +1539,22 @@ Multidimensional minibatch that is pure TensorVariable
 </div>
 
 
-          </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/pymc3_logo.jpg" alt="Logo"/>
-            </a></p>
-<h1 class="logo"><a href="../index.html">PyMC3</a></h1>
-
-
-
-<p class="blurb">Probabilistic Programming in Python: Bayesian Modeling and Probabilistic Machine Learning with Theano</p>
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../getting_started.html">Getting started</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started with PyMC3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_quickstart.html">API quickstart</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Variational API quickstart</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Basic-setup">Basic setup</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Checking-convergence">Checking convergence</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Tracking-parameters">Tracking parameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Multilabel-logistic-regression">Multilabel logistic regression</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Minibatches">Minibatches</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../gp.html">Gaussian Processes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../theano.html">PyMC3 and Theano</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../advanced_theano.html">Advanced usage of Theano in PyMC3</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../prob_dists.html">Probability Distributions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+<div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <a href="https://github.com/pymc-devs/pymc3"><i class="github icon large"></i></a>
+        <a href="https://twitter.com/pymc_devs"><i class="twitter icon large"></i></a>
+        <a href="https://discourse.pymc.io/"><i class="discourse icon large"></i></a>
     </div>
-    <div class="footer">
-      &copy;2017, The PyMC Development Team.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
-      
-      |
-      <a href="../_sources/notebooks/variational_api_quickstart.ipynb.txt"
-          rel="nofollow">Page source</a>
+    <div class="ui center aligned container">
+        <p>
+            &copy; Copyright 2018, The PyMC Development Team.
+        </p>
+        <p>
+            Created using <a href="https://sphinx-doc.org/">Sphinx</a> 2.0.1.<br />
+        </p>
     </div>
-
-    
-
-    
+</div>
   </body>
 </html>
