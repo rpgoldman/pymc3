@@ -728,9 +728,184 @@ disabled, <cite>k</cite>, <cite>t0</cite>, <cite>gamma</cite> and <cite>target_a
 <div class="section" id="multitrace">
 <h3>MultiTrace<a class="headerlink" href="#multitrace" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
-<dt id="pymc3.backends.base.pymc3.backends.base.MultiTrace">
-<em class="property">class </em><code class="descclassname">pymc3.backends.base.</code><code class="descname">MultiTrace</code><a class="headerlink" href="#pymc3.backends.base.pymc3.backends.base.MultiTrace" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="pymc3.backends.base.MultiTrace">
+<em class="property">class </em><code class="descclassname">pymc3.backends.base.</code><code class="descname">MultiTrace</code><span class="sig-paren">(</span><em>straces</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.backends.base.MultiTrace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main interface for accessing values from MCMC results</p>
+<p>The core method to select values is <cite>get_values</cite>. The method
+to select sampler statistics is <cite>get_sampler_stats</cite>. Both kinds of
+values can also be accessed by indexing the MultiTrace object.
+Indexing can behave in four ways:</p>
+<ol class="arabic">
+<li><p>Indexing with a variable or variable name (str) returns all
+values for that variable, combining values for all chains.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="p">[</span><span class="n">varname</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Slicing after the variable name can be used to burn and thin
+the samples.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="p">[</span><span class="n">varname</span><span class="p">,</span> <span class="mi">1000</span><span class="p">:]</span>
+</pre></div>
+</div>
+<p>For convenience during interactive use, values can also be
+accessed using the variable as an attribute.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">varname</span>
+</pre></div>
+</div>
+</li>
+<li><p>Indexing with an integer returns a dictionary with values for
+each variable at the given index (corresponding to a single
+sampling iteration).</p></li>
+<li><p>Slicing with a range returns a new trace with the number of draws
+corresponding to the range.</p></li>
+<li><p>Indexing with the name of a sampler statistic that is not also
+the name of a variable returns those values from all chains.
+If there is more than one sampler that provides that statistic,
+the values are concatenated along a new axis.</p></li>
+</ol>
+<p>For any methods that require a single trace (e.g., taking the length
+of the MultiTrace instance, which returns the number of draws), the
+trace with the highest chain number is always used.</p>
+<dl class="method">
+<dt id="pymc3.backends.base.MultiTrace.add_values">
+<code class="descname">add_values</code><span class="sig-paren">(</span><em>self</em>, <em>vals</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.backends.base.MultiTrace.add_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>add variables to traces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>vals</strong><span class="classifier">dict (str: array-like)</span></dt><dd><p>The keys should be the names of the new variables. The values are expected to be
+array-like object. For traces with more than one chain the length of each value
+should match the number of total samples already in the trace (chains * iterations),
+otherwise a warning is raised.</p>
+</dd>
+<dt><strong>overwrite</strong><span class="classifier">bool</span></dt><dd><p>If <cite>False</cite> (default) a ValueError is raised if the variable already exists.
+Change to <cite>True</cite> to overwrite the values of variables</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymc3.backends.base.MultiTrace.get_sampler_stats">
+<code class="descname">get_sampler_stats</code><span class="sig-paren">(</span><em>self</em>, <em>varname</em>, <em>burn=0</em>, <em>thin=1</em>, <em>combine=True</em>, <em>chains=None</em>, <em>squeeze=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.backends.base.MultiTrace.get_sampler_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sampler statistics from the trace.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>varname</strong><span class="classifier">str</span></dt><dd></dd>
+<dt><strong>sampler_idx</strong><span class="classifier">int or None</span></dt><dd></dd>
+<dt><strong>burn</strong><span class="classifier">int</span></dt><dd></dd>
+<dt><strong>thin</strong><span class="classifier">int</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>If the <cite>sampler_idx</cite> is specified, return the statistic with</dt><dd></dd>
+<dt>the given name in a numpy array. If it is not specified and there</dt><dd></dd>
+<dt>is more than one sampler that provides this statistic, return</dt><dd></dd>
+<dt>a numpy array of shape (m, n), where <cite>m</cite> is the number of</dt><dd></dd>
+<dt>such samplers, and <cite>n</cite> is the number of samples.</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymc3.backends.base.MultiTrace.get_values">
+<code class="descname">get_values</code><span class="sig-paren">(</span><em>self</em>, <em>varname</em>, <em>burn=0</em>, <em>thin=1</em>, <em>combine=True</em>, <em>chains=None</em>, <em>squeeze=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.backends.base.MultiTrace.get_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get values from traces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>varname</strong><span class="classifier">str</span></dt><dd></dd>
+<dt><strong>burn</strong><span class="classifier">int</span></dt><dd></dd>
+<dt><strong>thin</strong><span class="classifier">int</span></dt><dd></dd>
+<dt><strong>combine</strong><span class="classifier">bool</span></dt><dd><p>If True, results from <cite>chains</cite> will be concatenated.</p>
+</dd>
+<dt><strong>chains</strong><span class="classifier">int or list of ints</span></dt><dd><p>Chains to retrieve. If None, all chains are used. A single
+chain value can also be given.</p>
+</dd>
+<dt><strong>squeeze</strong><span class="classifier">bool</span></dt><dd><p>Return a single array element if the resulting list of
+values only has one element. If False, the result will
+always be a list of arrays, even if <cite>combine</cite> is True.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>A list of NumPy arrays or a single NumPy array (depending on</dt><dd></dd>
+<dt><cite>squeeze</cite>).</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymc3.backends.base.MultiTrace.point">
+<code class="descname">point</code><span class="sig-paren">(</span><em>self</em>, <em>idx</em>, <em>chain=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.backends.base.MultiTrace.point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary of point values at <cite>idx</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>idx</strong><span class="classifier">int</span></dt><dd></dd>
+<dt><strong>chain</strong><span class="classifier">int</span></dt><dd><p>If a chain is not given, the highest chain number is used.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymc3.backends.base.MultiTrace.points">
+<code class="descname">points</code><span class="sig-paren">(</span><em>self</em>, <em>chains=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.backends.base.MultiTrace.points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over all or some of the sample points</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>chains</strong><span class="classifier">list of int or N</span></dt><dd><p>The chains whose points should be inlcuded in the iterator.  If
+chains is not given, include points from all chains.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymc3.backends.base.MultiTrace.remove_values">
+<code class="descname">remove_values</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.backends.base.MultiTrace.remove_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove variables from traces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong><span class="classifier">str</span></dt><dd><p>Name of the variable to remove. Raises KeyError if the variable is not present</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pymc3.backends.base.BaseTrace">
+<em class="property">class </em><code class="descclassname">pymc3.backends.base.</code><code class="descname">BaseTrace</code><span class="sig-paren">(</span><em>name</em>, <em>model=None</em>, <em>vars=None</em>, <em>test_point=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.backends.base.BaseTrace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base trace object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong><span class="classifier">str</span></dt><dd><p>Name of backend</p>
+</dd>
+<dt><strong>model</strong><span class="classifier">Model</span></dt><dd><p>If None, the model is taken from the <cite>with</cite> context.</p>
+</dd>
+<dt><strong>vars</strong><span class="classifier">list of variables</span></dt><dd><p>Sampling values will be stored for these variables. If None,
+<cite>model.unobserved_RVs</cite> is used.</p>
+</dd>
+<dt><strong>test_point</strong><span class="classifier">dict</span></dt><dd><p>use different test point that might be with changed variables shapes</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 </div>
@@ -805,7 +980,7 @@ Operator Variational Inference
 
 <dl class="method">
 <dt id="pymc3.variational.opvi.ObjectiveFunction.step_function">
-<code class="descname">step_function</code><span class="sig-paren">(</span><em>self</em>, <em>obj_n_mc=None</em>, <em>tf_n_mc=None</em>, <em>obj_optimizer=&lt;function adagrad_window at 0x11b07e840&gt;</em>, <em>test_optimizer=&lt;function adagrad_window at 0x11b07e840&gt;</em>, <em>more_obj_params=None</em>, <em>more_tf_params=None</em>, <em>more_updates=None</em>, <em>more_replacements=None</em>, <em>total_grad_norm_constraint=None</em>, <em>score=False</em>, <em>fn_kwargs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.variational.opvi.ObjectiveFunction.step_function" title="Permalink to this definition">¶</a></dt>
+<code class="descname">step_function</code><span class="sig-paren">(</span><em>self</em>, <em>obj_n_mc=None</em>, <em>tf_n_mc=None</em>, <em>obj_optimizer=&lt;function adagrad_window at 0x124646840&gt;</em>, <em>test_optimizer=&lt;function adagrad_window at 0x124646840&gt;</em>, <em>more_obj_params=None</em>, <em>more_tf_params=None</em>, <em>more_updates=None</em>, <em>more_replacements=None</em>, <em>total_grad_norm_constraint=None</em>, <em>score=False</em>, <em>fn_kwargs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.variational.opvi.ObjectiveFunction.step_function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Step function that should be called on each optimization step.</p>
 <p>Generally it solves the following problem:</p>
 <div class="math notranslate nohighlight">
@@ -847,7 +1022,7 @@ Operator Variational Inference
 
 <dl class="method">
 <dt id="pymc3.variational.opvi.ObjectiveFunction.updates">
-<code class="descname">updates</code><span class="sig-paren">(</span><em>self</em>, <em>obj_n_mc=None</em>, <em>tf_n_mc=None</em>, <em>obj_optimizer=&lt;function adagrad_window at 0x11b07e840&gt;</em>, <em>test_optimizer=&lt;function adagrad_window at 0x11b07e840&gt;</em>, <em>more_obj_params=None</em>, <em>more_tf_params=None</em>, <em>more_updates=None</em>, <em>more_replacements=None</em>, <em>total_grad_norm_constraint=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.variational.opvi.ObjectiveFunction.updates" title="Permalink to this definition">¶</a></dt>
+<code class="descname">updates</code><span class="sig-paren">(</span><em>self</em>, <em>obj_n_mc=None</em>, <em>tf_n_mc=None</em>, <em>obj_optimizer=&lt;function adagrad_window at 0x124646840&gt;</em>, <em>test_optimizer=&lt;function adagrad_window at 0x124646840&gt;</em>, <em>more_obj_params=None</em>, <em>more_tf_params=None</em>, <em>more_updates=None</em>, <em>more_replacements=None</em>, <em>total_grad_norm_constraint=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.variational.opvi.ObjectiveFunction.updates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate gradients for objective function, test function and then
 constructs updates for optimization step</p>
 <dl class="field-list">
@@ -1360,7 +1535,7 @@ This node still needs <a class="reference internal" href="#pymc3.variational.opv
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>trace</strong><span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">pymc3.backends.base.MultiTrace</span></code></span></dt><dd><p>Samples drawn from variational posterior.</p>
+<dt><strong>trace</strong><span class="classifier"><a class="reference internal" href="#pymc3.backends.base.MultiTrace" title="pymc3.backends.base.MultiTrace"><code class="xref py py-class docutils literal notranslate"><span class="pre">pymc3.backends.base.MultiTrace</span></code></a></span></dt><dd><p>Samples drawn from variational posterior.</p>
 </dd>
 </dl>
 </dd>

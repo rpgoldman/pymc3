@@ -51,7 +51,10 @@ MultiTrace
 ^^^^^^^^
 
 .. currentmodule:: pymc3.backends.base
-.. class:: pymc3.backends.base.MultiTrace
+.. autoclass:: pymc3.backends.base.MultiTrace
+    :members:
+
+.. autoclass:: pymc3.backends.base.BaseTrace
 
 Variational
 -----------
