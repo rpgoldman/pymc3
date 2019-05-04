@@ -93,7 +93,7 @@ at the first item, preserving the order of the resulting generator</p>
 <dd class="field-odd"><dl>
 <dt><strong>data</strong><span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></dt><dd><p>initial data</p>
 </dd>
-<dt><strong>batch_size</strong><span class="classifier"><cite>int</cite> or <cite>List[int|tuple(size, random_seed)]</cite></span></dt><dd><p>batch size for inference, random seed is needed 
+<dt><strong>batch_size</strong><span class="classifier"><cite>int</cite> or <cite>List[int|tuple(size, random_seed)]</cite></span></dt><dd><p>batch size for inference, random seed is needed
 for child random generators</p>
 </dd>
 <dt><strong>dtype</strong><span class="classifier"><cite>str</cite></span></dt><dd><p>cast data to specific type</p>
@@ -104,9 +104,9 @@ for child random generators</p>
 </dd>
 <dt><strong>random_seed</strong><span class="classifier"><cite>int</cite></span></dt><dd><p>random seed that is used by default</p>
 </dd>
-<dt><strong>update_shared_f</strong><span class="classifier"><cite>callable</cite></span></dt><dd><p>returns <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code> that will be carefully 
+<dt><strong>update_shared_f</strong><span class="classifier"><cite>callable</cite></span></dt><dd><p>returns <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code> that will be carefully
 stored to underlying shared variable
-you can use it to change source of 
+you can use it to change source of
 minibatches programmatically</p>
 </dd>
 <dt><strong>in_memory_size</strong><span class="classifier"><cite>int</cite> or <cite>List[int|slice|Ellipsis]</cite></span></dt><dd><p>data size for storing in theano.shared</p>
@@ -152,13 +152,13 @@ I import <cite>partial</cite> for simplicity
 &gt;&gt;&gt; x = Minibatch(datagen(), batch_size=10, update_shared_f=datagen)
 &gt;&gt;&gt; x.update_shared()</p>
 <p>To be more concrete about how we get minibatch, here is a demo
-1) create shared variable 
+1) create shared variable
 &gt;&gt;&gt; shared = theano.shared(data)</p>
 <p>2) create random slice of size 10
 &gt;&gt;&gt; ridx = pm.tt_rng().uniform(size=(10,), low=0, high=data.shape[0]-1e-10).astype(‘int64’)</p>
 <p>3) take that slice
 &gt;&gt;&gt; minibatch = shared[ridx]</p>
-<p>That’s done. Next you can use this minibatch somewhere else. 
+<p>That’s done. Next you can use this minibatch somewhere else.
 You can see that implementation does not require fixed shape
 for shared variable. Feel free to use that if needed.</p>
 <p>Suppose you need some replacements in the graph, e.g. change minibatch to testdata
@@ -181,7 +181,7 @@ is then <cite>(10, 20, 30, 40, 50)</cite> but can be less verbose in some cases<
 &gt;&gt;&gt; x = Minibatch(moredata, [2, Ellipsis, 10])</p>
 <p>We take slice only for the first and last dimension
 &gt;&gt;&gt; assert x.eval().shape == (2, 20, 30, 40, 10)</p>
-<p>2) Skipping particular dimension, <cite>total_size = (10, None, 30)</cite> 
+<p>2) Skipping particular dimension, <cite>total_size = (10, None, 30)</cite>
 &gt;&gt;&gt; x = Minibatch(moredata, [2, None, 20])
 &gt;&gt;&gt; assert x.eval().shape == (2, 20, 20, 40, 50)</p>
 <p>3) Mixing that all, <cite>total_size = (10, None, 30, Ellipsis, 50)</cite>
