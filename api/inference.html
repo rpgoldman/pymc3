@@ -797,7 +797,7 @@ Operator Variational Inference
 
 <dl class="method">
 <dt id="pymc3.variational.opvi.ObjectiveFunction.step_function">
-<code class="descname">step_function</code><span class="sig-paren">(</span><em>self</em>, <em>obj_n_mc=None</em>, <em>tf_n_mc=None</em>, <em>obj_optimizer=&lt;function adagrad_window at 0x124a1e840&gt;</em>, <em>test_optimizer=&lt;function adagrad_window at 0x124a1e840&gt;</em>, <em>more_obj_params=None</em>, <em>more_tf_params=None</em>, <em>more_updates=None</em>, <em>more_replacements=None</em>, <em>total_grad_norm_constraint=None</em>, <em>score=False</em>, <em>fn_kwargs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.variational.opvi.ObjectiveFunction.step_function" title="Permalink to this definition">¶</a></dt>
+<code class="descname">step_function</code><span class="sig-paren">(</span><em>self</em>, <em>obj_n_mc=None</em>, <em>tf_n_mc=None</em>, <em>obj_optimizer=&lt;function adagrad_window at 0x126d19840&gt;</em>, <em>test_optimizer=&lt;function adagrad_window at 0x126d19840&gt;</em>, <em>more_obj_params=None</em>, <em>more_tf_params=None</em>, <em>more_updates=None</em>, <em>more_replacements=None</em>, <em>total_grad_norm_constraint=None</em>, <em>score=False</em>, <em>fn_kwargs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.variational.opvi.ObjectiveFunction.step_function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Step function that should be called on each optimization step.</p>
 <p>Generally it solves the following problem:</p>
 <div class="math notranslate nohighlight">
@@ -839,7 +839,7 @@ Operator Variational Inference
 
 <dl class="method">
 <dt id="pymc3.variational.opvi.ObjectiveFunction.updates">
-<code class="descname">updates</code><span class="sig-paren">(</span><em>self</em>, <em>obj_n_mc=None</em>, <em>tf_n_mc=None</em>, <em>obj_optimizer=&lt;function adagrad_window at 0x124a1e840&gt;</em>, <em>test_optimizer=&lt;function adagrad_window at 0x124a1e840&gt;</em>, <em>more_obj_params=None</em>, <em>more_tf_params=None</em>, <em>more_updates=None</em>, <em>more_replacements=None</em>, <em>total_grad_norm_constraint=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.variational.opvi.ObjectiveFunction.updates" title="Permalink to this definition">¶</a></dt>
+<code class="descname">updates</code><span class="sig-paren">(</span><em>self</em>, <em>obj_n_mc=None</em>, <em>tf_n_mc=None</em>, <em>obj_optimizer=&lt;function adagrad_window at 0x126d19840&gt;</em>, <em>test_optimizer=&lt;function adagrad_window at 0x126d19840&gt;</em>, <em>more_obj_params=None</em>, <em>more_tf_params=None</em>, <em>more_updates=None</em>, <em>more_replacements=None</em>, <em>total_grad_norm_constraint=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.variational.opvi.ObjectiveFunction.updates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate gradients for objective function, test function and then
 constructs updates for optimization step</p>
 <dl class="field-list">
