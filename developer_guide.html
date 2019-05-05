@@ -77,7 +77,7 @@ code of the probability distributions is nested under
 <a class="reference external" href="https://github.com/pymc-devs/pymc3/blob/master/pymc3/distributions/">pymc3/distributions</a>,
 with the <code class="docutils literal notranslate"><span class="pre">Distribution</span></code> class defined in <a class="reference external" href="https://github.com/pymc-devs/pymc3/blob/master/pymc3/distributions/distribution.py#L23-L44">distribution.py</a>.
 A few important points to highlight in the Distribution Class:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Distribution</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Distribution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Statistical distribution&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="o">...</span>
@@ -113,7 +113,7 @@ functions. Instead, to access a stateless distribution, you need to call
 <code class="docutils literal notranslate"><span class="pre">RV</span></code> in a model context (see
 <a class="reference external" href="https://docs.pymc.io/prob_dists.html#using-pymc-distributions-without-a-model">https://docs.pymc.io/prob_dists.html#using-pymc-distributions-without-a-model</a>).</p>
 <p>With this distinction in mind, we can take a closer look at the
-stateless distribution part of pymc3 (see distribution api in <a class="reference external" href="https://docs.pymc.io/api/distributions.html">doc</a>), which divided into:</p>
+stateless distribution part of pymc3 (see distriution api in <a class="reference external" href="https://docs.pymc.io/api/distributions.html">doc</a>), which divided into:</p>
 <ul class="simple">
 <li><p>Continuous</p></li>
 <li><p>Discrete</p></li>
@@ -185,8 +185,8 @@ below). This is different than TFP and pyro, where you need to be more
 explicit about the conversion. For example:</p>
 <p><strong>PyMC3</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">z</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">5.</span><span class="p">)</span>             <span class="c1"># ==&gt; pymc3.model.FreeRV, or theano.tensor with logp</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">z</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="mf">5.</span><span class="p">)</span> <span class="c1"># ==&gt; pymc3.model.ObservedRV, also has logp properties</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mf">5.</span><span class="p">)</span>             <span class="c1"># ==&gt; pymc3.model.FreeRV, or theano.tensor with logp</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">z</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="mf">5.</span><span class="p">)</span> <span class="c1"># ==&gt; pymc3.model.ObservedRV, also has logp properties</span>
 <span class="n">x</span><span class="o">.</span><span class="n">logp</span><span class="p">({</span><span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">})</span>                               <span class="c1"># ==&gt; -4.0439386</span>
 <span class="n">model</span><span class="o">.</span><span class="n">logp</span><span class="p">({</span><span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">})</span>                           <span class="c1"># ==&gt; -6.6973152</span>
 </pre></div>
@@ -320,12 +320,12 @@ most elementary:</p>
 variable. Thus, we have two equivalent ways of adding random variable to
 a model:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Which is the same as doing:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mf">1.</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Both with the same output:</p>
@@ -441,7 +441,7 @@ only add one <code class="docutils literal notranslate"><span class="pre">FreeRV
 transformation by nested applying multiple transforms to a Distribution
 (however, you can use <a class="reference external" href="https://docs.pymc.io/notebooks/api_quickstart.html?highlight=chain%20transformation">Chain
 transformation</a>).</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">tr</span><span class="o">.</span><span class="n">Log</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">tr</span><span class="o">.</span><span class="n">Log</span><span class="p">)</span>
 <span class="n">z</span><span class="o">.</span><span class="n">transform</span>           <span class="c1"># ==&gt; pymc3.distributions.transforms.Log</span>
 </pre></div>
 </div>
@@ -565,7 +565,7 @@ logp/dlogp function:</p>
 Theano graph to compile additional Theano functions. PyMC3 relies on
 <code class="docutils literal notranslate"><span class="pre">theano.clone</span></code> to copy the <code class="docutils literal notranslate"><span class="pre">model.logpt</span></code> and replace its input. It
 does not edit or rewrite the graph directly.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ValueGradFunction</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ValueGradFunction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Create a theano function that computes a value and its gradient.</span>
 <span class="sd">    ...</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -625,7 +625,7 @@ does not edit or rewrite the graph directly.</p>
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">grad_out</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">extra_vars</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="o">...</span>
         <span class="n">logp</span><span class="p">,</span> <span class="n">dlogp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_theano_function</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">logp</span><span class="p">,</span> <span class="n">dlogp</span>
+        <span class="k">return</span>
 
 
     <span class="k">def</span> <span class="nf">set_extra_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extra_vars</span><span class="p">):</span>
@@ -782,7 +782,7 @@ graph cloning/rewriting.</div>
 <p>The ability for model instance to generate conditional logp and dlogp
 function enable one of the unique feature of PyMC3 - <a class="reference external" href="https://docs.pymc.io/notebooks/sampling_compound_step.html">CompoundStep
 method</a>.
-On a conceptual level it is a Metropolis-within-Gibbs sampler. User can
+It is conceptual level it is a Metropolis-within-Gibbs sampler. User can
 <a class="reference external" href="https://docs.pymc.io/notebooks/sampling_compound_step.html?highlight=compoundstep#Specify-compound-steps">specify different sampler of different
 RVs</a>.
 Alternatively, it is implemented as yet another interceptor: the
@@ -957,13 +957,13 @@ we get error (even worse, wrong answer with silent error):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
     <span class="n">sd</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;sd&#39;</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-    <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sd</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">sd</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
     <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_prior_predictive</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 
 <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="c1"># ==&gt; should be (100, 2, 5, 10), but get (100, 5, 10)</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="c1"># ==&gt; ERROR</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="c1"># ==&gt; ERROR</span>
 </pre></div>
 </div>
 <p>There are also other error related random sample generation (e.g.,

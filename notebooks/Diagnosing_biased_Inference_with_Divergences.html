@@ -371,10 +371,10 @@ given transition or target distribution.</p>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">Centered_eight</span><span class="p">:</span>
-    <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
     <span class="n">tau</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;tau&#39;</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-    <span class="n">theta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">J</span><span class="p">)</span>
-    <span class="n">obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;obs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">J</span><span class="p">)</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;obs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1027,7 +1027,7 @@ decreasing the step size will not completely remove the divergences.</p>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">Centered_eight</span><span class="p">:</span>
     <span class="n">fit_cp85</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
-                         <span class="n">target_accept</span><span class="o">=.</span><span class="mi">85</span><span class="p">)</span>
+                         <span class="n">nuts_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">target_accept</span><span class="o">=.</span><span class="mi">85</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1053,7 +1053,7 @@ The number of effective samples is smaller than 10% for some parameters.
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">Centered_eight</span><span class="p">:</span>
     <span class="n">fit_cp90</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
-                         <span class="n">target_accept</span><span class="o">=.</span><span class="mi">90</span><span class="p">)</span>
+                         <span class="n">nuts_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">target_accept</span><span class="o">=.</span><span class="mi">90</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1080,7 +1080,7 @@ The number of effective samples is smaller than 10% for some parameters.
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">Centered_eight</span><span class="p">:</span>
     <span class="n">fit_cp95</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
-                         <span class="n">target_accept</span><span class="o">=.</span><span class="mi">95</span><span class="p">)</span>
+                         <span class="n">nuts_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">target_accept</span><span class="o">=.</span><span class="mi">95</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1107,7 +1107,7 @@ The number of effective samples is smaller than 10% for some parameters.
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">Centered_eight</span><span class="p">:</span>
     <span class="n">fit_cp99</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
-                         <span class="n">target_accept</span><span class="o">=.</span><span class="mi">99</span><span class="p">)</span>
+                         <span class="n">nuts_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">target_accept</span><span class="o">=.</span><span class="mi">99</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1318,11 +1318,11 @@ The number of effective samples is smaller than 10% for some parameters.
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">NonCentered_eight</span><span class="p">:</span>
-    <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
     <span class="n">tau</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;tau&#39;</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-    <span class="n">theta_tilde</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;theta_t&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">J</span><span class="p">)</span>
+    <span class="n">theta_tilde</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;theta_t&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">J</span><span class="p">)</span>
     <span class="n">theta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">tau</span> <span class="o">*</span> <span class="n">theta_tilde</span><span class="p">)</span>
-    <span class="n">obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;obs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;obs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1333,7 +1333,7 @@ The number of effective samples is smaller than 10% for some parameters.
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">NonCentered_eight</span><span class="p">:</span>
     <span class="n">fit_ncp80</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">SEED</span><span class="p">,</span>
-                         <span class="n">target_accept</span><span class="o">=.</span><span class="mi">80</span><span class="p">)</span>
+                         <span class="n">nuts_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">target_accept</span><span class="o">=.</span><span class="mi">80</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1625,7 +1625,7 @@ Percentage of Divergent 0.2
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">NonCentered_eight</span><span class="p">:</span>
     <span class="n">fit_ncp90</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">SEED</span><span class="p">,</span>
-                         <span class="n">target_accept</span><span class="o">=.</span><span class="mi">90</span><span class="p">)</span>
+                         <span class="n">nuts_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">target_accept</span><span class="o">=.</span><span class="mi">90</span><span class="p">))</span>
 
 <span class="c1"># display the total number and percentage of divergent</span>
 <span class="n">divergent</span> <span class="o">=</span> <span class="n">fit_ncp90</span><span class="p">[</span><span class="s1">&#39;diverging&#39;</span><span class="p">]</span>

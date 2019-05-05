@@ -62,7 +62,7 @@
 <span id="plots"></span><h1>Plots<a class="headerlink" href="#module-pymc3.plots" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="pymc3.plots.traceplot">
-<code class="descclassname">pymc3.plots.</code><code class="descname">traceplot</code><span class="sig-paren">(</span><em>trace</em>, <em>varnames=None</em>, <em>transform=&lt;function identity_transform at 0x1187bdc80&gt;</em>, <em>figsize=None</em>, <em>lines=None</em>, <em>combined=False</em>, <em>plot_transformed=False</em>, <em>grid=False</em>, <em>alpha=0.35</em>, <em>priors=None</em>, <em>prior_alpha=1</em>, <em>prior_style='--'</em>, <em>bw=4.5</em>, <em>ax=None</em>, <em>live_plot=False</em>, <em>skip_first=0</em>, <em>refresh_every=100</em>, <em>roll_over=1000</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.plots.traceplot" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymc3.plots.</code><code class="descname">traceplot</code><span class="sig-paren">(</span><em>trace</em>, <em>varnames=None</em>, <em>transform=&lt;function identity_transform at 0x12143bc80&gt;</em>, <em>figsize=None</em>, <em>lines=None</em>, <em>combined=False</em>, <em>plot_transformed=False</em>, <em>grid=False</em>, <em>alpha=0.35</em>, <em>priors=None</em>, <em>prior_alpha=1</em>, <em>prior_style='--'</em>, <em>bw=4.5</em>, <em>ax=None</em>, <em>live_plot=False</em>, <em>skip_first=0</em>, <em>refresh_every=100</em>, <em>roll_over=1000</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.plots.traceplot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot samples histograms and values.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -130,7 +130,7 @@ samples are shown (no effect on frequency plots).</p>
 
 <dl class="function">
 <dt id="pymc3.plots.plot_posterior">
-<code class="descclassname">pymc3.plots.</code><code class="descname">plot_posterior</code><span class="sig-paren">(</span><em>trace</em>, <em>varnames=None</em>, <em>transform=&lt;function identity_transform at 0x1187bdc80&gt;</em>, <em>figsize=None</em>, <em>text_size=None</em>, <em>alpha_level=0.05</em>, <em>round_to=3</em>, <em>point_estimate='mean'</em>, <em>rope=None</em>, <em>ref_val=None</em>, <em>kde_plot=False</em>, <em>plot_transformed=False</em>, <em>bw=4.5</em>, <em>ax=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.plots.plot_posterior" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymc3.plots.</code><code class="descname">plot_posterior</code><span class="sig-paren">(</span><em>trace</em>, <em>varnames=None</em>, <em>transform=&lt;function identity_transform at 0x12143bc80&gt;</em>, <em>figsize=None</em>, <em>text_size=None</em>, <em>alpha_level=0.05</em>, <em>round_to=3</em>, <em>point_estimate='mean'</em>, <em>rope=None</em>, <em>ref_val=None</em>, <em>kde_plot=False</em>, <em>plot_transformed=False</em>, <em>bw=4.5</em>, <em>ax=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.plots.plot_posterior" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot Posterior densities in style of John K. Kruschke book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -184,7 +184,7 @@ color=’#87ceeb’ will match the style in the book</p>
 
 <dl class="function">
 <dt id="pymc3.plots.forestplot">
-<code class="descclassname">pymc3.plots.</code><code class="descname">forestplot</code><span class="sig-paren">(</span><em>trace</em>, <em>models=None</em>, <em>varnames=None</em>, <em>transform=&lt;function identity_transform at 0x1187bdc80&gt;</em>, <em>alpha=0.05</em>, <em>quartiles=True</em>, <em>rhat=True</em>, <em>main=None</em>, <em>xtitle=None</em>, <em>xlim=None</em>, <em>ylabels=None</em>, <em>colors='C0'</em>, <em>chain_spacing=0.1</em>, <em>vline=0</em>, <em>gs=None</em>, <em>plot_transformed=False</em>, <em>plot_kwargs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.plots.forestplot" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymc3.plots.</code><code class="descname">forestplot</code><span class="sig-paren">(</span><em>trace</em>, <em>models=None</em>, <em>varnames=None</em>, <em>transform=&lt;function identity_transform at 0x12143bc80&gt;</em>, <em>alpha=0.05</em>, <em>quartiles=True</em>, <em>rhat=True</em>, <em>main=None</em>, <em>xtitle=None</em>, <em>xlim=None</em>, <em>ylabels=None</em>, <em>colors='C0'</em>, <em>chain_spacing=0.1</em>, <em>vline=0</em>, <em>gs=None</em>, <em>plot_transformed=False</em>, <em>plot_kwargs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.plots.forestplot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Forest plot (model summary plot).</p>
 <p>Generates a “forest plot” of 100*(1-alpha)% credible intervals from a trace
 or list of traces.</p>
@@ -437,47 +437,6 @@ Defaults to False.</p>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
 <dt><strong>ax</strong><span class="classifier">Matplotlib axes</span></dt><dd></dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="pymc3.plots.pairplot">
-<code class="descclassname">pymc3.plots.</code><code class="descname">pairplot</code><span class="sig-paren">(</span><em>trace</em>, <em>varnames=None</em>, <em>figsize=None</em>, <em>text_size=None</em>, <em>gs=None</em>, <em>ax=None</em>, <em>hexbin=False</em>, <em>plot_transformed=False</em>, <em>divergences=False</em>, <em>kwargs_divergence=None</em>, <em>sub_varnames=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.plots.pairplot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plot a scatter or hexbin matrix of the sampled parameters.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>trace</strong><span class="classifier">result of MCMC run</span></dt><dd></dd>
-<dt><strong>varnames</strong><span class="classifier">list of variable names</span></dt><dd><p>Variables to be plotted, if None all variable are plotted</p>
-</dd>
-<dt><strong>figsize</strong><span class="classifier">figure size tuple</span></dt><dd><p>If None, size is (8 + numvars, 8 + numvars)</p>
-</dd>
-<dt><strong>text_size: int</strong></dt><dd><p>Text size for labels</p>
-</dd>
-<dt><strong>gs</strong><span class="classifier">Grid spec</span></dt><dd><p>Matplotlib Grid spec.</p>
-</dd>
-<dt><strong>ax: axes</strong></dt><dd><p>Matplotlib axes</p>
-</dd>
-<dt><strong>hexbin</strong><span class="classifier">Boolean</span></dt><dd><p>If True draws an hexbin plot</p>
-</dd>
-<dt><strong>plot_transformed</strong><span class="classifier">bool</span></dt><dd><p>Flag for plotting automatically transformed variables in addition to
-original variables (defaults to False). Applies when varnames = None.
-When a list of varnames is passed, transformed variables can be passed
-using their names.</p>
-</dd>
-<dt><strong>divergences</strong><span class="classifier">Boolean</span></dt><dd><p>If True divergences will be plotted in a diferent color</p>
-</dd>
-<dt><strong>kwargs_divergence</strong><span class="classifier">dicts, optional</span></dt><dd><p>Aditional keywords passed to ax.scatter for divergences</p>
-</dd>
-<dt><strong>sub_varnames</strong><span class="classifier">list</span></dt><dd><p>Aditional varnames passed for plotting subsets of multidimensional
-variables</p>
-</dd>
-<dt><strong>Returns</strong></dt><dd></dd>
-<dt><strong>——-</strong></dt><dd></dd>
-<dt><strong>ax</strong><span class="classifier">matplotlib axes</span></dt><dd></dd>
-<dt><strong>gs</strong><span class="classifier">matplotlib gridspec</span></dt><dd></dd>
 </dl>
 </dd>
 </dl>

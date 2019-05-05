@@ -98,11 +98,11 @@
 
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">linear_training_data</span><span class="p">()</span>
 <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">linear_model</span><span class="p">:</span>
-    <span class="n">weights</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;weights&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;weights&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">noise</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;noise&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">y_observed</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y_observed&#39;</span><span class="p">,</span>
                 <span class="n">mu</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">weights</span><span class="p">),</span>
-                <span class="n">sigma</span><span class="o">=</span><span class="n">noise</span><span class="p">,</span>
+                <span class="n">sd</span><span class="o">=</span><span class="n">noise</span><span class="p">,</span>
                 <span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
 
     <span class="n">prior</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_prior_predictive</span><span class="p">()</span>
@@ -186,7 +186,7 @@
 
     <div class="ui bottom attached segment">
         <h2 class="ui dividing header">Support and sponsors</h2>
-        <p>PyMC3 is a non-profit project under NumFOCUS umbrella. If you want to support PyMC3 financially, you <a href="https://numfocus.salsalabs.org/donate-to-pymc3/index.html">can donate here</a>.</p>
+        <p>PyMC3 is a non-profit project under NumFOCUS umbrella. If you want to support PyMC3 financially, you <a href="https://www.flipcause.com/widget/widget_home/MTE4OTc=">can donate here</a>.</p>
 
         <div class="ui equal width grid">
             <div class="column">

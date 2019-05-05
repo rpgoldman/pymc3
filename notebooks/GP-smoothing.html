@@ -386,7 +386,7 @@ y_i & \sim \mathcal{N}(z_i, \alpha\cdot\sigma^2)
 <span class="n">model</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
 <span class="k">with</span> <span class="n">model</span><span class="p">:</span>
     <span class="n">smoothing_param</span> <span class="o">=</span> <span class="n">shared</span><span class="p">(</span><span class="mf">0.9</span><span class="p">)</span>
-    <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">&quot;mu&quot;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">LARGE_NUMBER</span><span class="p">)</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">&quot;mu&quot;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">LARGE_NUMBER</span><span class="p">)</span>
     <span class="n">tau</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s2">&quot;tau&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">LARGE_NUMBER</span><span class="p">)</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">GaussianRandomWalk</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">,</span>
                            <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span>

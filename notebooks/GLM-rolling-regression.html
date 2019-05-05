@@ -449,9 +449,9 @@ Initializing NUTS using jitter+adapt_diag...
     <span class="n">sigma_alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;sigma_alpha&#39;</span><span class="p">,</span> <span class="mf">50.</span><span class="p">)</span>
     <span class="n">sigma_beta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;sigma_beta&#39;</span><span class="p">,</span> <span class="mf">50.</span><span class="p">)</span>
 
-    <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">GaussianRandomWalk</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma_alpha</span><span class="p">,</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">GaussianRandomWalk</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">sigma_alpha</span><span class="p">,</span>
                                   <span class="n">shape</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">))</span>
-    <span class="n">beta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">GaussianRandomWalk</span><span class="p">(</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma_beta</span><span class="p">,</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">GaussianRandomWalk</span><span class="p">(</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">sigma_beta</span><span class="p">,</span>
                                  <span class="n">shape</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -467,10 +467,10 @@ Initializing NUTS using jitter+adapt_diag...
     <span class="n">regression</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">prices_zscored</span><span class="o">.</span><span class="n">GFI</span>
 
     <span class="c1"># Assume prices are Normally distributed, the mean comes from the regression.</span>
-    <span class="n">sd</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;sd&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=.</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">sd</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;sd&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=.</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">likelihood</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span>
                            <span class="n">mu</span><span class="o">=</span><span class="n">regression</span><span class="p">,</span>
-                           <span class="n">sigma</span><span class="o">=</span><span class="n">sd</span><span class="p">,</span>
+                           <span class="n">sd</span><span class="o">=</span><span class="n">sd</span><span class="p">,</span>
                            <span class="n">observed</span><span class="o">=</span><span class="n">prices_zscored</span><span class="o">.</span><span class="n">GLD</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -483,7 +483,7 @@ Initializing NUTS using jitter+adapt_diag...
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">model_randomwalk</span><span class="p">:</span>
     <span class="n">trace_rw</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">tune</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
-                         <span class="n">target_accept</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+                         <span class="n">nuts_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">target_accept</span><span class="o">=.</span><span class="mi">9</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>

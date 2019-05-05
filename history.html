@@ -134,8 +134,8 @@ Python 3 compatibility, improved summary plots, and some important bug fixes.</p
 <span class="k">with</span> <span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">bioassay_model</span><span class="p">:</span>
 
     <span class="c1"># Prior distributions for latent variables</span>
-    <span class="n">alpha</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-    <span class="n">beta</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
     <span class="c1"># Linear combinations of parameters</span>
     <span class="n">theta</span> <span class="o">=</span> <span class="n">invlogit</span><span class="p">(</span><span class="n">alpha</span> <span class="o">+</span> <span class="n">beta</span><span class="o">*</span><span class="n">dose</span><span class="p">)</span>

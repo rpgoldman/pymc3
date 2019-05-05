@@ -294,9 +294,9 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">pooled</span><span class="p">:</span>
-    <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1e6</span><span class="p">)</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mf">1e6</span><span class="p">)</span>
 
-    <span class="n">obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;obs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;obs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
 
     <span class="n">trace_p</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
@@ -341,12 +341,12 @@ NUTS: [mu]
 <span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">hierarchical</span><span class="p">:</span>
 
     <span class="n">eta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;eta&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">J</span><span class="p">)</span>
-    <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1e6</span><span class="p">)</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mf">1e6</span><span class="p">)</span>
     <span class="n">tau</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;tau&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 
     <span class="n">theta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">tau</span><span class="o">*</span><span class="n">eta</span><span class="p">)</span>
 
-    <span class="n">obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;obs&#39;</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;obs&#39;</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
 
     <span class="n">trace_h</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
@@ -700,7 +700,7 @@ probability of each model (among the compared models) given the data. One caveat
 <p>Though we might expect the hierarchical model to outperform a complete pooling model, there is little to choose between the models in this case, giving that both models gives very similar values of the information criteria. This is more clearly appreciated when we take into account the uncertainty (in terms of standard errors) of WAIC and LOO.</p>
 <div class="section" id="Reference">
 <h3>Reference<a class="headerlink" href="#Reference" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://doi.org/10.1007/s11222-013-9416-2">Gelman, A., Hwang, J., &amp; Vehtari, A. (2014). Understanding predictive information criteria for Bayesian models. Statistics and Computing, 24(6), 997–1016.</a></p>
+<p><a class="reference external" href="http://doi.org/10.1007/s11222-013-9416-2">Gelman, A., Hwang, J., &amp; Vehtari, A. (2014). Understanding predictive information criteria for Bayesian models. Statistics and Computing, 24(6), 997–1016.</a></p>
 <p><a class="reference external" href="http://link.springer.com/article/10.1007/s11222-016-9696-4">Vehtari, A, Gelman, A, Gabry, J. (2016). Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC. Statistics and Computing</a></p>
 </div>
 </div>

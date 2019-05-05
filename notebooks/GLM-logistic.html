@@ -297,7 +297,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -381,17 +381,17 @@ over its frequentist counterpart.</p>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -609,6 +609,7 @@ over its frequentist counterpart.</p>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;income&#39;</span><span class="p">])]</span>
+
 </pre></div>
 </div>
 </div>
@@ -627,17 +628,17 @@ over its frequentist counterpart.</p>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -1855,7 +1856,7 @@ Name: income, dtype: int64
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1c2a2dab70&gt;
+<span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f938c13e7f0&gt;
 </pre></div>
 </div>
 </div>
@@ -1887,7 +1888,7 @@ Name: income, dtype: int64
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">logistic_model</span><span class="p">:</span>
     <span class="n">pm</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">GLM</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="s1">&#39;income ~ age + age2 + educ + hours&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">families</span><span class="o">.</span><span class="n">Binomial</span><span class="p">())</span>
-    <span class="n">trace_logistic_model</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">trace_logistic_model</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1896,9 +1897,12 @@ Name: income, dtype: int64
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
+Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
 Sequential sampling (1 chains in 1 job)
 NUTS: [hours, educ, age2, age, Intercept]
-100%|██████████| 3000/3000 [10:03&lt;00:00,  4.97it/s]
+100%|██████████| 3000/3000 [22:29&lt;00:00,  2.22it/s]
+The acceptance probability does not match the target. It is 0.944638073234, but should be close to 0.8. Try to increase the number of tuning steps.
 Only one chain was sampled, this makes it impossible to run some convergence checks
 </pre></div></div>
 </div>
@@ -1941,7 +1945,7 @@ Only one chain was sampled, this makes it impossible to run some convergence che
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&lt;Figure size 648x504 with 0 Axes&gt;
+<span></span>&lt;matplotlib.figure.Figure at 0x7f9355afe518&gt;
 </pre></div>
 </div>
 </div>
@@ -1993,7 +1997,6 @@ for each level of education. Each curve is a draw from our posterior distributio
 <span class="n">pm</span><span class="o">.</span><span class="n">plot_posterior_predictive_glm</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="nb">eval</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">lm</span><span class="o">=</span><span class="n">lm</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">pm</span><span class="o">.</span><span class="n">plot_posterior_predictive_glm</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="nb">eval</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">lm</span><span class="o">=</span><span class="n">lm2</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">pm</span><span class="o">.</span><span class="n">plot_posterior_predictive_glm</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="nb">eval</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">lm</span><span class="o">=</span><span class="n">lm3</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">15</span><span class="p">)</span>
-
 <span class="kn">import</span> <span class="nn">matplotlib.lines</span> <span class="kn">as</span> <span class="nn">mlines</span>
 <span class="n">blue_line</span> <span class="o">=</span> <span class="n">mlines</span><span class="o">.</span><span class="n">Line2D</span><span class="p">([</span><span class="s1">&#39;lm&#39;</span><span class="p">],</span> <span class="p">[],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High School Education&#39;</span><span class="p">)</span>
 <span class="n">green_line</span> <span class="o">=</span> <span class="n">mlines</span><span class="o">.</span><span class="n">Line2D</span><span class="p">([</span><span class="s1">&#39;lm2&#39;</span><span class="p">],</span> <span class="p">[],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Bachelors&#39;</span><span class="p">)</span>
@@ -2039,7 +2042,7 @@ for each level of education. Each curve is a draw from our posterior distributio
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">lb</span><span class="p">,</span> <span class="n">ub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mf">97.5</span><span class="p">)</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;P(</span><span class="si">%.3f</span><span class="s2"> &lt; O.R. &lt; </span><span class="si">%.3f</span><span class="s2">) = 0.95&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">lb</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">ub</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;P(</span><span class="si">%.3f</span><span class="s2"> &lt; O.R. &lt; </span><span class="si">%.3f</span><span class="s2">) = 0.95&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">lb</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">ub</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -2048,7 +2051,7 @@ for each level of education. Each curve is a draw from our posterior distributio
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-P(1.378 &lt; O.R. &lt; 1.414) = 0.95
+P(2.617 &lt; O.R. &lt; 2.824) = 0.95
 </pre></div></div>
 </div>
 </div>
@@ -2056,7 +2059,7 @@ P(1.378 &lt; O.R. &lt; 1.414) = 0.95
 <h2>Model selection<a class="headerlink" href="#Model-selection" title="Permalink to this headline">¶</a></h2>
 <p>One question that was immediately asked was what effect does age have on the model, and why should it be <span class="math notranslate nohighlight">\(age^2\)</span> versus age? We’ll run the model with a few changes to see what effect higher order terms have on this model in terms of WAIC.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -2079,8 +2082,8 @@ Running: k1
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Sequential sampling (1 chains in 1 job)
-NUTS: [sd, age, hours, educ, Intercept]
-100%|██████████| 3000/3000 [00:33&lt;00:00, 89.51it/s]
+NUTS: [sd_log__, age, hours, educ, Intercept]
+100%|██████████| 3000/3000 [00:31&lt;00:00, 94.25it/s]
 Only one chain was sampled, this makes it impossible to run some convergence checks
 </pre></div></div>
 </div>
@@ -2099,8 +2102,8 @@ Running: k2
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Sequential sampling (1 chains in 1 job)
-NUTS: [sd, np.power(age, 2), age, hours, educ, Intercept]
-100%|██████████| 3000/3000 [01:33&lt;00:00, 32.10it/s]
+NUTS: [sd_log__, np.power(age, 2), age, hours, educ, Intercept]
+100%|██████████| 3000/3000 [02:10&lt;00:00, 22.97it/s]
 Only one chain was sampled, this makes it impossible to run some convergence checks
 </pre></div></div>
 </div>
@@ -2119,8 +2122,8 @@ Running: k3
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Sequential sampling (1 chains in 1 job)
-NUTS: [sd, np.power(age, 3), np.power(age, 2), age, hours, educ, Intercept]
-100%|██████████| 3000/3000 [05:28&lt;00:00,  9.12it/s]
+NUTS: [sd_log__, np.power(age, 3), np.power(age, 2), age, hours, educ, Intercept]
+100%|██████████| 3000/3000 [09:24&lt;00:00,  5.31it/s]
 Only one chain was sampled, this makes it impossible to run some convergence checks
 </pre></div></div>
 </div>
@@ -2139,14 +2142,15 @@ Running: k4
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Sequential sampling (1 chains in 1 job)
-NUTS: [sd, np.power(age, 4), np.power(age, 3), np.power(age, 2), age, hours, educ, Intercept]
-100%|██████████| 3000/3000 [20:03&lt;00:00,  2.30it/s]
+NUTS: [sd_log__, np.power(age, 4), np.power(age, 3), np.power(age, 2), age, hours, educ, Intercept]
+100%|██████████| 3000/3000 [32:01&lt;00:00,  1.56it/s]
+The acceptance probability does not match the target. It is 0.885654681782, but should be close to 0.8. Try to increase the number of tuning steps.
 The chain reached the maximum tree depth. Increase max_treedepth, increase target_accept or reparameterize.
 Only one chain was sampled, this makes it impossible to run some convergence checks
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>

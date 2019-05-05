@@ -322,7 +322,7 @@ Running on PyMC3 v3.4.1
 </div>
 <div class="section" id="Model-specification">
 <h2>Model specification<a class="headerlink" href="#Model-specification" title="Permalink to this headline">¶</a></h2>
-<p>Our initial beliefs about the parameters are quite informative (sigma=1) and a bit off the true values.</p>
+<p>Our initial beliefs about the parameters are quite informative (sd=1) and a bit off the true values.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -333,15 +333,15 @@ Running on PyMC3 v3.4.1
 <span class="k">with</span> <span class="n">basic_model</span><span class="p">:</span>
 
     <span class="c1"># Priors for unknown model parameters</span>
-    <span class="n">alpha</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">beta0</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;beta0&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">beta1</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;beta1&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">beta0</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;beta0&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">beta1</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;beta1&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="c1"># Expected value of outcome</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">beta0</span> <span class="o">*</span> <span class="n">X1</span> <span class="o">+</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">X2</span>
 
     <span class="c1"># Likelihood (sampling distribution) of observations</span>
-    <span class="n">Y_obs</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;Y_obs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">Y</span><span class="p">)</span>
+    <span class="n">Y_obs</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;Y_obs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">Y</span><span class="p">)</span>
 
     <span class="c1"># draw 1000 posterior samples</span>
     <span class="n">trace</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
@@ -431,7 +431,7 @@ NUTS: [beta1, beta0, alpha]
         <span class="n">mu</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">beta0</span> <span class="o">*</span> <span class="n">X1</span> <span class="o">+</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">X2</span>
 
         <span class="c1"># Likelihood (sampling distribution) of observations</span>
-        <span class="n">Y_obs</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;Y_obs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">Y</span><span class="p">)</span>
+        <span class="n">Y_obs</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;Y_obs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">Y</span><span class="p">)</span>
 
         <span class="c1"># draw 10000 posterior samples</span>
         <span class="n">trace</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>

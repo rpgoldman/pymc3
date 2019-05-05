@@ -680,7 +680,7 @@ rates (<code class="docutils literal notranslate"><span class="pre">O</span></co
     <span class="c1"># Proportion sptial variance</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">sd_c</span><span class="o">/</span><span class="p">(</span><span class="n">sd_h</span><span class="o">+</span><span class="n">sd_c</span><span class="p">))</span>
 
-    <span class="n">trace1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mf">3e3</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">max_treedepth</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">trace1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mf">3e3</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nuts_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;max_treedepth&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>
@@ -861,7 +861,7 @@ etc</a> to archive the same purpose.</p>
     <span class="c1"># Proportion sptial variance</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">sd_c</span><span class="o">/</span><span class="p">(</span><span class="n">sd_h</span><span class="o">+</span><span class="n">sd_c</span><span class="p">))</span>
 
-    <span class="n">trace2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mf">3e3</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">max_treedepth</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">trace2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mf">3e3</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nuts_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;max_treedepth&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>

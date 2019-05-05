@@ -334,7 +334,7 @@ Fri Nov 18 18:11:28 CST 2016
 
 
     <span class="c1"># cluster centers</span>
-    <span class="n">means</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;means&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">means</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;means&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">sd</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
     <span class="c1"># break symmetry</span>
     <span class="n">order_means_potential</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Potential</span><span class="p">(</span><span class="s1">&#39;order_means_potential&#39;</span><span class="p">,</span>
                                          <span class="n">tt</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span><span class="n">means</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">means</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -351,7 +351,7 @@ Fri Nov 18 18:11:28 CST 2016
     <span class="c1"># likelihood for each observed value</span>
     <span class="n">points</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;obs&#39;</span><span class="p">,</span>
                        <span class="n">mu</span><span class="o">=</span><span class="n">means</span><span class="p">[</span><span class="n">category</span><span class="p">],</span>
-                       <span class="n">sigma</span><span class="o">=</span><span class="n">sd</span><span class="p">,</span>
+                       <span class="n">sd</span><span class="o">=</span><span class="n">sd</span><span class="p">,</span>
                        <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>

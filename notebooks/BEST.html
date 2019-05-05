@@ -280,7 +280,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Running on PyMC3 v3.6
+Running on PyMC3 v3.3
 </pre></div></div>
 </div>
 <p>This model replicates the example used in: Kruschke, John. (2012) <strong>Bayesian estimation supersedes the t-test</strong>. <em>Journal of Experimental Psychology</em>: General.</p>
@@ -312,7 +312,7 @@ control arms, respectively.</p>
 <span class="n">y2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">placebo</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">],</span> <span class="n">group</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[[</span><span class="s1">&#39;drug&#39;</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">drug</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;placebo&#39;</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">placebo</span><span class="p">)]))</span>
 
-<span class="n">y</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span>
+<span class="n">y</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;group&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -346,8 +346,8 @@ control arms, respectively.</p>
 <span class="err">μ</span><span class="n">_s</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>
 
 <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">group1_mean</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;group1_mean&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="err">μ</span><span class="n">_m</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="err">μ</span><span class="n">_s</span><span class="p">)</span>
-    <span class="n">group2_mean</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;group2_mean&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="err">μ</span><span class="n">_m</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="err">μ</span><span class="n">_s</span><span class="p">)</span>
+    <span class="n">group1_mean</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;group1_mean&#39;</span><span class="p">,</span> <span class="err">μ</span><span class="n">_m</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="err">μ</span><span class="n">_s</span><span class="p">)</span>
+    <span class="n">group2_mean</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;group2_mean&#39;</span><span class="p">,</span> <span class="err">μ</span><span class="n">_m</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="err">μ</span><span class="n">_s</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -378,7 +378,7 @@ you place such a wide uniform prior on these values, you are essentially giving 
 <span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
     <span class="err">ν</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;ν_minus_one&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mf">29.</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
 
-<span class="n">pm</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">),</span> <span class="n">fill_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">});</span>
+<span class="n">pm</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">),</span> <span class="n">shade</span><span class="o">=</span><span class="mf">0.5</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -427,7 +427,7 @@ you place such a wide uniform prior on these values, you are essentially giving 
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -438,10 +438,9 @@ you place such a wide uniform prior on these values, you are essentially giving 
 <div class="highlight"><pre>
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
-Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [ν_minus_one, group2_std, group1_std, group2_mean, group1_mean]
-Sampling 4 chains: 100%|██████████| 10000/10000 [00:04&lt;00:00, 2137.47draws/s]
-The acceptance probability does not match the target. It is 0.8794089803204976, but should be close to 0.8. Try to increase the number of tuning steps.
+Multiprocess sampling (2 chains in 2 jobs)
+NUTS: [ν_minus_one_log__, group2_std_interval__, group1_std_interval__, group2_mean, group1_mean]
+100%|██████████| 2500/2500 [00:03&lt;00:00, 727.76it/s]
 </pre></div></div>
 </div>
 <p>We can plot the stochastic parameters of the model. PyMC’s <code class="docutils literal notranslate"><span class="pre">plot_posterior</span></code> function replicates the informative histograms portrayed in Kruschke (2012). These summarize the posterior distributions of the parameters, and present a 95% credible interval and the posterior mean. The plots below are constructed with the final 1000 samples from each of the 2 chains, pooled together.</p>
@@ -450,7 +449,7 @@ The acceptance probability does not match the target. It is 0.8794089803204976, 
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pm</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;group1_mean&#39;</span><span class="p">,</span><span class="s1">&#39;group2_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;group1_std&#39;</span><span class="p">,</span> <span class="s1">&#39;group2_std&#39;</span><span class="p">,</span> <span class="s1">&#39;ν_minus_one&#39;</span><span class="p">],</span>
+<span></span><span class="n">pm</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">varnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;group1_mean&#39;</span><span class="p">,</span><span class="s1">&#39;group2_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;group1_std&#39;</span><span class="p">,</span> <span class="s1">&#39;group2_std&#39;</span><span class="p">,</span> <span class="s1">&#39;ν_minus_one&#39;</span><span class="p">],</span>
                   <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#87ceeb&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -470,7 +469,7 @@ size and differences in standard deviation are similarly positive.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pm</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;difference of means&#39;</span><span class="p">,</span><span class="s1">&#39;difference of stds&#39;</span><span class="p">,</span> <span class="s1">&#39;effect size&#39;</span><span class="p">],</span>
+<span></span><span class="n">pm</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">varnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;difference of means&#39;</span><span class="p">,</span><span class="s1">&#39;difference of stds&#39;</span><span class="p">,</span> <span class="s1">&#39;effect size&#39;</span><span class="p">],</span>
                   <span class="n">ref_val</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                   <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#87ceeb&#39;</span><span class="p">);</span>
 </pre></div>
@@ -489,8 +488,8 @@ size and differences in standard deviation are similarly positive.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pm</span><span class="o">.</span><span class="n">forestplot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;group1_mean&#39;</span><span class="p">,</span>
-                                <span class="s1">&#39;group2_mean&#39;</span><span class="p">]);</span>
+<span></span><span class="n">pm</span><span class="o">.</span><span class="n">forestplot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">varnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;group1_mean&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;group2_mean&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </div>
@@ -506,7 +505,7 @@ size and differences in standard deviation are similarly positive.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pm</span><span class="o">.</span><span class="n">forestplot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;group1_std&#39;</span><span class="p">,</span>
+<span></span><span class="n">pm</span><span class="o">.</span><span class="n">forestplot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">varnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;group1_std&#39;</span><span class="p">,</span>
                                <span class="s1">&#39;group2_std&#39;</span><span class="p">,</span>
                                <span class="s1">&#39;ν_minus_one&#39;</span><span class="p">]);</span>
 </pre></div>
@@ -524,7 +523,7 @@ size and differences in standard deviation are similarly positive.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pm</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">varnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;difference of means&#39;</span><span class="p">,</span> <span class="s1">&#39;difference of stds&#39;</span><span class="p">,</span> <span class="s1">&#39;effect size&#39;</span><span class="p">])</span>
+<span></span><span class="n">pm</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span><span class="n">varnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;difference of means&#39;</span><span class="p">,</span> <span class="s1">&#39;difference of stds&#39;</span><span class="p">,</span> <span class="s1">&#39;effect size&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -563,33 +562,33 @@ size and differences in standard deviation are similarly positive.</p>
   <tbody>
     <tr>
       <th>difference of means</th>
-      <td>1.013422</td>
-      <td>0.447558</td>
-      <td>0.006065</td>
-      <td>0.086625</td>
-      <td>1.850443</td>
-      <td>6873.034799</td>
-      <td>0.999837</td>
+      <td>1.003488</td>
+      <td>0.464556</td>
+      <td>0.008673</td>
+      <td>0.110008</td>
+      <td>1.929636</td>
+      <td>2618.006985</td>
+      <td>0.999933</td>
     </tr>
     <tr>
       <th>difference of stds</th>
-      <td>0.945937</td>
-      <td>0.441513</td>
-      <td>0.005225</td>
-      <td>0.133137</td>
-      <td>1.843480</td>
-      <td>6840.669245</td>
-      <td>0.999897</td>
+      <td>0.944355</td>
+      <td>0.450525</td>
+      <td>0.006941</td>
+      <td>0.152468</td>
+      <td>1.885434</td>
+      <td>3567.953258</td>
+      <td>0.999944</td>
     </tr>
     <tr>
       <th>effect size</th>
-      <td>0.600971</td>
-      <td>0.279514</td>
-      <td>0.003620</td>
-      <td>0.037204</td>
-      <td>1.128682</td>
-      <td>7217.271311</td>
-      <td>0.999775</td>
+      <td>0.595406</td>
+      <td>0.289738</td>
+      <td>0.005166</td>
+      <td>0.040975</td>
+      <td>1.175411</td>
+      <td>2756.596339</td>
+      <td>0.999857</td>
     </tr>
   </tbody>
 </table>

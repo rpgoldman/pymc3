@@ -80,10 +80,10 @@ expressions rather than NumPy or Python code.</p>
 <td><p>Reshapes the variable x by keeping the first outdim-1 dimension size(s) of x the same, and making the last dimension size of x equal to the multiplication of its remaining dimension size(s).</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">zeros_like</span></code>(model[, dtype, opt])</p></td>
-<td><p>equivalent of numpy.zeros_like :param model: :type model: tensor :param dtype: :type dtype: data-type, optional :param opt: Useful for Theano optimization, not for user building a graph as this             have the consequence that model isn’t always in the graph.</p></td>
+<td><p>equivalent of numpy.zeros_like Parameters ———- model : tensor dtype : data-type, optional opt : If True, we will return a constant instead of a graph when possible.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ones_like</span></code>(model[, dtype, opt])</p></td>
-<td><p>equivalent of numpy.ones_like :param model: :type model: tensor :param dtype: :type dtype: data-type, optional :param opt: Useful for Theano optimization, not for user building a graph as this             have the consequence that model isn’t always in the graph.</p></td>
+<td><p>equivalent of numpy.ones_like Parameters ———- model : tensor dtype : data-type, optional opt : If True, we will return a constant instead of a graph when possible.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">stack</span></code>(\*tensors, \*\*kwargs)</p></td>
 <td><p>Stack tensors in sequence on given axis (default is 0).</p></td>
@@ -451,7 +451,7 @@ the elements by row like this (for lower or upper triangular matrices):</p>
 
 <dl class="function">
 <dt id="pymc3.math.kron_dot">
-<code class="descclassname">pymc3.math.</code><code class="descname">kron_dot</code><span class="sig-paren">(</span><em>krons</em>, <em>m</em>, <em>*</em>, <em>op=&lt;function dot at 0x114979a60&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.math.kron_dot" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymc3.math.</code><code class="descname">kron_dot</code><span class="sig-paren">(</span><em>krons</em>, <em>m</em>, <em>*</em>, <em>op=&lt;function dot at 0x11d5f5a60&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#pymc3.math.kron_dot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply op to krons and m in a way that reproduces <code class="docutils literal notranslate"><span class="pre">op(kronecker(*krons),</span> <span class="pre">m)</span></code></p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>

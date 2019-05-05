@@ -339,7 +339,7 @@ div.rendered_html tbody tr:hover {
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
     <span class="n">step_size</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;sigma&#39;</span><span class="p">,</span> <span class="mf">50.</span><span class="p">)</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">GaussianRandomWalk</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">GaussianRandomWalk</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span>
                            <span class="n">shape</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">returns</span><span class="p">))</span>
 
     <span class="n">nu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;nu&#39;</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">)</span>
@@ -360,7 +360,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">tune</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">target_accept</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">tune</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">nuts_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">target_accept</span><span class="o">=.</span><span class="mi">9</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
