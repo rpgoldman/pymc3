@@ -1,3 +1,7 @@
+from typing import Dict, List, Optional, TYPE_CHECKING
+if TYPE_CHECKING:
+    from typing import Any
+from typing import Iterable as TIterable
 from collections import defaultdict, Iterable
 from copy import copy
 import pickle
@@ -6,11 +10,12 @@ import warnings
 
 import numpy as np
 import theano.gradient as tg
+from theano.tensor import Tensor
 
 from .backends.base import BaseTrace, MultiTrace
 from .backends.ndarray import NDArray
 from .distributions.distribution import draw_values
-from .model import modelcontext, Point, all_continuous
+from .model import modelcontext, Point, all_continuous, Model
 from .step_methods import (NUTS, HamiltonianMC, Metropolis, BinaryMetropolis,
                            BinaryGibbsMetropolis, CategoricalGibbsMetropolis,
                            Slice, CompoundStep, arraystep, smc)
@@ -529,7 +534,7 @@ def _sample_population(draws, chain, chains, start, random_seed, step, tune,
 def _sample(chain, progressbar, random_seed, start, draws=None, step=None,
             trace=None, tune=None, model=None, **kwargs):
     skip_first = kwargs.get('skip_first', 0)
-    refresh_every = kwargs.get('refresh_every', 100)
+    # refresh_every = kwargs.get('refresh_every', 100)
 
     sampling = _iter_sample(draws, step, start, trace, chain,
                             tune, model, random_seed)
@@ -1027,8 +1032,14 @@ def stop_tuning(step):
     return step
 
 
-def sample_posterior_predictive(trace, samples=None, model=None, vars=None, size=None,
-                                random_seed=None, progressbar=True):
+def sample_posterior_predictive(trace,
+                                samples: Optional[int]=None,
+                                model: Optional[Model]=None,
+                                vars: Optional[TIterable[Tensor]]=None,
+                                varnames: Optional[List[str]]=None,
+                                size: Optional[int]=None,
+                                random_seed=None,
+                                progressbar: bool=True) -> Dict[str, np.ndarray]:
     """Generate posterior predictive samples from a model given a trace.
 
     Parameters
@@ -1042,7 +1053,10 @@ def sample_posterior_predictive(trace, samples=None, model=None, vars=None, size
         Model used to generate `trace`
     vars : iterable
         Variables for which to compute the posterior predictive samples.
-        Defaults to `model.observed_RVs`.
+        Defaults to `model.observed_RVs`.  Deprecated: please use `varnames` instead.
+    varnames : Iterable[str]
+        Alternative way to specify vars to sample, to make this function orthogonal with
+        others.
     size : int
         The number of random draws from the distribution specified by the parameters in each
         sample of the trace.
@@ -1056,7 +1070,7 @@ def sample_posterior_predictive(trace, samples=None, model=None, vars=None, size
     Returns
     -------
     samples : dict
-        Dictionary with the variables as keys. The values corresponding to the
+        Dictionary with the variable names as keys, and values numpy arrays containing
         posterior predictive samples.
     """
     len_trace = len(trace)
@@ -1069,7 +1083,15 @@ def sample_posterior_predictive(trace, samples=None, model=None, vars=None, size
         samples = sum(len(v) for v in trace._straces.values())
 
     model = modelcontext(model)
+    assert model
 
+    if varnames is not None:
+        if vars is not None:
+            raise Exception("Should not specify both vars and varnames arguments.")
+        vars = (model[x] for x in varnames)
+    elif vars is not None: # varnames is None, and vars is not.
+        warnings.warn("vars argument is deprecated in favor of varnames.",
+                      DeprecationWarning)
     if vars is None:
         vars = model.observed_RVs
 
@@ -1081,7 +1103,7 @@ def sample_posterior_predictive(trace, samples=None, model=None, vars=None, size
     if progressbar:
         indices = tqdm(indices, total=samples)
 
-    ppc_trace = defaultdict(list)
+    ppc_trace = defaultdict(list) # type: Dict[str, List[Any]] 
     try:
         for idx in indices:
             if nchain > 1:
