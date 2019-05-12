@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, TYPE_CHECKING
+from typing import Dict, List, Optional, TYPE_CHECKING, cast
 if TYPE_CHECKING:
     from typing import Any
 from typing import Iterable as TIterable
@@ -1082,7 +1082,6 @@ def sample_posterior_predictive(trace,
         samples = sum(len(v) for v in trace._straces.values())
 
     model = modelcontext(model)
-    assert model
 
     if varnames is not None:
         if vars is not None:
@@ -1271,7 +1270,11 @@ def sample_ppc_w(*args, **kwargs):
     return sample_posterior_predictive_w(*args, **kwargs)
 
 
-def sample_prior_predictive(samples=500, model=None, vars=None, random_seed=None):
+def sample_prior_predictive(samples=500,
+                            model: Optional[Model]=None,
+                            vars: Optional[TIterable[str]] = None,
+                            varnames: Optional[TIterable[str]] = None,
+                            random_seed=None) -> Dict[str, np.ndarray]:
     """Generate samples from the prior predictive distribution.
 
     Parameters
@@ -1279,10 +1282,16 @@ def sample_prior_predictive(samples=500, model=None, vars=None, random_seed=None
     samples : int
         Number of samples from the prior predictive to generate. Defaults to 500.
     model : Model (optional if in `with` context)
-    vars : iterable
+    vars : Iterable[str]
         A list of names of variables for which to compute the posterior predictive
          samples.
         Defaults to `model.named_vars`.
+        DEPRECATED - Use `varnames` instead.
+    varnames : Iterable[str]
+        A list of names of variables for which to compute the posterior predictive
+         samples.
+        Defaults to `model.named_vars`.
+    
     random_seed : int
         Seed for the random number generator.
 
@@ -1294,8 +1303,16 @@ def sample_prior_predictive(samples=500, model=None, vars=None, random_seed=None
     """
     model = modelcontext(model)
 
-    if vars is None:
+    if vars is None and varnames is None:
         vars = set(model.named_vars.keys())
+    elif vars is None:
+        vars = varnames
+    elif vars is not None:
+        warnings.warn("vars argument is deprecated in favor of varnames.",
+                      DeprecationWarning)
+    else:
+        raise Exception("Cannot supply both vars and varnames arguments.")
+    vars = cast(Iterable[str], vars) # tell mypy that vars cannot be None here.
 
     if random_seed is not None:
         np.random.seed(random_seed)
@@ -1304,8 +1321,9 @@ def sample_prior_predictive(samples=500, model=None, vars=None, random_seed=None
     values = draw_values([model[name] for name in names], size=samples)
 
     data = {k: v for k, v in zip(names, values)}
+    assert data is not None
 
-    prior = {}
+    prior: Dict[str, np.ndarray] = {}
     for var_name in vars:
         if var_name in data:
             prior[var_name] = data[var_name]
