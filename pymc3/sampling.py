@@ -1035,7 +1035,7 @@ def sample_posterior_predictive(trace,
                                 samples: Optional[int]=None,
                                 model: Optional[Model]=None,
                                 vars: Optional[TIterable[Tensor]]=None,
-                                varnames: Optional[List[str]]=None,
+                                var_names: Optional[List[str]]=None,
                                 size: Optional[int]=None,
                                 random_seed=None,
                                 progressbar: bool=True) -> Dict[str, np.ndarray]:
@@ -1052,8 +1052,8 @@ def sample_posterior_predictive(trace,
         Model used to generate `trace`
     vars : iterable
         Variables for which to compute the posterior predictive samples.
-        Defaults to `model.observed_RVs`.  Deprecated: please use `varnames` instead.
-    varnames : Iterable[str]
+        Defaults to `model.observed_RVs`.  Deprecated: please use `var_names` instead.
+    var_names : Iterable[str]
         Alternative way to specify vars to sample, to make this function orthogonal with
         others.
     size : int
@@ -1083,12 +1083,12 @@ def sample_posterior_predictive(trace,
 
     model = modelcontext(model)
 
-    if varnames is not None:
+    if var_names is not None:
         if vars is not None:
-            raise Exception("Should not specify both vars and varnames arguments.")
-        vars = (model[x] for x in varnames)
-    elif vars is not None: # varnames is None, and vars is not.
-        warnings.warn("vars argument is deprecated in favor of varnames.",
+            raise Exception("Should not specify both vars and var_names arguments.")
+        vars = (model[x] for x in var_names)
+    elif vars is not None: # var_names is None, and vars is not.
+        warnings.warn("vars argument is deprecated in favor of var_names.",
                       DeprecationWarning)
     if vars is None:
         vars = model.observed_RVs
@@ -1273,7 +1273,7 @@ def sample_ppc_w(*args, **kwargs):
 def sample_prior_predictive(samples=500,
                             model: Optional[Model]=None,
                             vars: Optional[TIterable[str]] = None,
-                            varnames: Optional[TIterable[str]] = None,
+                            var_names: Optional[TIterable[str]] = None,
                             random_seed=None) -> Dict[str, np.ndarray]:
     """Generate samples from the prior predictive distribution.
 
@@ -1286,8 +1286,8 @@ def sample_prior_predictive(samples=500,
         A list of names of variables for which to compute the posterior predictive
          samples.
         Defaults to `model.named_vars`.
-        DEPRECATED - Use `varnames` instead.
-    varnames : Iterable[str]
+        DEPRECATED - Use `var_names` instead.
+    var_names : Iterable[str]
         A list of names of variables for which to compute the posterior predictive
          samples.
         Defaults to `model.named_vars`.
@@ -1303,16 +1303,16 @@ def sample_prior_predictive(samples=500,
     """
     model = modelcontext(model)
 
-    if vars is None and varnames is None:
+    if vars is None and var_names is None:
         vars = set(model.named_vars.keys())
     elif vars is None:
-        vars = varnames
+        vars = var_names
     elif vars is not None:
-        warnings.warn("vars argument is deprecated in favor of varnames.",
+        warnings.warn("vars argument is deprecated in favor of var_names.",
                       DeprecationWarning)
     else:
-        raise Exception("Cannot supply both vars and varnames arguments.")
-    vars = cast(Iterable[str], vars) # tell mypy that vars cannot be None here.
+        raise Exception("Cannot supply both vars and var_names arguments.")
+    vars = cast(TIterable[str], vars) # tell mypy that vars cannot be None here.
 
     if random_seed is not None:
         np.random.seed(random_seed)
