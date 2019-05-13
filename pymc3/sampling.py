@@ -1086,7 +1086,8 @@ def sample_posterior_predictive(trace,
     if var_names is not None:
         if vars is not None:
             raise Exception("Should not specify both vars and var_names arguments.")
-        vars = (model[x] for x in var_names)
+        else:
+            vars = [model[x] for x in var_names]
     elif vars is not None: # var_names is None, and vars is not.
         warnings.warn("vars argument is deprecated in favor of var_names.",
                       DeprecationWarning)
