@@ -1324,7 +1324,7 @@ def sample_prior_predictive(samples=500,
     data = {k: v for k, v in zip(names, values)}
     assert data is not None
 
-    prior: Dict[str, np.ndarray] = {}
+    prior = {} # type: Dict[str, np.ndarray]
     for var_name in vars:
         if var_name in data:
             prior[var_name] = data[var_name]
