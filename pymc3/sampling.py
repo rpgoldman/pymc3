@@ -1085,7 +1085,7 @@ def sample_posterior_predictive(trace,
 
     if var_names is not None:
         if vars is not None:
-            raise Exception("Should not specify both vars and var_names arguments.")
+            raise ValueError("Should not specify both vars and var_names arguments.")
         else:
             vars = [model[x] for x in var_names]
     elif vars is not None: # var_names is None, and vars is not.
@@ -1312,7 +1312,7 @@ def sample_prior_predictive(samples=500,
         warnings.warn("vars argument is deprecated in favor of var_names.",
                       DeprecationWarning)
     else:
-        raise Exception("Cannot supply both vars and var_names arguments.")
+        raise ValueError("Cannot supply both vars and var_names arguments.")
     vars = cast(TIterable[str], vars) # tell mypy that vars cannot be None here.
 
     if random_seed is not None:
