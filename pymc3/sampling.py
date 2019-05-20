@@ -1322,7 +1322,8 @@ def sample_prior_predictive(samples=500,
     values = draw_values([model[name] for name in names], size=samples)
 
     data = {k: v for k, v in zip(names, values)}
-    assert data is not None
+    if data is None:
+        raise AssertionError("No variables sampled: attempting to sample %s"%names)
 
     prior = {} # type: Dict[str, np.ndarray]
     for var_name in vars:
