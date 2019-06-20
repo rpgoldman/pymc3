@@ -3,7 +3,7 @@ import functools
 import itertools
 import threading
 import warnings
-from typing import Optional
+from typing import Dict, List, Optional, Union
 
 import numpy as np
 from pandas import Series
@@ -20,7 +20,7 @@ from .memoize import memoize, WithMemoization
 from .theanof import gradient, hessian, inputvars, generator
 from .vartypes import typefilter, discrete_types, continuous_types, isgenerator
 from .blocking import DictToArrayBijection, ArrayOrdering
-from .util import get_transformed_name
+from .util import get_transformed_name, is_transformed_name
 
 __all__ = [
     'Model', 'Factor', 'compilef', 'fn', 'fastfn', 'modelcontext',
@@ -279,6 +279,8 @@ class Factor:
         if self.name is not None:
             logp.name = '__logp_%s' % self.name
         return logp
+
+    arviz_dims = None # type: Optional[List[str]]
 
 
 class InitContextMeta(type):
@@ -800,7 +802,8 @@ class Model(Context, Factor, WithMemoization, metaclass=InitContextMeta):
         """All the continuous variables in the model"""
         return list(typefilter(self.vars, continuous_types))
 
-    def Var(self, name, dist, data=None, total_size=None):
+    def Var(self, name, dist, data=None, total_size=None,
+                 arviz_dims: Optional[Union[str, List[str]]]=None):
         """Create and add (un)observed random variable to the model with an
         appropriate prior distribution.
 
@@ -859,6 +862,10 @@ class Model(Context, Factor, WithMemoization, metaclass=InitContextMeta):
                 self.free_RVs.append(var.missing_values)
                 self.missing_values.append(var.missing_values)
                 self.named_vars[var.missing_values.name] = var.missing_values
+
+        if isinstance(arviz_dims, str):
+            arviz_dims = [arviz_dims]
+        var.arviz_dims = arviz_dims            
 
         self.add_random_variable(var)
         return var
@@ -1059,6 +1066,15 @@ class Model(Context, Factor, WithMemoization, metaclass=InitContextMeta):
             $$'''.format('\\\\'.join(tex_vars))
 
     __latex__ = _repr_latex_
+
+    def arviz_dims(self) -> Dict[str, List[str]]:
+        '''Return any available arviz/xarray dimensions for the nodes in the model.'''
+        d = dict() # type: Dict[str, List[str]]
+        for name, var in self.named_vars:
+            if not is_transformed_name(name):
+                if hasattr(var, 'arviz_dims'):
+                    d[name] = var.arviz_dims
+        return d
 
 
 def set_data(new_data, model=None):
@@ -1482,7 +1498,8 @@ def _latex_repr_rv(rv):
     return r'$\text{%s} \sim \text{Deterministic}(%s)$' % (rv.name, r',~'.join(_walk_up_rv(rv)))
 
 
-def Deterministic(name, var, model=None):
+def Deterministic(name, var, model=None,
+                 arviz_dims: Optional[Union[str, List[str]]]=None):
     """Create a named deterministic variable
 
     Parameters
@@ -1500,10 +1517,13 @@ def Deterministic(name, var, model=None):
     model.add_random_variable(var)
     var._repr_latex_ = functools.partial(_latex_repr_rv, var)
     var.__latex__ = var._repr_latex_
+    var.arviz_dims = [arviz_dims] if isinstance(arviz_dims, str) else arviz_dims
+    
     return var
 
 
-def Potential(name, var, model=None):
+def Potential(name, var, model=None,
+              arviz_dims: Optional[Union[str, List[str]]]=None):
     """Add an arbitrary factor potential to the model likelihood
 
     Parameters
@@ -1519,6 +1539,8 @@ def Potential(name, var, model=None):
     var.name = model.name_for(name)
     model.potentials.append(var)
     model.add_random_variable(var)
+    var.arviz_dims = [arviz_dims] if isinstance(arviz_dims, str) else arviz_dims
+
     return var
 
 

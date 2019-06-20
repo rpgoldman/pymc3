@@ -44,7 +44,8 @@ class Distribution:
                 raise TypeError("observed needs to be data but got: {}".format(type(data)))
             total_size = kwargs.pop('total_size', None)
             dist = cls.dist(*args, **kwargs)
-            return model.Var(name, dist, data, total_size)
+            arviz_dims = kwargs.pop('arviz_dims', None)
+            return model.Var(name, dist, data, total_size, arviz_dims=arviz_dims)
         else:
             raise TypeError("Name needs to be a string but got: {}".format(name))
 
