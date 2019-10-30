@@ -1282,18 +1282,22 @@ class FreeRV(Factor, PyMC3Variable):
             self.distribution = distribution
             self.tag.test_value = np.ones(
                 distribution.shape, distribution.dtype) * distribution.default()
-            self.logp_elemwiset = distribution.logp(self)
-            # The logp might need scaling in minibatches.
-            # This is done in `Factor`.
-            self.logp_sum_unscaledt = distribution.logp_sum(self)
-            self.logp_nojac_unscaledt = distribution.logp_nojac(self)
-            self.total_size = total_size
-            self.model = model
-            self.scaling = _get_scaling(total_size, self.shape, self.ndim)
+            try:
+                self.logp_elemwiset = distribution.logp(self)
+                # The logp might need scaling in minibatches.
+                # This is done in `Factor`.
+                self.logp_sum_unscaledt = distribution.logp_sum(self)
+                self.logp_nojac_unscaledt = distribution.logp_nojac(self)
+                self.total_size = total_size
+                self.model = model
+                self.scaling = _get_scaling(total_size, self.shape, self.ndim)
 
-            incorporate_methods(source=distribution, destination=self,
-                                methods=['random'],
-                                wrapper=InstanceMethod)
+                incorporate_methods(source=distribution, destination=self,
+                                    methods=['random'],
+                                    wrapper=InstanceMethod)
+            except Exception as e:
+                print("Error defining distribution for variable %s"%name)
+                raise e
 
     def _repr_latex_(self, name=None, dist=None):
         if self.distribution is None:
