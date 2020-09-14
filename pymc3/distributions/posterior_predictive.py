@@ -449,6 +449,12 @@ class _PosteriorPredictiveSampler(AbstractContextManager):
                                 if node is not None and (node, samples) not in drawn
                             ]
                         )
+                    except MemoryError as e:
+                        err_str = f"Memory error trying to draw value for {next_} | {temp_givens}"
+                        warnings.warn(err_str)
+                        s = str(e) + "\n" + err_str
+                        raise MemoryError(s)
+                        
 
             # the below makes sure the graph is evaluated in order
             # test_distributions_random::TestDrawValues::test_draw_order fails without it
